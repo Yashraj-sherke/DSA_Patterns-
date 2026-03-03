@@ -1,0 +1,2 @@
+# Redirect root to DSA.html
+/    /DSA.html    200

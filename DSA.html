@@ -3,68 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Track your DSA interview preparation across 14 coding patterns with 150+ problems. Monitor progress, add notes, and export data.">
+<meta name="keywords" content="DSA, Data Structures, Algorithms, Interview Prep, LeetCode, Coding Patterns, Problem Tracker">
+<meta name="author" content="DSA Tracker">
+<meta name="theme-color" content="#0f0f1a">
+<meta name="color-scheme" content="dark">
+
+<!-- Open Graph -->
+<meta property="og:title" content="DSA Problem Tracker — Interview Prep">
+<meta property="og:description" content="Track your progress across 14 DSA patterns with 150+ coding problems.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://via.placeholder.com/1200x630/0f0f1a/667eea?text=DSA+Problem+Tracker">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DSA Problem Tracker — Interview Prep">
+<meta name="twitter:description" content="Track your progress across 14 DSA patterns with 150+ coding problems.">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+
 <title>DSA Problem Tracker — Interview Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:#0f0f1a;color:#e0e0e0;padding:20px}
-h1{text-align:center;font-size:2rem;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+body{font-family:'Inter',sans-serif;background:#0f0f1a;color:#e0e0e0;padding:20px;min-height:100vh}
+h1{text-align:center;font-size:2rem;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
 .subtitle{text-align:center;color:#888;margin-bottom:20px;font-size:.85rem}
 .stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
-.stat-card{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:12px;padding:14px 22px;text-align:center;min-width:130px}
-.stat-card .num{font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-card{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:12px;padding:14px 22px;text-align:center;min-width:130px;transition:transform .2s}
+.stat-card:hover{transform:translateY(-2px)}
+.stat-card .num{font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .stat-card .lbl{font-size:.7rem;color:#888;margin-top:2px}
+.toolbar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.toolbar button{background:#1a1a2e;border:1px solid #2a2a4a;color:#ccc;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.75rem;transition:.3s}
+.toolbar button:hover{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent}
 .filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
 .filters button{background:#1a1a2e;border:1px solid #2a2a4a;color:#ccc;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.75rem;transition:.3s}
 .filters button:hover,.filters button.active{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent}
 .search-bar{display:flex;justify-content:center;margin-bottom:18px}
-.search-bar input{background:#1a1a2e;border:1px solid #2a2a4a;color:#e0e0e0;padding:8px 18px;border-radius:20px;width:350px;font-size:.85rem;outline:none}
-.search-bar input:focus{border-color:#667eea}
-table{width:100%;border-collapse:separate;border-spacing:0;background:#12121f;border-radius:12px;overflow:hidden}
-thead th{background:linear-gradient(135deg,#1e1e38,#2a2a50);padding:12px 10px;font-size:.73rem;text-transform:uppercase;letter-spacing:.5px;color:#aaa;position:sticky;top:0;z-index:10;border-bottom:2px solid #667eea}
-tbody tr{transition:.2s}
+.search-bar input{background:#1a1a2e;border:1px solid #2a2a4a;color:#e0e0e0;padding:8px 18px;border-radius:20px;width:350px;max-width:90vw;font-size:.85rem;outline:none;transition:border-color .3s}
+.search-bar input:focus{border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,.15)}
+.table-wrap{overflow-x:auto;border-radius:12px;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:separate;border-spacing:0;background:#12121f;border-radius:12px;overflow:hidden;min-width:900px}
+thead th{background:linear-gradient(135deg,#1e1e38,#2a2a50);padding:12px 10px;font-size:.73rem;text-transform:uppercase;letter-spacing:.5px;color:#aaa;position:sticky;top:0;z-index:10;border-bottom:2px solid #667eea;white-space:nowrap}
+tbody tr{transition:background .2s}
 tbody tr:hover{background:#1e1e36}
 tbody td{padding:9px 10px;border-bottom:1px solid #1e1e30;font-size:.8rem;vertical-align:middle}
 .pattern-row td{background:linear-gradient(135deg,#1a1040,#201850);font-weight:700;font-size:.85rem;color:#b8c0ff;padding:12px 10px;border-bottom:2px solid #667eea}
 .pattern-row td:first-child{border-left:4px solid #667eea}
 a{color:#667eea;text-decoration:none;font-size:.75rem}
 a:hover{color:#a78bfa;text-decoration:underline}
+a:focus-visible{outline:2px solid #667eea;outline-offset:2px;border-radius:3px}
 .diff{padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:600;display:inline-block}
 .diff.easy{background:#064e3b;color:#6ee7b7}
 .diff.medium{background:#713f12;color:#fbbf24}
 .diff.hard{background:#7f1d1d;color:#fca5a5}
 select.status-sel{background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a4a;padding:4px 6px;border-radius:6px;font-size:.72rem;cursor:pointer;outline:none}
+select.status-sel:focus-visible{border-color:#667eea;box-shadow:0 0 0 2px rgba(102,126,234,.3)}
 select.status-sel option{background:#1a1a2e}
 input.notes-input{background:transparent;border:1px solid #2a2a4a;color:#e0e0e0;padding:4px 6px;border-radius:6px;width:100%;font-size:.72rem;outline:none}
-input.notes-input:focus{border-color:#667eea}
+input.notes-input:focus{border-color:#667eea;box-shadow:0 0 0 2px rgba(102,126,234,.15)}
 input.date-input{background:transparent;border:1px solid #2a2a4a;color:#e0e0e0;padding:4px 6px;border-radius:6px;font-size:.72rem;outline:none}
-input.date-input:focus{border-color:#667eea}
+input.date-input:focus{border-color:#667eea;box-shadow:0 0 0 2px rgba(102,126,234,.15)}
 .rev-sel{background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a4a;padding:4px 6px;border-radius:6px;font-size:.72rem;cursor:pointer;outline:none}
+.rev-sel:focus-visible{border-color:#667eea;box-shadow:0 0 0 2px rgba(102,126,234,.3)}
 .save-btn{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;padding:12px 28px;border-radius:30px;font-size:.85rem;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(102,126,234,.4);z-index:100;transition:.3s}
 .save-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(102,126,234,.6)}
-.toast{position:fixed;bottom:80px;right:24px;background:#1a1a2e;color:#6ee7b7;border:1px solid #064e3b;padding:10px 20px;border-radius:10px;font-size:.8rem;opacity:0;transition:.4s;z-index:100}
+.save-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.toast{position:fixed;bottom:80px;right:24px;background:#1a1a2e;color:#6ee7b7;border:1px solid #064e3b;padding:10px 20px;border-radius:10px;font-size:.8rem;opacity:0;transition:.4s;z-index:100;pointer-events:none}
 .toast.show{opacity:1}
-#num{text-align:center;font-size:.7rem;color:#666}
+.toast.error{color:#fca5a5;border-color:#7f1d1d}
+.offline-banner{display:none;position:fixed;top:0;left:0;right:0;background:#713f12;color:#fbbf24;text-align:center;padding:6px;font-size:.75rem;z-index:200}
+.offline-banner.visible{display:block}
+#num{text-align:center;font-size:.7rem;color:#666;margin-top:12px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:768px){
+ body{padding:10px}
+ h1{font-size:1.5rem}
+ .stat-card{min-width:100px;padding:10px 14px}
+ .stat-card .num{font-size:1.2rem}
+ .search-bar input{width:100%}
+}
+@media print{
+ .save-btn,.toolbar,.filters,.search-bar,.toast,.offline-banner{display:none!important}
+ body{background:#fff;color:#000;padding:10px}
+ table{background:#fff}
+ thead th{background:#f3f4f6;color:#000;border-bottom:2px solid #667eea}
+ tbody td{border-bottom:1px solid #ddd;color:#000}
+ .pattern-row td{background:#e8e8f8;color:#333}
+ .diff.easy{background:#d1fae5;color:#065f46}
+ .diff.medium{background:#fef3c7;color:#92400e}
+ .diff.hard{background:#fee2e2;color:#991b1b}
+ select.status-sel,.rev-sel{-webkit-appearance:none;appearance:none;border:none;background:transparent;color:#000}
+ input.notes-input,input.date-input{border:none;color:#000}
+}
 </style>
 </head>
 <body>
+<div class="offline-banner" id="offlineBanner" role="alert">⚠️ You are offline — changes will be saved locally</div>
+<header>
 <h1>🚀 DSA Problem Tracker</h1>
-<p class="subtitle">14 Patterns • Track your progress • Data saved in browser</p>
-<div class="stats">
-<div class="stat-card"><div class="num" id="totalQ">0</div><div class="lbl">Total Problems</div></div>
-<div class="stat-card"><div class="num" id="doneQ">0</div><div class="lbl">Completed</div></div>
-<div class="stat-card"><div class="num" id="pctQ">0%</div><div class="lbl">Progress</div></div>
-<div class="stat-card"><div class="num" id="revQ">0</div><div class="lbl">Need Revision</div></div>
+<p class="subtitle">14 Patterns &bull; Track your progress &bull; Data saved in browser</p>
+</header>
+<main>
+<section class="stats" aria-label="Progress statistics">
+<div class="stat-card"><div class="num" id="totalQ" aria-label="Total problems">0</div><div class="lbl">Total Problems</div></div>
+<div class="stat-card"><div class="num" id="doneQ" aria-label="Completed problems">0</div><div class="lbl">Completed</div></div>
+<div class="stat-card"><div class="num" id="pctQ" aria-label="Completion percentage">0%</div><div class="lbl">Progress</div></div>
+<div class="stat-card"><div class="num" id="revQ" aria-label="Problems needing revision">0</div><div class="lbl">Need Revision</div></div>
+</section>
+<div class="toolbar">
+<button onclick="exportData()" title="Export progress as JSON file">📥 Export Data</button>
+<button onclick="document.getElementById('importFile').click()" title="Import progress from JSON file">📤 Import Data</button>
+<button onclick="resetData()" title="Reset all progress">🗑️ Reset</button>
+<input type="file" id="importFile" accept=".json" style="display:none" aria-label="Import data file">
 </div>
-<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..."></div>
-<div class="filters" id="filterBtns"></div>
-<table><thead><tr>
-<th>#</th><th>Pattern</th><th>Problem</th><th>Difficulty</th><th>Links</th><th>Status</th><th>Date Done</th><th>Revision</th><th>Notes</th>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..." aria-label="Search problems"></div>
+<div class="filters" id="filterBtns" role="group" aria-label="Filter by pattern"></div>
+<div class="table-wrap">
+<table role="grid" aria-label="DSA Problems"><thead><tr>
+<th scope="col">#</th><th scope="col">Pattern</th><th scope="col">Problem</th><th scope="col">Difficulty</th><th scope="col">Links</th><th scope="col">Status</th><th scope="col">Date Done</th><th scope="col">Revision</th><th scope="col">Notes</th>
 </tr></thead><tbody id="tbody"></tbody></table>
-<button class="save-btn" onclick="saveAll()">💾 Save Progress</button>
-<div class="toast" id="toast">✅ Progress Saved!</div>
+</div>
+</main>
+<button class="save-btn" onclick="saveAll()" aria-label="Save progress">💾 Save Progress</button>
+<div class="toast" id="toast" role="status" aria-live="polite">✅ Progress Saved!</div>
 <p id="num"></p>
 <script>
+"use strict";
 const D=[
 ["Two Pointers",[
 ["Pair with Target Sum","easy",["https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/"]],
@@ -246,52 +317,88 @@ const D=[
 ["Serialize & Deserialize Binary Tree","hard",["https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/"]]]]
 ];
 const KEY="dsa_tracker_v2";
-let saved=JSON.parse(localStorage.getItem(KEY)||"{}");
+let saved={};
+try{saved=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){console.warn("Failed to load saved data",e);saved={};}
+
 const tbody=document.getElementById("tbody");
-let idx=0,patterns=new Set();
+let idx=0;
+const patterns=new Set();
+
+// Build table
 D.forEach(([pat,problems])=>{
 patterns.add(pat);
-let pr=document.createElement("tr");pr.className="pattern-row";pr.dataset.pattern=pat;
-pr.innerHTML=`<td colspan="9">📌 ${pat} (${problems.length} problems)</td>`;
+const pr=document.createElement("tr");pr.className="pattern-row";pr.dataset.pattern=pat;
+pr.setAttribute("role","row");
+pr.innerHTML=`<td colspan="9" role="gridcell">📌 ${pat} (${problems.length} problems)</td>`;
 tbody.appendChild(pr);
 problems.forEach(([name,diff,links])=>{
-idx++;let id="p"+idx;
-let s=saved[id]||{status:"Not Started",date:"",rev:"No",notes:""};
-let linkHtml=links.map((l,i)=>`<a href="${l}" target="_blank">Link ${i+1}</a>`).join(" ");
-let tr=document.createElement("tr");tr.dataset.pattern=pat;tr.dataset.diff=diff;tr.dataset.name=name.toLowerCase();
+idx++;const id="p"+idx;
+const s=saved[id]||{status:"Not Started",date:"",rev:"No",notes:""};
+const linkHtml=links.map((l,i)=>`<a href="${l}" target="_blank" rel="noopener noreferrer">Link ${i+1}</a>`).join(" ");
+const tr=document.createElement("tr");tr.dataset.pattern=pat;tr.dataset.diff=diff;tr.dataset.name=name.toLowerCase();
+tr.setAttribute("role","row");
 tr.innerHTML=`<td style="color:#555">${idx}</td><td style="color:#888;font-size:.7rem">${pat}</td><td><b>${name}</b></td>
-<td><span class="diff ${diff}">${diff.toUpperCase()}</span></td><td>${linkHtml||"—"}</td>
-<td><select class="status-sel" data-id="${id}" data-field="status"><option${s.status=="Not Started"?" selected":""}>Not Started</option><option${s.status=="In Progress"?" selected":""}>In Progress</option><option${s.status=="Done"?" selected":""}>Done</option><option${s.status=="Revisit"?" selected":""}>Revisit</option></select></td>
-<td><input type="date" class="date-input" data-id="${id}" data-field="date" value="${s.date}"></td>
-<td><select class="rev-sel" data-id="${id}" data-field="rev"><option${s.rev=="No"?" selected":""}>No</option><option${s.rev=="Yes"?" selected":""}>Yes</option></select></td>
-<td><input class="notes-input" data-id="${id}" data-field="notes" value="${s.notes}" placeholder="Add notes..."></td>`;
+<td><span class="diff ${diff}" role="text" aria-label="Difficulty: ${diff}">${diff.toUpperCase()}</span></td><td>${linkHtml||"—"}</td>
+<td><select class="status-sel" data-id="${id}" data-field="status" aria-label="Status for ${name}"><option${s.status==="Not Started"?" selected":""}>Not Started</option><option${s.status==="In Progress"?" selected":""}>In Progress</option><option${s.status==="Done"?" selected":""}>Done</option><option${s.status==="Revisit"?" selected":""}>Revisit</option></select></td>
+<td><input type="date" class="date-input" data-id="${id}" data-field="date" value="${s.date}" aria-label="Date done for ${name}"></td>
+<td><select class="rev-sel" data-id="${id}" data-field="rev" aria-label="Needs revision for ${name}"><option${s.rev==="No"?" selected":""}>No</option><option${s.rev==="Yes"?" selected":""}>Yes</option></select></td>
+<td><input class="notes-input" data-id="${id}" data-field="notes" value="${escapeHtml(s.notes)}" placeholder="Add notes..." aria-label="Notes for ${name}"></td>`;
 tbody.appendChild(tr);
 });
 });
 document.getElementById("totalQ").textContent=idx;
+
+function escapeHtml(str){
+if(!str)return"";
+const map={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"};
+return str.replace(/[&<>"']/g,c=>map[c]);
+}
+
 // Filters
 const fb=document.getElementById("filterBtns");
-let allBtn=document.createElement("button");allBtn.textContent="All";allBtn.className="active";allBtn.onclick=()=>filterBy("");fb.appendChild(allBtn);
-patterns.forEach(p=>{let b=document.createElement("button");b.textContent=p;b.onclick=()=>filterBy(p);fb.appendChild(b);});
+const allBtn=document.createElement("button");allBtn.textContent="All";allBtn.className="active";allBtn.onclick=()=>filterBy("");fb.appendChild(allBtn);
+patterns.forEach(p=>{const b=document.createElement("button");b.textContent=p;b.onclick=()=>filterBy(p);fb.appendChild(b);});
+
 function filterBy(p){
 document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
 if(!p)document.querySelector(".filters button").classList.add("active");
-else [...document.querySelectorAll(".filters button")].find(b=>b.textContent===p)?.classList.add("active");
+else[...document.querySelectorAll(".filters button")].find(b=>b.textContent===p)?.classList.add("active");
 tbody.querySelectorAll("tr").forEach(r=>{r.style.display=(!p||r.dataset.pattern===p)?"":"none";});
 }
+
+// Debounced search
+let searchTimer;
 document.getElementById("searchBox").addEventListener("input",e=>{
-let q=e.target.value.toLowerCase();
+clearTimeout(searchTimer);
+searchTimer=setTimeout(()=>{
+const q=e.target.value.toLowerCase().trim();
 tbody.querySelectorAll("tr:not(.pattern-row)").forEach(r=>{r.style.display=(r.dataset.name||"").includes(q)?"":"none";});
 tbody.querySelectorAll(".pattern-row").forEach(r=>{r.style.display=q?"none":"";});
+},150);
 });
+
+function showToast(msg,isError){
+const t=document.getElementById("toast");
+t.textContent=msg;
+t.classList.toggle("error",!!isError);
+t.classList.add("show");
+setTimeout(()=>t.classList.remove("show"),2500);
+}
+
 function saveAll(){
-let d={};
+try{
+const d={};
 document.querySelectorAll("[data-id]").forEach(el=>{
-let id=el.dataset.id,f=el.dataset.field;if(!d[id])d[id]={};d[id][f]=el.value;
+const id=el.dataset.id,f=el.dataset.field;if(!d[id])d[id]={};d[id][f]=el.value;
 });
 localStorage.setItem(KEY,JSON.stringify(d));saved=d;updateStats();
-let t=document.getElementById("toast");t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2000);
+showToast("✅ Progress Saved!");
+}catch(e){
+console.error("Save failed:",e);
+showToast("❌ Save failed — storage may be full",true);
 }
+}
+
 function updateStats(){
 let done=0,rev=0;
 document.querySelectorAll("select.status-sel").forEach(s=>{if(s.value==="Done")done++;});
@@ -300,7 +407,82 @@ document.getElementById("doneQ").textContent=done;
 document.getElementById("pctQ").textContent=Math.round(done/idx*100)+"%";
 document.getElementById("revQ").textContent=rev;
 }
+
+// Auto-save on change
 document.addEventListener("change",e=>{if(e.target.dataset?.id)saveAll();});
+
+// Export data as JSON
+function exportData(){
+try{
+const d={};
+document.querySelectorAll("[data-id]").forEach(el=>{
+const id=el.dataset.id,f=el.dataset.field;if(!d[id])d[id]={};d[id][f]=el.value;
+});
+const blob=new Blob([JSON.stringify(d,null,2)],{type:"application/json"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");
+a.href=url;a.download=`dsa-tracker-backup-${new Date().toISOString().slice(0,10)}.json`;
+document.body.appendChild(a);a.click();document.body.removeChild(a);
+URL.revokeObjectURL(url);
+showToast("✅ Data exported!");
+}catch(e){
+console.error("Export failed:",e);
+showToast("❌ Export failed",true);
+}
+}
+
+// Import data from JSON
+document.getElementById("importFile").addEventListener("change",e=>{
+const file=e.target.files[0];if(!file)return;
+const reader=new FileReader();
+reader.onload=ev=>{
+try{
+const data=JSON.parse(ev.target.result);
+if(typeof data!=="object"||data===null)throw new Error("Invalid format");
+localStorage.setItem(KEY,JSON.stringify(data));
+showToast("✅ Data imported! Reloading...");
+setTimeout(()=>location.reload(),1000);
+}catch(err){
+console.error("Import failed:",err);
+showToast("❌ Invalid file format",true);
+}
+};
+reader.readAsText(file);
+e.target.value="";
+});
+
+// Reset data
+function resetData(){
+if(!confirm("Are you sure you want to reset ALL progress? This cannot be undone."))return;
+try{
+localStorage.removeItem(KEY);
+showToast("✅ Progress reset! Reloading...");
+setTimeout(()=>location.reload(),1000);
+}catch(e){
+showToast("❌ Reset failed",true);
+}
+}
+
+// Keyboard shortcuts
+document.addEventListener("keydown",e=>{
+if((e.ctrlKey||e.metaKey)&&e.key==="s"){e.preventDefault();saveAll();}
+if(e.key==="/"&&!["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName)){
+e.preventDefault();document.getElementById("searchBox").focus();}
+});
+
+// Offline detection
+function updateOnlineStatus(){
+document.getElementById("offlineBanner").classList.toggle("visible",!navigator.onLine);
+}
+window.addEventListener("online",updateOnlineStatus);
+window.addEventListener("offline",updateOnlineStatus);
+updateOnlineStatus();
+
+// Service Worker registration
+if("serviceWorker"in navigator){
+navigator.serviceWorker.register("sw.js").catch(()=>{});
+}
+
 updateStats();
 </script>
 </body>
