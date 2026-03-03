@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Problem Tracker — Interview Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0f0f1a;color:#e0e0e0;padding:20px}
+h1{text-align:center;font-size:2rem;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.subtitle{text-align:center;color:#888;margin-bottom:20px;font-size:.85rem}
+.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.stat-card{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:12px;padding:14px 22px;text-align:center;min-width:130px}
+.stat-card .num{font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-card .lbl{font-size:.7rem;color:#888;margin-top:2px}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.filters button{background:#1a1a2e;border:1px solid #2a2a4a;color:#ccc;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.75rem;transition:.3s}
+.filters button:hover,.filters button.active{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent}
+.search-bar{display:flex;justify-content:center;margin-bottom:18px}
+.search-bar input{background:#1a1a2e;border:1px solid #2a2a4a;color:#e0e0e0;padding:8px 18px;border-radius:20px;width:350px;font-size:.85rem;outline:none}
+.search-bar input:focus{border-color:#667eea}
+table{width:100%;border-collapse:separate;border-spacing:0;background:#12121f;border-radius:12px;overflow:hidden}
+thead th{background:linear-gradient(135deg,#1e1e38,#2a2a50);padding:12px 10px;font-size:.73rem;text-transform:uppercase;letter-spacing:.5px;color:#aaa;position:sticky;top:0;z-index:10;border-bottom:2px solid #667eea}
+tbody tr{transition:.2s}
+tbody tr:hover{background:#1e1e36}
+tbody td{padding:9px 10px;border-bottom:1px solid #1e1e30;font-size:.8rem;vertical-align:middle}
+.pattern-row td{background:linear-gradient(135deg,#1a1040,#201850);font-weight:700;font-size:.85rem;color:#b8c0ff;padding:12px 10px;border-bottom:2px solid #667eea}
+.pattern-row td:first-child{border-left:4px solid #667eea}
+a{color:#667eea;text-decoration:none;font-size:.75rem}
+a:hover{color:#a78bfa;text-decoration:underline}
+.diff{padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:600;display:inline-block}
+.diff.easy{background:#064e3b;color:#6ee7b7}
+.diff.medium{background:#713f12;color:#fbbf24}
+.diff.hard{background:#7f1d1d;color:#fca5a5}
+select.status-sel{background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a4a;padding:4px 6px;border-radius:6px;font-size:.72rem;cursor:pointer;outline:none}
+select.status-sel option{background:#1a1a2e}
+input.notes-input{background:transparent;border:1px solid #2a2a4a;color:#e0e0e0;padding:4px 6px;border-radius:6px;width:100%;font-size:.72rem;outline:none}
+input.notes-input:focus{border-color:#667eea}
+input.date-input{background:transparent;border:1px solid #2a2a4a;color:#e0e0e0;padding:4px 6px;border-radius:6px;font-size:.72rem;outline:none}
+input.date-input:focus{border-color:#667eea}
+.rev-sel{background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a4a;padding:4px 6px;border-radius:6px;font-size:.72rem;cursor:pointer;outline:none}
+.save-btn{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;padding:12px 28px;border-radius:30px;font-size:.85rem;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(102,126,234,.4);z-index:100;transition:.3s}
+.save-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(102,126,234,.6)}
+.toast{position:fixed;bottom:80px;right:24px;background:#1a1a2e;color:#6ee7b7;border:1px solid #064e3b;padding:10px 20px;border-radius:10px;font-size:.8rem;opacity:0;transition:.4s;z-index:100}
+.toast.show{opacity:1}
+#num{text-align:center;font-size:.7rem;color:#666}
+</style>
+</head>
+<body>
+<h1>🚀 DSA Problem Tracker</h1>
+<p class="subtitle">14 Patterns • Track your progress • Data saved in browser</p>
+<div class="stats">
+<div class="stat-card"><div class="num" id="totalQ">0</div><div class="lbl">Total Problems</div></div>
+<div class="stat-card"><div class="num" id="doneQ">0</div><div class="lbl">Completed</div></div>
+<div class="stat-card"><div class="num" id="pctQ">0%</div><div class="lbl">Progress</div></div>
+<div class="stat-card"><div class="num" id="revQ">0</div><div class="lbl">Need Revision</div></div>
+</div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..."></div>
+<div class="filters" id="filterBtns"></div>
+<table><thead><tr>
+<th>#</th><th>Pattern</th><th>Problem</th><th>Difficulty</th><th>Links</th><th>Status</th><th>Date Done</th><th>Revision</th><th>Notes</th>
+</tr></thead><tbody id="tbody"></tbody></table>
+<button class="save-btn" onclick="saveAll()">💾 Save Progress</button>
+<div class="toast" id="toast">✅ Progress Saved!</div>
+<p id="num"></p>
+<script>
+const D=[
+["Two Pointers",[
+["Pair with Target Sum","easy",["https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/"]],
+["Rearrange 0 and 1","easy",["https://www.geeksforgeeks.org/problems/segregate-0s-and-1s5106/1"]],
+["Remove Duplicates","easy",["https://leetcode.com/problems/remove-duplicates-from-sorted-list/","https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/","https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/"]],
+["Squaring a Sorted Array","easy",["https://leetcode.com/problems/squares-of-a-sorted-array/"]],
+["Triplet Sum to Zero","medium",["https://leetcode.com/problems/3sum/"]],
+["Triplet Sum Close to Target","medium",["https://leetcode.com/problems/3sum-closest/"]],
+["Triplets with Smaller Sum","medium",["https://www.geeksforgeeks.org/problems/count-triplets-with-sum-smaller-than-x5549/1"]],
+["Subarrays with Product Less than Target","medium",["https://leetcode.com/problems/subarray-product-less-than-k/"]],
+["Dutch National Flag Problem","medium",["https://leetcode.com/problems/sort-colors/description/"]],
+["Quadruple Sum to Target","medium",["https://leetcode.com/problems/4sum/"]],
+["Comparing Strings with Backspaces","medium",["https://leetcode.com/problems/backspace-string-compare/"]],
+["Minimum Window Sort","medium",["https://leetcode.com/problems/shortest-unsorted-continuous-subarray/","https://www.ideserve.co.in/learn/minimum-length-subarray-sorting-which-results-in-sorted-array"]]]],
+["Fast & Slow Pointers",[
+["LinkedList Cycle","easy",["https://leetcode.com/problems/linked-list-cycle/"]],
+["Start of LinkedList Cycle","medium",["https://leetcode.com/problems/linked-list-cycle-ii/"]],
+["Happy Number","medium",["https://leetcode.com/problems/happy-number/"]],
+["Find Duplicate Number","medium",["https://leetcode.com/problems/find-the-duplicate-number/description/"]],
+["Middle of the LinkedList","easy",["https://leetcode.com/problems/middle-of-the-linked-list/"]],
+["Palindrome LinkedList","medium",["https://leetcode.com/problems/palindrome-linked-list/"]],
+["Rearrange a LinkedList","medium",["https://leetcode.com/problems/reorder-list/"]],
+["Cycle in a Circular Array","hard",["https://leetcode.com/problems/circular-array-loop/"]]]],
+["Sliding Window",[
+["Max Sum Subarray of Size K","easy",["https://www.geeksforgeeks.org/problems/max-sum-subarray-of-size-k5313/1"]],
+["Smallest Subarray with Given Sum","easy",["https://leetcode.com/problems/minimum-size-subarray-sum/"]],
+["Longest Substring with K Distinct Chars","medium",["https://www.geeksforgeeks.org/problems/longest-k-unique-characters-substring0853/1"]],
+["Fruits into Baskets","medium",["https://leetcode.com/problems/fruit-into-baskets/"]],
+["No-repeat Substring","hard",["https://leetcode.com/problems/longest-substring-without-repeating-characters/"]],
+["Longest Substring Same Letters after Replace","hard",["https://leetcode.com/problems/longest-repeating-character-replacement/"]],
+["Longest Subarray Ones after Replace","hard",["https://leetcode.com/problems/max-consecutive-ones-iii/"]],
+["Minimum Size Subarray Sum","easy",["https://leetcode.com/problems/minimum-size-subarray-sum/"]],
+["Minimum Window Substring","hard",["https://leetcode.com/problems/minimum-window-substring/description/"]],
+["Permutation in a String","hard",["https://leetcode.com/problems/permutation-in-string/"]],
+["String Anagrams","hard",["https://leetcode.com/problems/find-all-anagrams-in-a-string/"]],
+["Words Concatenation","hard",["https://leetcode.com/problems/substring-with-concatenation-of-all-words/"]]]],
+["Kadane's Pattern",[
+["Maximum Subarray Sum","easy",["https://leetcode.com/problems/maximum-subarray/"]],
+["Minimum Subarray Sum","easy",["https://www.geeksforgeeks.org/problems/smallest-sum-contiguous-subarray/1"]],
+["Maximum Product Subarray","medium",["https://leetcode.com/problems/maximum-product-subarray/"]],
+["Max Subarray Sum with One Deletion","medium",["https://leetcode.com/problems/maximum-subarray-sum-with-one-deletion/description/"]],
+["Maximum Absolute Sum of Any Subarray","medium",["https://leetcode.com/problems/maximum-absolute-sum-of-any-subarray/"]],
+["Maximum Sum Circular Subarray","medium",["https://leetcode.com/problems/maximum-sum-circular-subarray/"]]]],
+["Prefix Sum",[
+["Subarray Sum Equals K","easy",["https://leetcode.com/problems/subarray-sum-equals-k/description/"]],
+["Find Pivot Index","easy",["https://leetcode.com/problems/find-pivot-index/description/"]],
+["Subarray Sums Divisible By K","medium",["https://leetcode.com/problems/subarray-sums-divisible-by-k/description/"]],
+["Contiguous Array","medium",["https://leetcode.com/problems/contiguous-array/description/"]],
+["Shortest Subarray With Sum at Least K","hard",["https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/description/"]],
+["Count Range Sum","hard",["https://leetcode.com/problems/count-of-range-sum/description/"]]]],
+["Merge Intervals",[
+["Merge Intervals","medium",["https://leetcode.com/problems/merge-intervals/description/"]],
+["Insert Interval","medium",["https://leetcode.com/problems/insert-interval/"]],
+["Intervals Intersection","medium",["https://leetcode.com/problems/interval-list-intersections/description/"]],
+["Overlapping Intervals","medium",["https://www.geeksforgeeks.org/check-if-any-two-intervals-overlap-among-a-given-set-of-intervals/"]],
+["Minimum Meeting Rooms","hard",["https://www.geeksforgeeks.org/problems/attend-all-meetings-ii/1"]],
+["Maximum CPU Load","hard",["https://www.geeksforgeeks.org/maximum-cpu-load-from-the-given-list-of-jobs/"]],
+["Employee Free Time","hard",["https://www.codertrain.co/employee-free-time"]]]],
+["Cyclic Sort",[
+["Cyclic Sort","easy",["https://www.geeksforgeeks.org/sort-an-array-which-contain-1-to-n-values-in-on-using-cycle-sort/"]],
+["Find the Missing Number","easy",["https://leetcode.com/problems/missing-number/"]],
+["Find All Missing Numbers","easy",["https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/"]],
+["Find the Duplicate Number","easy",["https://leetcode.com/problems/find-the-duplicate-number/"]],
+["Find All Duplicate Numbers","easy",["https://leetcode.com/problems/find-all-duplicates-in-an-array/"]],
+["Find the Corrupt Pair","easy",["https://thecodingsimplified.com/find-currupt-pair/"]],
+["Smallest Missing Positive Number","medium",["https://leetcode.com/problems/first-missing-positive/"]],
+["First K Missing Positive Numbers","hard",["https://thecodingsimplified.com/find-the-first-k-missing-positive-number/"]]]],
+["In-place Reversal of LinkedList",[
+["Reverse a LinkedList","easy",["https://leetcode.com/problems/reverse-linked-list/"]],
+["Reverse a Sub-list","medium",["https://leetcode.com/problems/reverse-linked-list-ii/"]],
+["Reverse List in Pairs","medium",["https://leetcode.com/problems/swap-nodes-in-pairs/description/"]],
+["Reverse every K-element Sub-list","hard",["https://leetcode.com/problems/reverse-nodes-in-k-group/"]],
+["Reverse Nodes in Even Length Groups","hard",["https://leetcode.com/problems/reverse-nodes-in-even-length-groups/description/"]],
+["Rotate a LinkedList","medium",["https://leetcode.com/problems/rotate-list/"]]]],
+["Stack",[
+["Remove Adjacent Duplicates","easy",["https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/description/"]],
+["Balanced Parentheses","easy",["https://leetcode.com/problems/valid-parentheses/description/"]],
+["Reverse a String","easy",[]],
+["Next Greater Element","easy",["https://leetcode.com/problems/next-greater-element-ii/description/"]],
+["Daily Temperatures","easy",["https://leetcode.com/problems/daily-temperatures/"]],
+["Remove Nodes From Linked List","easy",["https://leetcode.com/problems/remove-nodes-from-linked-list/"]],
+["Remove All Adjacent Duplicates II","medium",["https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/"]],
+["Simplify Path","medium",["https://leetcode.com/problems/simplify-path/"]],
+["Remove K Digits","hard",["https://leetcode.com/problems/remove-k-digits/"]]]],
+["Hash Maps",[
+["First Non-repeating Character","easy",["https://leetcode.com/problems/first-unique-character-in-a-string/"]],
+["Maximum Number of Balloons","easy",["https://leetcode.com/problems/maximum-number-of-balloons/"]],
+["Longest Palindrome","easy",["https://leetcode.com/problems/longest-palindrome/"]],
+["Ransom Note","easy",["https://leetcode.com/problems/ransom-note/"]]]],
+["Binary Search",[
+["Binary Search Basic","easy",["https://leetcode.com/problems/binary-search/"]],
+["Upper Bound / Ceiling","easy",["https://www.geeksforgeeks.org/problems/ceil-in-a-sorted-array/1"]],
+["First and Last Position","medium",["https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/"]],
+["Count Number of Occurrences","easy",["https://www.geeksforgeeks.org/problems/number-of-occurrence2259/1"]],
+["Search in Infinite Sorted Array","medium",["https://www.geeksforgeeks.org/find-position-element-sorted-array-infinite-numbers/"]],
+["Peak Index in Mountain","medium",["https://leetcode.com/problems/peak-index-in-a-mountain-array/"]],
+["Find Peak Element","medium",["https://leetcode.com/problems/find-peak-element/"]],
+["Find Min in Rotated Sorted Array","medium",["https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"]],
+["Number of Rotations","medium",["https://www.geeksforgeeks.org/problems/rotation4723/1"]],
+["Search in Rotated Sorted Array","medium",["https://leetcode.com/problems/search-in-rotated-sorted-array/description/"]],
+["Koko Eating Bananas","medium",["https://leetcode.com/problems/koko-eating-bananas/"]],
+["Min Days to Make M Bouquets","medium",["https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/"]],
+["Aggressive Cows","medium",["https://www.geeksforgeeks.org/problems/aggressive-cows/1"]],
+["H-Index II","medium",["https://leetcode.com/problems/h-index-ii/description/"]],
+["Max Candies to K Children","medium",["https://leetcode.com/problems/maximum-candies-allocated-to-k-children/description/"]],
+["Capacity to Ship Packages","medium",["https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/description/"]],
+["Book Allocation Problem","hard",["https://www.geeksforgeeks.org/problems/allocate-minimum-number-of-pages0937/1"]],
+["Split Array Largest Sum","hard",["https://leetcode.com/problems/split-array-largest-sum/description/"]],
+["Search 2D Matrix","medium",["https://leetcode.com/problems/search-a-2d-matrix/"]],
+["Search 2D Matrix II","hard",["https://leetcode.com/problems/search-a-2d-matrix-ii/description/"]],
+["Kth Smallest in Sorted Matrix","hard",["https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/"]],
+["Kth Smallest in Multiplication Table","hard",["https://leetcode.com/problems/kth-smallest-number-in-multiplication-table/description/"]],
+["Median of Two Sorted Arrays","hard",["https://leetcode.com/problems/median-of-two-sorted-arrays/"]]]],
+["Heap Pattern",[
+["Kth Smallest Element","easy",["https://www.geeksforgeeks.org/problems/kth-smallest-element5635/1"]],
+["Kth Largest Element","medium",["https://leetcode.com/problems/kth-largest-element-in-an-array/description/"]],
+["Top K Frequent Elements","medium",["https://leetcode.com/problems/top-k-frequent-elements/description/"]],
+["Top K Frequent Words","medium",["https://leetcode.com/problems/top-k-frequent-words/description/"]],
+["K Closest Points to Origin","medium",["https://leetcode.com/problems/k-closest-points-to-origin/description/"]],
+["Find K Closest Elements","medium",["https://leetcode.com/problems/find-k-closest-elements/description/"]],
+["Kth Weakest Row in Matrix","easy",["https://leetcode.com/problems/the-k-weakest-rows-in-a-matrix/description/"]],
+["Merge K Sorted Arrays","medium",["https://www.geeksforgeeks.org/problems/merge-k-sorted-arrays/1"]],
+["Kth Smallest in Sorted Matrix","medium",["https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/"]],
+["Last Stone Weight","easy",["https://leetcode.com/problems/last-stone-weight/description/"]],
+["CPU Task Scheduler","medium",["https://leetcode.com/problems/task-scheduler/description/"]],
+["Reorganize String","medium",["https://leetcode.com/problems/reorganize-string/"]],
+["Min Refueling Stops","hard",["https://leetcode.com/problems/minimum-number-of-refueling-stops/description/"]],
+["IPO","hard",["https://leetcode.com/problems/ipo/description/"]],
+["Course Schedule III","hard",["https://leetcode.com/problems/course-schedule-iii/description/"]],
+["Find Median in Data Stream","hard",["https://leetcode.com/problems/find-median-from-data-stream/description/"]],
+["Sliding Window Median","hard",["https://leetcode.com/problems/sliding-window-median/description/"]]]],
+["Recursion & Backtracking",[
+["Fibonacci","easy",["https://leetcode.com/problems/fibonacci-number/description/"]],
+["Check if String is Palindrome","easy",["https://www.geeksforgeeks.org/problems/palindrome-string0817/1"]],
+["Check if Array is Sorted","easy",["https://www.geeksforgeeks.org/problems/check-if-an-array-is-sorted0701/1"]],
+["Sum of Digits of a Number","easy",["https://www.geeksforgeeks.org/problems/sum-of-digits1742/1"]],
+["Remove Occurrences of Char in String","easy",["https://www.geeksforgeeks.org/problems/remove-all-occurrences-of-a-character-in-a-string/1"]],
+["Generate Parentheses","medium",["https://leetcode.com/problems/generate-parentheses/description/"]],
+["Letter Combinations of Phone Number","medium",["https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/"]],
+["Permutations","medium",["https://leetcode.com/problems/permutations/description/"]],
+["Combination Sum","medium",["https://leetcode.com/problems/combination-sum/description/"]],
+["Palindrome Partitioning","hard",["https://leetcode.com/problems/palindrome-partitioning/description/"]]]],
+["Tree Pattern",[
+["Inorder Traversal","easy",["https://leetcode.com/problems/binary-tree-inorder-traversal/description/"]],
+["Preorder Traversal","easy",["https://leetcode.com/problems/binary-tree-preorder-traversal/description/"]],
+["Postorder Traversal","easy",["https://leetcode.com/problems/binary-tree-postorder-traversal/description/"]],
+["Level Order Traversal","medium",["https://leetcode.com/problems/binary-tree-level-order-traversal/description/"]],
+["ZigZag Level Order","medium",["https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/description/"]],
+["Level Order II","medium",["https://leetcode.com/problems/binary-tree-level-order-traversal-ii/description/"]],
+["Invert Tree","easy",["https://leetcode.com/problems/invert-binary-tree/description/"]],
+["Symmetric Tree","easy",["https://leetcode.com/problems/symmetric-tree/description/"]],
+["Same Tree","easy",["https://leetcode.com/problems/same-tree/description/"]],
+["Subtree of Another Tree","easy",["https://leetcode.com/problems/subtree-of-another-tree/description/"]],
+["Flip Equivalent Tree","medium",["https://leetcode.com/problems/flip-equivalent-binary-trees/description/"]],
+["LCA of Binary Tree","medium",["https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/"]],
+["Search in Binary Search Tree","easy",["https://leetcode.com/problems/search-in-a-binary-search-tree/"]],
+["LCA of BST","medium",["https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/"]],
+["LCA of Deepest Leaves","medium",["https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves/description/"]],
+["Two Sum IV — BST","easy",["https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/"]],
+["Kth Smallest Element in BST","medium",["https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/"]],
+["Minimum Depth of Binary Tree","easy",["https://leetcode.com/problems/minimum-depth-of-binary-tree/description/"]],
+["Maximum Depth of Binary Tree","easy",["https://leetcode.com/problems/maximum-depth-of-binary-tree/description/"]],
+["Balanced Binary Tree","easy",["https://leetcode.com/problems/balanced-binary-tree/description/"]],
+["Diameter of Binary Tree","easy",["https://leetcode.com/problems/diameter-of-binary-tree/description/"]],
+["Binary Tree Tilt","easy",["https://leetcode.com/problems/binary-tree-tilt/description/"]],
+["Check Completeness of Binary Tree","medium",["https://leetcode.com/problems/check-completeness-of-a-binary-tree/description/"]],
+["Validate BST","medium",["https://leetcode.com/problems/validate-binary-search-tree/description/"]],
+["Recover BST","medium",["https://leetcode.com/problems/recover-binary-search-tree/description/"]],
+["Path Sum","easy",["https://leetcode.com/problems/path-sum/description/"]],
+["Path Sum II","medium",["https://leetcode.com/problems/path-sum-ii/"]],
+["Path Sum III","medium",["https://leetcode.com/problems/path-sum-iii/"]],
+["Sum Root to Leaf Numbers","medium",["https://leetcode.com/problems/sum-root-to-leaf-numbers/description/"]],
+["Maximum Path Sum","hard",["https://leetcode.com/problems/binary-tree-maximum-path-sum/description/"]],
+["Construct from Preorder & Inorder","medium",["https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/"]],
+["Construct from Postorder & Inorder","medium",["https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/"]],
+["Construct from Preorder & Postorder","medium",["https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/description/"]],
+["Sorted Array to BST","easy",["https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/description/"]],
+["Sorted List to BST","medium",["https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/"]],
+["Serialize & Deserialize Binary Tree","hard",["https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/"]]]]
+];
+const KEY="dsa_tracker_v2";
+let saved=JSON.parse(localStorage.getItem(KEY)||"{}");
+const tbody=document.getElementById("tbody");
+let idx=0,patterns=new Set();
+D.forEach(([pat,problems])=>{
+patterns.add(pat);
+let pr=document.createElement("tr");pr.className="pattern-row";pr.dataset.pattern=pat;
+pr.innerHTML=`<td colspan="9">📌 ${pat} (${problems.length} problems)</td>`;
+tbody.appendChild(pr);
+problems.forEach(([name,diff,links])=>{
+idx++;let id="p"+idx;
+let s=saved[id]||{status:"Not Started",date:"",rev:"No",notes:""};
+let linkHtml=links.map((l,i)=>`<a href="${l}" target="_blank">Link ${i+1}</a>`).join(" ");
+let tr=document.createElement("tr");tr.dataset.pattern=pat;tr.dataset.diff=diff;tr.dataset.name=name.toLowerCase();
+tr.innerHTML=`<td style="color:#555">${idx}</td><td style="color:#888;font-size:.7rem">${pat}</td><td><b>${name}</b></td>
+<td><span class="diff ${diff}">${diff.toUpperCase()}</span></td><td>${linkHtml||"—"}</td>
+<td><select class="status-sel" data-id="${id}" data-field="status"><option${s.status=="Not Started"?" selected":""}>Not Started</option><option${s.status=="In Progress"?" selected":""}>In Progress</option><option${s.status=="Done"?" selected":""}>Done</option><option${s.status=="Revisit"?" selected":""}>Revisit</option></select></td>
+<td><input type="date" class="date-input" data-id="${id}" data-field="date" value="${s.date}"></td>
+<td><select class="rev-sel" data-id="${id}" data-field="rev"><option${s.rev=="No"?" selected":""}>No</option><option${s.rev=="Yes"?" selected":""}>Yes</option></select></td>
+<td><input class="notes-input" data-id="${id}" data-field="notes" value="${s.notes}" placeholder="Add notes..."></td>`;
+tbody.appendChild(tr);
+});
+});
+document.getElementById("totalQ").textContent=idx;
+// Filters
+const fb=document.getElementById("filterBtns");
+let allBtn=document.createElement("button");allBtn.textContent="All";allBtn.className="active";allBtn.onclick=()=>filterBy("");fb.appendChild(allBtn);
+patterns.forEach(p=>{let b=document.createElement("button");b.textContent=p;b.onclick=()=>filterBy(p);fb.appendChild(b);});
+function filterBy(p){
+document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+if(!p)document.querySelector(".filters button").classList.add("active");
+else [...document.querySelectorAll(".filters button")].find(b=>b.textContent===p)?.classList.add("active");
+tbody.querySelectorAll("tr").forEach(r=>{r.style.display=(!p||r.dataset.pattern===p)?"":"none";});
+}
+document.getElementById("searchBox").addEventListener("input",e=>{
+let q=e.target.value.toLowerCase();
+tbody.querySelectorAll("tr:not(.pattern-row)").forEach(r=>{r.style.display=(r.dataset.name||"").includes(q)?"":"none";});
+tbody.querySelectorAll(".pattern-row").forEach(r=>{r.style.display=q?"none":"";});
+});
+function saveAll(){
+let d={};
+document.querySelectorAll("[data-id]").forEach(el=>{
+let id=el.dataset.id,f=el.dataset.field;if(!d[id])d[id]={};d[id][f]=el.value;
+});
+localStorage.setItem(KEY,JSON.stringify(d));saved=d;updateStats();
+let t=document.getElementById("toast");t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2000);
+}
+function updateStats(){
+let done=0,rev=0;
+document.querySelectorAll("select.status-sel").forEach(s=>{if(s.value==="Done")done++;});
+document.querySelectorAll("select.rev-sel").forEach(s=>{if(s.value==="Yes")rev++;});
+document.getElementById("doneQ").textContent=done;
+document.getElementById("pctQ").textContent=Math.round(done/idx*100)+"%";
+document.getElementById("revQ").textContent=rev;
+}
+document.addEventListener("change",e=>{if(e.target.dataset?.id)saveAll();});
+updateStats();
+</script>
+</body>
+</html>
