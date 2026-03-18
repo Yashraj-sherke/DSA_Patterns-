@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TCS NQT 2026 Coding Preparation Sheet — 135+ questions across 7 levels. Track progress, master patterns, and crack TCS Ninja, Digital & Prime.">
+<meta name="keywords" content="TCS NQT, TCS NQT 2026, Coding Sheet, TCS Ninja, TCS Digital, TCS Prime, Interview Prep, Coding Problems">
+<meta name="author" content="DSA Tracker">
+<meta name="theme-color" content="#0f0f1a">
+<meta name="color-scheme" content="dark">
+<title>TCS NQT 2026 — Coding Preparation Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f0f1a;--surface:#1a1a2e;--surface2:#12121f;--border:#2a2a4a;
+  --text:#e0e0e0;--text-muted:#888;--text-dim:#555;
+  --accent:linear-gradient(135deg,#667eea,#764ba2);
+  --accent1:#667eea;--accent2:#764ba2;
+  --easy-bg:#064e3b;--easy-text:#6ee7b7;
+  --med-bg:#713f12;--med-text:#fbbf24;
+  --hard-bg:#7f1d1d;--hard-text:#fca5a5;
+  --expert-bg:#312e81;--expert-text:#a78bfa;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:20px;min-height:100vh}
+
+/* Navigation */
+.nav-bar{display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.nav-link{background:var(--surface);border:1px solid var(--border);color:#ccc;padding:8px 20px;border-radius:25px;cursor:pointer;font-size:.8rem;text-decoration:none;transition:.3s;display:inline-flex;align-items:center;gap:6px}
+.nav-link:hover,.nav-link.active{background:var(--accent);color:#fff;border-color:transparent;transform:translateY(-1px)}
+
+/* Header */
+h1{text-align:center;font-size:2.2rem;font-weight:900;background:var(--accent);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;letter-spacing:-.5px}
+.subtitle{text-align:center;color:var(--text-muted);margin-bottom:8px;font-size:.85rem}
+.badge-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.badge{background:var(--surface);border:1px solid var(--border);padding:5px 14px;border-radius:20px;font-size:.7rem;color:var(--text-muted);display:inline-flex;align-items:center;gap:4px}
+
+/* Exam Overview Card */
+.overview-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;margin:0 auto 24px;max-width:800px}
+.overview-card h3{font-size:.9rem;color:var(--accent1);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.overview-item{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--text-muted)}
+.overview-item .icon{font-size:1rem}
+.overview-item strong{color:var(--text)}
+
+/* Frequency Chart */
+.freq-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;margin:0 auto 24px;max-width:800px}
+.freq-section h3{font-size:.9rem;color:var(--accent1);margin-bottom:14px}
+.freq-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:.75rem}
+.freq-label{min-width:180px;color:var(--text-muted)}
+.freq-bar-bg{flex:1;background:#1e1e36;border-radius:6px;height:22px;overflow:hidden;position:relative}
+.freq-bar{height:100%;border-radius:6px;background:var(--accent);transition:width .8s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:.65rem;color:#fff;font-weight:700}
+.freq-heat{min-width:50px;text-align:center}
+
+/* Stats */
+.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 22px;text-align:center;min-width:130px;transition:transform .2s}
+.stat-card:hover{transform:translateY(-2px)}
+.stat-card .num{font-size:1.6rem;font-weight:800;background:var(--accent);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.stat-card .lbl{font-size:.7rem;color:var(--text-muted);margin-top:2px}
+
+/* Toolbar, Search, Filters */
+.toolbar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.toolbar button{background:var(--surface);border:1px solid var(--border);color:#ccc;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.75rem;transition:.3s}
+.toolbar button:hover{background:var(--accent);color:#fff;border-color:transparent}
+.search-bar{display:flex;justify-content:center;margin-bottom:18px}
+.search-bar input{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 18px;border-radius:20px;width:400px;max-width:90vw;font-size:.85rem;outline:none;transition:border-color .3s}
+.search-bar input:focus{border-color:var(--accent1);box-shadow:0 0 0 3px rgba(102,126,234,.15)}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.filters button{background:var(--surface);border:1px solid var(--border);color:#ccc;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.75rem;transition:.3s}
+.filters button:hover,.filters button.active{background:var(--accent);color:#fff;border-color:transparent}
+
+/* Table */
+.table-wrap{overflow-x:auto;border-radius:12px;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:separate;border-spacing:0;background:var(--surface2);border-radius:12px;overflow:hidden;min-width:1050px}
+thead th{background:linear-gradient(135deg,#1e1e38,#2a2a50);padding:12px 10px;font-size:.73rem;text-transform:uppercase;letter-spacing:.5px;color:#aaa;position:sticky;top:0;z-index:10;border-bottom:2px solid var(--accent1);white-space:nowrap}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:#1e1e36}
+tbody td{padding:9px 10px;border-bottom:1px solid #1e1e30;font-size:.8rem;vertical-align:middle}
+
+/* Level headers */
+.level-row td{font-weight:700;font-size:.85rem;padding:14px 10px;border-bottom:2px solid var(--accent1)}
+.level-row td:first-child{border-left:4px solid var(--accent1)}
+.level-1 td{background:linear-gradient(135deg,#0a2e1a,#0f3d24);color:#6ee7b7}
+.level-2 td{background:linear-gradient(135deg,#1a1040,#201850);color:#818cf8}
+.level-3 td{background:linear-gradient(135deg,#2d1010,#3d1515);color:#fca5a5}
+.level-4 td{background:linear-gradient(135deg,#2d2000,#3d2b00);color:#fbbf24}
+.level-5 td{background:linear-gradient(135deg,#1a0030,#2d004d);color:#c084fc}
+.level-6 td{background:linear-gradient(135deg,#0a1e3d,#0f2b52);color:#60a5fa}
+.level-7 td{background:linear-gradient(135deg,#2d002d,#4d004d);color:#f0abfc}
+
+/* Difficulty & Freq badges */
+.diff{padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:600;display:inline-block}
+.diff.easy{background:var(--easy-bg);color:var(--easy-text)}
+.diff.medium{background:var(--med-bg);color:var(--med-text)}
+.diff.hard{background:var(--hard-bg);color:var(--hard-text)}
+.diff.expert{background:var(--expert-bg);color:var(--expert-text)}
+.freq{font-size:.75rem;white-space:nowrap}
+.pyq-tag{background:#1e3a5f;color:#60a5fa;padding:1px 6px;border-radius:8px;font-size:.55rem;font-weight:600;margin-left:6px;vertical-align:middle}
+.cb-cell{text-align:center}
+.cb-cell input[type=checkbox]{width:18px;height:18px;accent-color:#667eea;cursor:pointer;border-radius:4px;vertical-align:middle}
+.row-done{opacity:.6}
+.row-done td b{text-decoration:line-through;color:#666}
+
+/* Inputs */
+select.status-sel{background:var(--surface);color:var(--text);border:1px solid var(--border);padding:4px 6px;border-radius:6px;font-size:.72rem;cursor:pointer;outline:none}
+select.status-sel:focus-visible{border-color:var(--accent1);box-shadow:0 0 0 2px rgba(102,126,234,.3)}
+select.status-sel option{background:var(--surface)}
+input.notes-input{background:transparent;border:1px solid var(--border);color:var(--text);padding:4px 6px;border-radius:6px;width:100%;font-size:.72rem;outline:none}
+input.notes-input:focus{border-color:var(--accent1);box-shadow:0 0 0 2px rgba(102,126,234,.15)}
+input.date-input{background:transparent;border:1px solid var(--border);color:var(--text);padding:4px 6px;border-radius:6px;font-size:.72rem;outline:none}
+input.date-input:focus{border-color:var(--accent1);box-shadow:0 0 0 2px rgba(102,126,234,.15)}
+.rev-sel{background:var(--surface);color:var(--text);border:1px solid var(--border);padding:4px 6px;border-radius:6px;font-size:.72rem;cursor:pointer;outline:none}
+.rev-sel:focus-visible{border-color:var(--accent1);box-shadow:0 0 0 2px rgba(102,126,234,.3)}
+
+/* Strategy Section */
+.strategy-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin:24px auto;max-width:900px}
+.strategy-section h3{font-size:1rem;color:var(--accent1);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.strategy-grid{display:grid;grid-template-columns:auto 1fr 1fr;gap:1px;background:var(--border);border-radius:10px;overflow:hidden;font-size:.75rem}
+.strategy-grid .sg-head{background:#1e1e38;padding:10px 12px;font-weight:700;color:#aaa;text-transform:uppercase;font-size:.68rem}
+.strategy-grid .sg-cell{background:var(--surface2);padding:10px 12px;color:var(--text-muted)}
+.strategy-grid .sg-cell strong{color:var(--text)}
+
+/* Save btn & toast */
+.save-btn{position:fixed;bottom:24px;right:24px;background:var(--accent);color:#fff;border:none;padding:12px 28px;border-radius:30px;font-size:.85rem;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(102,126,234,.4);z-index:100;transition:.3s}
+.save-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(102,126,234,.6)}
+.toast{position:fixed;bottom:80px;right:24px;background:var(--surface);color:var(--easy-text);border:1px solid var(--easy-bg);padding:10px 20px;border-radius:10px;font-size:.8rem;opacity:0;transition:.4s;z-index:100;pointer-events:none}
+.toast.show{opacity:1}
+.toast.error{color:var(--hard-text);border-color:var(--hard-bg)}
+
+@media(max-width:768px){
+ body{padding:10px}
+ h1{font-size:1.5rem}
+ .stat-card{min-width:100px;padding:10px 14px}
+ .stat-card .num{font-size:1.2rem}
+ .search-bar input{width:100%}
+ .overview-grid{grid-template-columns:1fr 1fr}
+ .freq-label{min-width:120px;font-size:.65rem}
+}
+@media print{
+ .save-btn,.toolbar,.filters,.search-bar,.toast,.nav-bar{display:none!important}
+ body{background:#fff;color:#000;padding:10px}
+ table{background:#fff}
+ thead th{background:#f3f4f6;color:#000;border-bottom:2px solid var(--accent1)}
+ tbody td{border-bottom:1px solid #ddd;color:#000}
+ .level-row td{background:#e8e8f8;color:#333}
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav-bar">
+ <a href="DSA.html" class="nav-link">🚀 DSA Patterns Tracker</a>
+ <a href="TCS_NQT.html" class="nav-link active">🎯 TCS NQT 2026 Sheet</a>
+</nav>
+
+<header>
+ <h1>🎯 TCS NQT 2026 — Coding Preparation Sheet</h1>
+ <p class="subtitle">Crack TCS Ninja • Digital • Prime — All questions from previous year analysis</p>
+ <div class="badge-row">
+  <span class="badge">📋 150+ Questions</span>
+  <span class="badge">📊 7 Levels</span>
+  <span class="badge">📈 47+ Drives Analyzed (2021–2025)</span>
+  <span class="badge">🎯 Ninja → Digital → Prime</span>
+ </div>
+</header>
+
+<main>
+
+<!-- Exam Overview -->
+<div class="overview-card">
+ <h3>📋 Exam Overview</h3>
+ <div class="overview-grid">
+  <div class="overview-item"><span class="icon">⏱</span><div><strong>90 Minutes</strong><br>Time Limit</div></div>
+  <div class="overview-item"><span class="icon">📝</span><div><strong>2–3 Coding Qs</strong><br>Per Session</div></div>
+  <div class="overview-item"><span class="icon">💻</span><div><strong>C / C++ / Java / Python</strong><br>Languages</div></div>
+  <div class="overview-item"><span class="icon">✅</span><div><strong>No Negative Marking</strong><br>Always Submit</div></div>
+  <div class="overview-item"><span class="icon">💰</span><div><strong>Partial Marking</strong><br>3/5 TCs = 15/25</div></div>
+  <div class="overview-item"><span class="icon">🏢</span><div><strong>Ninja ₹3.36L</strong><br>Digital ₹7L • Prime ₹9–14L</div></div>
+ </div>
+</div>
+
+<!-- Topic Frequency Chart -->
+<div class="freq-section">
+ <h3>📈 Topic Probability Chart — Likelihood of Appearing</h3>
+ <div id="freqChart"></div>
+</div>
+
+<!-- Stats -->
+<section class="stats" aria-label="Progress statistics">
+ <div class="stat-card"><div class="num" id="totalQ">0</div><div class="lbl">Total Questions</div></div>
+ <div class="stat-card"><div class="num" id="doneQ">0</div><div class="lbl">Completed</div></div>
+ <div class="stat-card"><div class="num" id="pctQ">0%</div><div class="lbl">Progress</div></div>
+ <div class="stat-card"><div class="num" id="revQ">0</div><div class="lbl">Need Revision</div></div>
+</section>
+
+<!-- Toolbar -->
+<div class="toolbar">
+ <button onclick="exportData()" title="Export progress as JSON">📥 Export</button>
+ <button onclick="document.getElementById('importFile').click()" title="Import progress from JSON">📤 Import</button>
+ <button onclick="resetData()" title="Reset all progress">🗑️ Reset</button>
+ <input type="file" id="importFile" accept=".json" style="display:none" aria-label="Import data file">
+</div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search questions..." aria-label="Search questions"></div>
+<div class="filters" id="filterBtns" role="group" aria-label="Filter by level"></div>
+
+<!-- Questions Table -->
+<div class="table-wrap">
+ <table role="grid" aria-label="TCS NQT Questions">
+  <thead><tr>
+   <th scope="col">✅</th>
+   <th scope="col">#</th>
+   <th scope="col">Level</th>
+   <th scope="col">Question</th>
+   <th scope="col">Topic</th>
+   <th scope="col">Frequency</th>
+   <th scope="col">Difficulty</th>
+   <th scope="col">Status</th>
+   <th scope="col">Date Done</th>
+   <th scope="col">Revision</th>
+   <th scope="col">Notes</th>
+  </tr></thead>
+  <tbody id="tbody"></tbody>
+ </table>
+</div>
+
+<!-- Exam Strategy -->
+<div class="strategy-section">
+ <h3>⏱️ 20-Minute Problem-Solving Strategy</h3>
+ <div class="strategy-grid">
+  <div class="sg-head">Time</div><div class="sg-head">Step</div><div class="sg-head">What To Do</div>
+  <div class="sg-cell"><strong>0:00</strong></div><div class="sg-cell"><strong>📖 READ</strong></div><div class="sg-cell">Read the ENTIRE problem once. Extract inputs, outputs, constraints, edge cases.</div>
+  <div class="sg-cell"><strong>2:00</strong></div><div class="sg-cell"><strong>🔍 DECODE</strong></div><div class="sg-cell">Strip story wrapper. Translate to pure algorithm.</div>
+  <div class="sg-cell"><strong>4:00</strong></div><div class="sg-cell"><strong>✏️ DRY RUN</strong></div><div class="sg-cell">Manually trace the sample input. Confirm your algorithm gives expected output.</div>
+  <div class="sg-cell"><strong>6:00</strong></div><div class="sg-cell"><strong>💻 CODE I/O</strong></div><div class="sg-cell">Write input/output handling FIRST. Wrong I/O = 0 marks.</div>
+  <div class="sg-cell"><strong>8:00</strong></div><div class="sg-cell"><strong>🔧 CODE LOGIC</strong></div><div class="sg-cell">Write the core algorithm using your memorized pattern.</div>
+  <div class="sg-cell"><strong>13:00</strong></div><div class="sg-cell"><strong>🧪 TEST</strong></div><div class="sg-cell">Trace with sample input. Check loop limits, off-by-one, overflow, edge cases.</div>
+  <div class="sg-cell"><strong>15:00</strong></div><div class="sg-cell"><strong>▶️ COMPILE</strong></div><div class="sg-cell">Compile ONCE with sample input. TCS compiler takes ~25 sec.</div>
+  <div class="sg-cell"><strong>17:00</strong></div><div class="sg-cell"><strong>🐛 DEBUG</strong></div><div class="sg-cell">If wrong: check I/O format first, then loop bounds, then logic.</div>
+  <div class="sg-cell"><strong>19:00</strong></div><div class="sg-cell"><strong>✅ SUBMIT</strong></div><div class="sg-cell">Verify output matches expected format. Submit. Move to Q2.</div>
+ </div>
+</div>
+
+<!-- Critical Rules -->
+<div class="strategy-section" style="border-left:3px solid #f59e0b">
+ <h3>🚨 Critical Exam Day Rules</h3>
+ <div style="display:grid;gap:8px;font-size:.8rem;color:var(--text-muted)">
+  <div>🔴 <strong style="color:var(--text)">Rule 1:</strong> Write complete solution BEFORE compiling. Budget only 2–3 compiles per question.</div>
+  <div>🔴 <strong style="color:var(--text)">Rule 2:</strong> Q1 is your interview ticket. Secure it fully before touching Q2.</div>
+  <div>🔴 <strong style="color:var(--text)">Rule 3:</strong> Wrong I/O format = 0 marks even with perfect logic.</div>
+  <div>🔴 <strong style="color:var(--text)">Rule 4:</strong> Brute force that passes 3/5 test cases beats elegant code that doesn't compile.</div>
+  <div>🔴 <strong style="color:var(--text)">Rule 5:</strong> If stuck > 10 mins, switch to brute force.</div>
+  <div>🔴 <strong style="color:var(--text)">Rule 6:</strong> Last 5 minutes — stop coding new logic. Only clean up I/O and edge cases.</div>
+ </div>
+</div>
+
+</main>
+
+<button class="save-btn" onclick="saveAll()" aria-label="Save progress">💾 Save Progress</button>
+<div class="toast" id="toast" role="status" aria-live="polite">✅ Progress Saved!</div>
+
+<script>
+"use strict";
+
+// ═══════════════════════════════════════════════════
+// TOPIC FREQUENCY DATA
+// ═══════════════════════════════════════════════════
+const FREQ_DATA = [
+ ["Arrays (Manipulation/Search)", 95, "🔥🔥🔥"],
+ ["Number Theory (Prime/Armstrong/Palindrome)", 90, "🔥🔥🔥"],
+ ["String Manipulation", 85, "🔥🔥🔥"],
+ ["Applied Story Problems", 85, "🔥🔥🔥"],
+ ["Sorting Algorithms", 75, "🔥🔥🔥"],
+ ["Digit Extraction Logic", 70, "🔥🔥"],
+ ["Series (AP/GP/Fibonacci)", 65, "🔥🔥"],
+ ["Bit Manipulation", 55, "🔥🔥"],
+ ["2D Arrays / Matrix", 40, "🔥"],
+ ["Sliding Window / Greedy", 35, "🔥"]
+];
+
+const freqChart = document.getElementById("freqChart");
+FREQ_DATA.forEach(([label, pct, heat]) => {
+ const row = document.createElement("div");
+ row.className = "freq-row";
+ row.innerHTML = `<span class="freq-label">${label}</span>
+  <div class="freq-bar-bg"><div class="freq-bar" style="width:${pct}%">${pct}%</div></div>
+  <span class="freq-heat">${heat}</span>`;
+ freqChart.appendChild(row);
+});
+
+// ═══════════════════════════════════════════════════
+// QUESTIONS DATA — 7 Levels, 135 Questions
+// Format: [name, topic, freq, diff]
+// diff: "easy"=★★, "medium"=★★★, "hard"=★★★★, "expert"=★★★★★
+// ═══════════════════════════════════════════════════
+const D = [
+["🟢 Level 1 — Absolute Basics", "level-1", [
+ ["Print numbers from 1 to N and N to 1", "Loops", "🔥", "easy"],
+ ["Check if a number is PRIME", "Number Theory", "🔥🔥🔥", "easy"],
+ ["Print all prime numbers between 1 and N", "Number Theory", "🔥🔥🔥", "easy"],
+ ["Check if a number is an ARMSTRONG number (e.g., 153 = 1³+5³+3³)", "Number Theory", "🔥🔥🔥", "easy"],
+ ["Check if a number is a PALINDROME (e.g., 121, 1331)", "Digits", "🔥🔥🔥", "easy"],
+ ["REVERSE a given number (e.g., 1234 → 4321)", "Digits", "🔥🔥🔥", "easy"],
+ ["Find the SUM OF DIGITS of a number (e.g., 1234 → 10)", "Digits", "🔥🔥🔥", "easy"],
+ ["Calculate the FACTORIAL of N (loop and recursion)", "Math", "🔥🔥🔥", "easy"],
+ ["Print the FIBONACCI series up to N terms", "Series", "🔥🔥🔥", "easy"],
+ ["Find the Nth FIBONACCI NUMBER using recursion", "Recursion", "🔥🔥", "medium"],
+ ["Find the PRODUCT of all digits of a number", "Digits", "🔥", "easy"],
+ ["COUNT the total number of digits in a number", "Digits", "🔥🔥", "easy"],
+ ["Print a STAR PATTERN — right-angled triangle", "Patterns", "🔥🔥", "easy"],
+ ["Print an INVERTED STAR PATTERN (reverse triangle)", "Patterns", "🔥", "easy"],
+ ["SWAP two numbers WITHOUT using a third variable", "Logic", "🔥🔥", "easy"],
+ ["Check if a year is a LEAP YEAR [PYQ]", "Logic", "🔥🔥", "easy"],
+ ["Print FLOYD'S TRIANGLE (1 2 3 / 4 5 6 / ...) [PYQ]", "Patterns", "🔥🔥🔥", "easy"],
+ ["Print PYRAMID / centred star triangle [PYQ]", "Patterns", "🔥🔥🔥", "easy"],
+ ["Print DIAMOND star pattern [PYQ]", "Patterns", "🔥🔥", "medium"]
+]],
+["🔵 Level 2 — Numbers & Mathematical Logic", "level-2", [
+ ["Find GCD using Euclid's algorithm", "Math", "🔥🔥🔥", "medium"],
+ ["Find LCM using GCD formula: LCM = (a*b)/GCD(a,b)", "Math", "🔥🔥", "medium"],
+ ["Check if a number is a PERFECT NUMBER (e.g., 6 = 1+2+3)", "Math", "🔥🔥🔥", "medium"],
+ ["Check if a number is a HARSHAD (Niven) NUMBER", "Math", "🔥🔥", "medium"],
+ ["Check if a number is an AUTOMORPHIC NUMBER (5² = 25)", "Math", "🔥🔥", "medium"],
+ ["Check if a number is a STRONG NUMBER (e.g., 145)", "Math", "🔥🔥", "medium"],
+ ["Check if a number is a PERFECT SQUARE without sqrt()", "Math", "🔥", "medium"],
+ ["Convert DECIMAL to BINARY without built-in functions", "Number Sys.", "🔥🔥🔥", "medium"],
+ ["Convert BINARY to DECIMAL", "Number Sys.", "🔥🔥", "medium"],
+ ["Convert DECIMAL to OCTAL", "Number Sys.", "🔥", "medium"],
+ ["Find Nth term of Arithmetic Progression", "Series", "🔥🔥", "easy"],
+ ["Find Nth term of Geometric Progression", "Series", "🔥🔥", "easy"],
+ ["Print SUM of first N terms of an AP", "Series", "🔥", "easy"],
+ ["Print all FACTORS of a number and count them", "Math", "🔥🔥", "medium"],
+ ["TOGGLE all bits of a number", "Bit Manip.", "🔥🔥", "medium"],
+ ["COUNT SET BITS (1s) in binary representation", "Bit Manip.", "🔥🔥", "medium"],
+ ["Check if a number is power of 2 using bit manipulation", "Bit Manip.", "🔥", "medium"],
+ ["Print all ARMSTRONG numbers between 1 and 1000", "Math", "🔥🔥", "medium"],
+ ["AUTOMOBILE PROBLEM: Find two-wheelers and four-wheelers [Real TCS]", "Applied Math", "🔥🔥🔥", "medium"],
+ ["HANDSHAKE PROBLEM: N*(N-1)/2 total handshakes [Real TCS]", "Applied Math", "🔥🔥🔥", "medium"],
+ ["Count SUNDAYS in N days given starting day [Real TCS PYQ]", "Applied Math", "🔥🔥🔥", "medium"],
+ ["Find Nth term of a MIXED SERIES [PYQ]", "Series", "🔥🔥", "medium"],
+ ["Sum of CUBES of integers in a range [PYQ 2024]", "Math", "🔥🔥", "easy"]
+]],
+["🔴 Level 3 — Strings", "level-3", [
+ ["REVERSE a string without built-in reverse", "Strings", "🔥🔥🔥", "easy"],
+ ["Check if a string is a PALINDROME", "Strings", "🔥🔥🔥", "medium"],
+ ["Check if two strings are ANAGRAMS", "Strings", "🔥🔥🔥", "medium"],
+ ["Find FIRST NON-REPEATING CHARACTER [Real TCS]", "Strings", "🔥🔥🔥", "medium"],
+ ["COUNT VOWELS and CONSONANTS in a string", "Strings", "🔥🔥🔥", "easy"],
+ ["COUNT frequency of EACH CHARACTER (no map/dict)", "Strings", "🔥🔥🔥", "medium"],
+ ["REMOVE ALL SPACES from a string", "Strings", "🔥🔥", "easy"],
+ ["REMOVE ALL VOWELS from a string", "Strings", "🔥🔥", "easy"],
+ ["TOGGLE CASE of each character", "Strings", "🔥🔥", "medium"],
+ ["CAPITALIZE first letter of every word", "Strings", "🔥🔥", "medium"],
+ ["Reverse ORDER OF WORDS ('hello world' → 'world hello')", "Strings", "🔥🔥", "medium"],
+ ["Reverse EACH WORD individually ('abc def' → 'cba fed')", "Strings", "🔥", "medium"],
+ ["REMOVE DUPLICATE CHARACTERS (keep first occurrence)", "Strings", "🔥🔥🔥", "medium"],
+ ["Remove CONSECUTIVE DUPLICATE CHARACTERS", "Strings", "🔥🔥", "medium"],
+ ["COUNT WORDS in a sentence", "Strings", "🔥🔥", "easy"],
+ ["Find the LONGEST WORD in a sentence", "Strings", "🔥🔥", "medium"],
+ ["Find the SHORTEST WORD in a sentence", "Strings", "🔥", "medium"],
+ ["Replace all VOWELS with '*'", "Strings", "🔥🔥", "easy"],
+ ["Check if two strings are ROTATIONS of each other", "Strings", "🔥🔥", "hard"],
+ ["Print all PALINDROMIC WORDS in a sentence", "Strings", "🔥🔥", "medium"],
+ ["CAESAR CIPHER — encrypt/decrypt by shifting chars [PYQ]", "Strings", "🔥🔥", "medium"],
+ ["Check if string is a PANGRAM (all 26 letters) [PYQ]", "Strings", "🔥🔥", "medium"],
+ ["Find LONGEST COMMON PREFIX in array of strings [PYQ]", "Strings", "🔥🔥", "medium"]
+]],
+["🟠 Level 4 — Arrays (MOST IMPORTANT)", "level-4", [
+ ["Find LARGEST and SMALLEST element without sorting", "Arrays", "🔥🔥🔥", "easy"],
+ ["Find SECOND LARGEST element without sorting [Real TCS]", "Arrays", "🔥🔥🔥", "medium"],
+ ["Find SECOND SMALLEST element without sorting", "Arrays", "🔥🔥", "medium"],
+ ["REVERSE an array in-place", "Arrays", "🔥🔥🔥", "easy"],
+ ["COUNT FREQUENCY of each element", "Arrays", "🔥🔥🔥", "medium"],
+ ["Find MISSING NUMBER in 1 to N (sum formula)", "Arrays", "🔥🔥🔥", "medium"],
+ ["PUSH ALL ZEROS TO END keeping order [Real TCS]", "Arrays", "🔥🔥🔥", "medium"],
+ ["SORT ARRAY OF 0s, 1s, 2s — Dutch National Flag [Real TCS]", "Arrays", "🔥🔥🔥", "hard"],
+ ["ROTATE ARRAY LEFT by one position", "Arrays", "🔥🔥", "medium"],
+ ["ROTATE ARRAY RIGHT by K positions", "Arrays", "🔥🔥", "medium"],
+ ["Find ELEMENT APPEARING ODD NUMBER OF TIMES [Real TCS]", "Arrays", "🔥🔥🔥", "hard"],
+ ["FIND PAIRS with sum equal to target K", "Arrays", "🔥🔥🔥", "medium"],
+ ["Implement BUBBLE SORT and count swaps", "Sorting", "🔥🔥🔥", "medium"],
+ ["Implement SELECTION SORT", "Sorting", "🔥🔥", "medium"],
+ ["Find INTERSECTION of two arrays", "Arrays", "🔥🔥", "medium"],
+ ["Find UNION of two arrays", "Arrays", "🔥", "medium"],
+ ["MERGE two sorted arrays", "Arrays", "🔥🔥", "hard"],
+ ["Remove DUPLICATES from sorted array in-place", "Arrays", "🔥🔥", "medium"],
+ ["MAXIMUM SUM SUBARRAY — Kadane's Algorithm [High TCS]", "Arrays", "🔥🔥🔥", "hard"],
+ ["Check if array is SORTED", "Arrays", "🔥🔥", "easy"],
+ ["COUNT elements GREATER THAN AVERAGE", "Arrays", "🔥🔥🔥", "medium"],
+ ["GEMS/BOOKS PROBLEM: items exceeding average [Real TCS]", "Applied Array", "🔥🔥🔥", "medium"],
+ ["WEEKLY TRACKER: 7 days exercise mins [Real TCS 2025]", "Applied Array", "🔥🔥🔥", "medium"],
+ ["COUNT SUBSETS with sum equal to target [Real TCS Advanced]", "Arrays", "🔥🔥🔥", "hard"],
+ ["SMALLEST MISSING POSITIVE INTEGER [Real TCS NQT 2023]", "Arrays", "🔥🔥🔥", "hard"],
+ ["Implement INSERTION SORT [PYQ]", "Sorting", "🔥🔥", "medium"],
+ ["Find all REPEATING ELEMENTS in array [PYQ]", "Arrays", "🔥🔥", "medium"],
+ ["Check if array is SUBSET of another array [PYQ]", "Arrays", "🔥🔥", "medium"],
+ ["Find elements GREATER than all prior elements [PYQ]", "Arrays", "🔥🔥", "medium"],
+ ["Count SUBARRAYS with given sum [PYQ 2024]", "Arrays", "🔥🔥🔥", "hard"],
+ ["MINIMUM PAGE TURNS in a book [Real TCS 2024]", "Applied Math", "🔥🔥🔥", "medium"]
+]],
+["🟣 Level 5 — Important TCS Patterns", "level-5", [
+ ["REPLACE ELEMENTS WITH RANK ([40,10,20,30] → [4,1,2,3])", "Sorting/Logic", "🔥🔥🔥", "hard"],
+ ["SORT ARRAY BY FREQUENCY — most frequent first", "Sorting", "🔥🔥🔥", "hard"],
+ ["COUNT MAX CONSECUTIVE 1s in binary array", "Arrays", "🔥🔥🔥", "medium"],
+ ["STOCK BUY AND SELL — Maximum profit [Classic]", "Arrays", "🔥🔥🔥", "hard"],
+ ["JUMP GAME — Can you reach last index?", "Arrays", "🔥🔥", "hard"],
+ ["MAXIMUM PRODUCT SUBARRAY", "Arrays", "🔥🔥", "expert"],
+ ["TRAPPING RAIN WATER — Calculate trapped water", "Arrays", "🔥🔥", "expert"],
+ ["TWO SUM — Return indices with target sum", "Arrays", "🔥🔥🔥", "medium"],
+ ["THREE SUM — Find unique triplets summing to zero", "Arrays", "🔥🔥", "expert"],
+ ["LONGEST INCREASING SUBSEQUENCE (LIS)", "DP/Arrays", "🔥🔥", "expert"],
+ ["FIND DUPLICATE in array of N+1 integers", "Arrays", "🔥🔥", "hard"],
+ ["CHECK ARITHMETIC PROGRESSION after sorting", "Math/Arrays", "🔥🔥", "medium"],
+ ["LEADERS IN ARRAY — greater than all right elements", "Arrays", "🔥🔥", "hard"],
+ ["EQUILIBRIUM INDEX — left sum equals right sum", "Arrays", "🔥🔥", "hard"],
+ ["PASSWORD VALIDATOR — 8 chars, upper, lower, digit, special [Real TCS]", "Strings", "🔥🔥🔥", "hard"],
+ ["MAX GUESTS on cruise at any time [Real TCS 2024-2025]", "Applied Array", "🔥🔥🔥", "hard"],
+ ["Row with MOST 1s in binary matrix [Real TCS 2024]", "2D Arrays", "🔥🔥", "hard"],
+ ["PASCAL'S TRIANGLE — print N rows [PYQ]", "Patterns", "🔥🔥🔥", "medium"]
+]],
+["🏆 Level 6 — TCS Advanced Coding", "level-6", [
+ ["MATRIX DIAGONAL SUM (avoid centre double count)", "2D Arrays", "🔥🔥", "hard"],
+ ["MATRIX TRANSPOSE — rows to columns in-place", "2D Arrays", "🔥🔥", "medium"],
+ ["SPIRAL ORDER MATRIX TRAVERSAL", "2D Arrays", "🔥", "expert"],
+ ["SLIDING WINDOW MAXIMUM — max of every window size K", "Sliding Window", "🔥🔥", "expert"],
+ ["LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS", "Sliding Window", "🔥🔥🔥", "hard"],
+ ["MINIMUM WINDOW SUBSTRING", "Sliding Window", "🔥", "expert"],
+ ["ACTIVITY SELECTION — max non-overlapping activities", "Greedy", "🔥🔥", "hard"],
+ ["COIN CHANGE — Minimum coins for amount", "Greedy", "🔥🔥🔥", "hard"],
+ ["HASHING — First pair with given sum O(n)", "Hashing", "🔥🔥🔥", "hard"],
+ ["HASHING — Group anagrams from string list", "Hashing", "🔥🔥", "expert"],
+ ["ATM SIMULATION — Balance, deposits, withdrawals [Real TCS]", "Simulation", "🔥🔥🔥", "hard"],
+ ["STUDENT RANKER — Total, average, ranks [Real TCS]", "2D Arrays", "🔥🔥🔥", "hard"],
+ ["NUMBER IN WORDS (345 → 'Three Hundred Forty Five')", "Logic/String", "🔥🔥", "expert"],
+ ["SIEVE OF ERATOSTHENES — All primes up to N", "Math", "🔥🔥", "hard"],
+ ["GOLDBACH'S CHECK — N as sum of two primes", "Math", "🔥🔥", "hard"]
+]],
+["🟣 Level 7 — Prime Level (Advanced)", "level-7", [
+ ["Shortest path (Floyd-Warshall — all pairs)", "Graphs", "🔥🔥", "expert"],
+ ["Minimum Spanning Tree (Prim's algorithm)", "Graphs", "🔥🔥", "expert"],
+ ["Number of connected components (Union-Find)", "Graphs", "🔥🔥", "hard"],
+ ["Bipartite graph check (BFS 2-coloring)", "Graphs", "🔥", "hard"],
+ ["Find bridges in graph (Tarjan's algorithm)", "Graphs", "🔥", "hard"],
+ ["Matrix chain multiplication (DP)", "DP", "🔥🔥", "expert"],
+ ["Rod cutting problem (DP)", "DP", "🔥🔥", "hard"],
+ ["Boolean parenthesization (DP)", "DP", "🔥", "expert"],
+ ["Palindrome partitioning (DP)", "DP", "🔥", "hard"],
+ ["Wildcard matching (DP)", "DP", "🔥", "hard"],
+ ["Z-function string matching", "String Algo", "🔥", "hard"],
+ ["Suffix array construction", "String Algo", "🔥", "expert"],
+ ["Count distinct substrings using Trie", "String/DS", "🔥", "hard"],
+ ["Segment tree with lazy propagation", "Adv DS", "🔥", "expert"],
+ ["Persistent segment tree", "Adv DS", "🔥", "expert"],
+ ["Find median in sliding window", "Adv DS", "🔥", "hard"],
+ ["K closest points to origin", "Greedy/Heap", "🔥", "hard"],
+ ["Fractional knapsack (greedy)", "Greedy", "🔥", "hard"],
+ ["Gas station circular (greedy)", "Greedy", "🔥", "hard"],
+ ["Jump game II (minimum jumps)", "Greedy/DP", "🔥", "hard"],
+ ["Word ladder (BFS on strings)", "Graphs/BFS", "🔥🔥", "expert"],
+ ["Alien dictionary (topological sort)", "Graphs", "🔥", "hard"],
+ ["Maximum XOR of two numbers (Trie)", "Trie", "🔥", "expert"],
+ ["Count inversions (merge sort)", "Divide & Conq", "🔥", "hard"],
+ ["Serialize / deserialize binary tree", "Trees", "🔥", "hard"],
+ ["Find Kth largest element in an array [PYQ]", "Arrays", "🔥🔥", "hard"],
+ ["Longest Palindromic Substring [PYQ]", "Strings", "🔥🔥", "expert"],
+ ["Container With Most Water [PYQ]", "Arrays", "🔥🔥", "hard"],
+ ["Subarray Sum Equals K [PYQ]", "Arrays", "🔥🔥", "hard"],
+ ["Minimum Path Sum in Grid [PYQ]", "DP", "🔥🔥", "hard"]
+]]
+];
+
+// ═══════════════════════════════════════════════════
+// LOCAL STORAGE & STATE
+// ═══════════════════════════════════════════════════
+const KEY = "tcs_nqt_tracker_v1";
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { saved = {}; }
+
+const tbody = document.getElementById("tbody");
+let idx = 0;
+const levels = new Set();
+
+function escapeHtml(str) {
+ if (!str) return "";
+ const map = {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"};
+ return str.replace(/[&<>"']/g, c => map[c]);
+}
+
+function getDiffClass(d) {
+ if (d === "easy") return "easy";
+ if (d === "medium") return "medium";
+ if (d === "hard") return "hard";
+ if (d === "expert") return "expert";
+ return "medium";
+}
+
+function getDiffLabel(d) {
+ if (d === "easy") return "★★ Easy";
+ if (d === "medium") return "★★★ Med";
+ if (d === "hard") return "★★★★ Hard";
+ if (d === "expert") return "★★★★★ Expert";
+ return d;
+}
+
+// ═══════════════════════════════════════════════════
+// BUILD TABLE
+// ═══════════════════════════════════════════════════
+D.forEach(([levelName, levelClass, problems]) => {
+ levels.add(levelName);
+ const lr = document.createElement("tr");
+ lr.className = "level-row " + levelClass;
+ lr.dataset.level = levelName;
+ lr.innerHTML = `<td colspan="11">📌 ${levelName} (${problems.length} questions)</td>`;
+ tbody.appendChild(lr);
+
+ problems.forEach(([name, topic, freq, diff]) => {
+  idx++;
+  const id = "t" + idx;
+  const s = saved[id] || { status: "Not Started", date: "", rev: "No", notes: "" };
+   const isDone = s.status === "Done";
+  const tr = document.createElement("tr");
+   if (isDone) tr.classList.add("row-done");
+  tr.dataset.level = levelName;
+  tr.dataset.name = name.toLowerCase();
+  tr.dataset.topic = topic.toLowerCase();
+   const pyqTag = (name.includes('[PYQ') || name.includes('[Real TCS')) ? '<span class="pyq-tag">PYQ</span>' : '';
+  tr.innerHTML = `
+    <td class="cb-cell"><input type="checkbox" data-id="${id}" data-field="done" ${isDone?'checked':''} aria-label="Done"></td>
+   <td style="color:#555">${idx}</td>
+   <td style="color:#888;font-size:.68rem">${levelName.replace(/🟢|🔵|🔴|🟠|🟣|🏆/g,'').trim().split('—')[0].trim()}</td>
+   <td><b>${name}</b>${pyqTag}</td>
+   <td style="font-size:.72rem;color:#999">${topic}</td>
+   <td class="freq">${freq}</td>
+   <td><span class="diff ${getDiffClass(diff)}">${getDiffLabel(diff)}</span></td>
+   <td><select class="status-sel" data-id="${id}" data-field="status" aria-label="Status for ${escapeHtml(name)}">
+    <option${s.status==="Not Started"?" selected":""}>Not Started</option>
+    <option${s.status==="In Progress"?" selected":""}>In Progress</option>
+    <option${s.status==="Done"?" selected":""}>Done</option>
+    <option${s.status==="Revisit"?" selected":""}>Revisit</option>
+   </select></td>
+   <td><input type="date" class="date-input" data-id="${id}" data-field="date" value="${s.date}" aria-label="Date for ${escapeHtml(name)}"></td>
+   <td><select class="rev-sel" data-id="${id}" data-field="rev" aria-label="Revision for ${escapeHtml(name)}">
+    <option${s.rev==="No"?" selected":""}>No</option>
+    <option${s.rev==="Yes"?" selected":""}>Yes</option>
+   </select></td>
+   <td><input class="notes-input" data-id="${id}" data-field="notes" value="${escapeHtml(s.notes)}" placeholder="Add notes..." aria-label="Notes for ${escapeHtml(name)}"></td>`;
+  tbody.appendChild(tr);
+ });
+});
+document.getElementById("totalQ").textContent = idx;
+
+// ═══════════════════════════════════════════════════
+// FILTERS
+// ═══════════════════════════════════════════════════
+const fb = document.getElementById("filterBtns");
+const allBtn = document.createElement("button");
+allBtn.textContent = "All";
+allBtn.className = "active";
+allBtn.onclick = () => filterBy("");
+fb.appendChild(allBtn);
+levels.forEach(l => {
+ const b = document.createElement("button");
+ b.textContent = l.replace(/🟢|🔵|🔴|🟠|🟣|🏆/g,'').trim().split('—')[0].trim();
+ b.onclick = () => filterBy(l);
+ fb.appendChild(b);
+});
+
+function filterBy(lvl) {
+ document.querySelectorAll(".filters button").forEach(b => b.classList.remove("active"));
+ if (!lvl) document.querySelector(".filters button").classList.add("active");
+ else [...document.querySelectorAll(".filters button")].find(b => b.textContent === lvl.replace(/🟢|🔵|🔴|🟠|🟣|🏆/g,'').trim().split('—')[0].trim())?.classList.add("active");
+ tbody.querySelectorAll("tr").forEach(r => {
+  r.style.display = (!lvl || r.dataset.level === lvl) ? "" : "none";
+ });
+}
+
+// ═══════════════════════════════════════════════════
+// SEARCH (debounced)
+// ═══════════════════════════════════════════════════
+let searchTimer;
+document.getElementById("searchBox").addEventListener("input", e => {
+ clearTimeout(searchTimer);
+ searchTimer = setTimeout(() => {
+  const q = e.target.value.toLowerCase().trim();
+  tbody.querySelectorAll("tr:not(.level-row)").forEach(r => {
+   const name = r.dataset.name || "";
+   const topic = r.dataset.topic || "";
+   r.style.display = (name.includes(q) || topic.includes(q)) ? "" : "none";
+  });
+  tbody.querySelectorAll(".level-row").forEach(r => { r.style.display = q ? "none" : ""; });
+ }, 150);
+});
+
+// ═══════════════════════════════════════════════════
+// SAVE / LOAD / EXPORT / IMPORT / RESET
+// ═══════════════════════════════════════════════════
+function showToast(msg, isError) {
+ const t = document.getElementById("toast");
+ t.textContent = msg;
+ t.classList.toggle("error", !!isError);
+ t.classList.add("show");
+ setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+function saveAll() {
+ try {
+  const d = {};
+  document.querySelectorAll("[data-id]").forEach(el => {
+   const id = el.dataset.id, f = el.dataset.field;
+   if (!d[id]) d[id] = {};
+   d[id][f] = el.value;
+  });
+  localStorage.setItem(KEY, JSON.stringify(d));
+  saved = d;
+  updateStats();
+  showToast("✅ Progress Saved!");
+ } catch(e) {
+  showToast("❌ Save failed — storage may be full", true);
+ }
+}
+
+function updateStats() {
+ let done = 0, rev = 0;
+ document.querySelectorAll("select.status-sel").forEach(s => { if (s.value === "Done") done++; });
+ document.querySelectorAll("select.rev-sel").forEach(s => { if (s.value === "Yes") rev++; });
+ document.getElementById("doneQ").textContent = done;
+ document.getElementById("pctQ").textContent = Math.round(done / idx * 100) + "%";
+ document.getElementById("revQ").textContent = rev;
+}
+
+// Checkbox ↔ Status sync
+document.addEventListener("change", e => {
+ if (e.target.type === "checkbox" && e.target.dataset?.id) {
+  const id = e.target.dataset.id;
+  const row = e.target.closest("tr");
+  const sel = row.querySelector("select.status-sel");
+  if (e.target.checked) {
+   sel.value = "Done";
+   row.classList.add("row-done");
+   if (!row.querySelector(".date-input").value) row.querySelector(".date-input").value = new Date().toISOString().slice(0,10);
+  } else {
+   sel.value = "Not Started";
+   row.classList.remove("row-done");
+  }
+  saveAll();
+ } else if (e.target.classList.contains("status-sel")) {
+  const id = e.target.dataset.id;
+  const row = e.target.closest("tr");
+  const cb = row.querySelector("input[type=checkbox]");
+  if (e.target.value === "Done") {
+   cb.checked = true;
+   row.classList.add("row-done");
+   if (!row.querySelector(".date-input").value) row.querySelector(".date-input").value = new Date().toISOString().slice(0,10);
+  } else {
+   cb.checked = false;
+   row.classList.remove("row-done");
+  }
+  saveAll();
+ } else if (e.target.dataset?.id) {
+  saveAll();
+ }
+});
+
+function exportData() {
+ try {
+  const d = {};
+  document.querySelectorAll("[data-id]").forEach(el => {
+   const id = el.dataset.id, f = el.dataset.field;
+   if (!d[id]) d[id] = {};
+   d[id][f] = el.value;
+  });
+  const blob = new Blob([JSON.stringify(d, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `tcs-nqt-backup-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast("✅ Data exported!");
+ } catch(e) {
+  showToast("❌ Export failed", true);
+ }
+}
+
+document.getElementById("importFile").addEventListener("change", e => {
+ const file = e.target.files[0]; if (!file) return;
+ const reader = new FileReader();
+ reader.onload = ev => {
+  try {
+   const data = JSON.parse(ev.target.result);
+   if (typeof data !== "object" || data === null) throw new Error("Invalid");
+   localStorage.setItem(KEY, JSON.stringify(data));
+   showToast("✅ Imported! Reloading...");
+   setTimeout(() => location.reload(), 1000);
+  } catch(err) {
+   showToast("❌ Invalid file format", true);
+  }
+ };
+ reader.readAsText(file);
+ e.target.value = "";
+});
+
+function resetData() {
+ if (!confirm("Reset ALL TCS NQT progress? This cannot be undone.")) return;
+ try {
+  localStorage.removeItem(KEY);
+  showToast("✅ Reset! Reloading...");
+  setTimeout(() => location.reload(), 1000);
+ } catch(e) {
+  showToast("❌ Reset failed", true);
+ }
+}
+
+// Keyboard shortcuts
+document.addEventListener("keydown", e => {
+ if ((e.ctrlKey || e.metaKey) && e.key === "s") { e.preventDefault(); saveAll(); }
+ if (e.key === "/" && !["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName)) {
+  e.preventDefault(); document.getElementById("searchBox").focus();
+ }
+});
+
+updateStats();
+</script>
+</body>
+</html>
