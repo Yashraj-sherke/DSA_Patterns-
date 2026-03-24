@@ -68,6 +68,22 @@ input.notes-input{background:transparent;border:1px solid #2a2a4a;color:#e0e0e0;
 input.notes-input:focus{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11,.15)}
 input.date-input{background:transparent;border:1px solid #2a2a4a;color:#e0e0e0;padding:4px 6px;border-radius:6px;font-size:.72rem;outline:none}
 input.date-input:focus{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11,.15)}
+/* Key Points / Hints System */
+.hint-badge{display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,#1e3a5f,#2a1e5f);border:1px solid #3b4f8a;padding:2px 7px;border-radius:12px;font-size:.62rem;color:#93c5fd;cursor:pointer;margin-left:6px;transition:all .25s;white-space:nowrap;vertical-align:middle}
+.hint-badge:hover{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent;transform:scale(1.05);box-shadow:0 2px 10px rgba(37,99,235,.4)}
+.hint-badge.active{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-color:transparent}
+.key-points-row{display:none}
+.key-points-row.visible{display:table-row}
+.key-points-row td{padding:0 10px 10px 10px !important;border-bottom:1px solid #1e1e30 !important;background:#0d0d18}
+.key-points-panel{background:linear-gradient(135deg,#111128,#16162e);border:1px solid #2a2a5a;border-radius:10px;padding:10px 14px;margin:4px 0;animation:slideDown .25s ease-out}
+@keyframes slideDown{from{opacity:0;max-height:0;transform:translateY(-8px)}to{opacity:1;max-height:300px;transform:translateY(0)}}
+.key-points-panel .kp-title{font-size:.7rem;font-weight:700;color:#a78bfa;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.key-points-panel .kp-title::before{content:'💡';font-size:.75rem}
+.key-points-panel ul{list-style:none;padding:0;margin:0}
+.key-points-panel ul li{position:relative;padding:3px 0 3px 16px;font-size:.7rem;color:#c4b5fd;line-height:1.45}
+.key-points-panel ul li::before{content:'▸';position:absolute;left:0;color:#f59e0b;font-size:.65rem;top:4px}
+.key-points-panel .kp-tag{display:inline-block;background:rgba(245,158,11,.15);color:#fbbf24;padding:1px 6px;border-radius:6px;font-size:.58rem;font-weight:600;margin-right:4px}
+.key-points-panel .kp-approach{display:inline-block;background:rgba(52,211,153,.12);color:#6ee7b7;padding:1px 6px;border-radius:6px;font-size:.58rem;font-weight:600;margin-right:4px}
 .save-btn{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border:none;padding:12px 28px;border-radius:30px;font-size:.85rem;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(245,158,11,.4);z-index:100;transition:.3s}
 .save-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(245,158,11,.6)}
 .save-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
@@ -713,6 +729,149 @@ const KEY = "logic_building_v1";
 let saved = {};
 try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { saved = {}; }
 
+// ============================================
+// KEY POINTS MAP — Logic Hints per Question Pattern
+// ============================================
+const KEY_POINTS = [
+ // Conditionals
+ {match: /positive.*negative.*zero|positive or negative/i, hints: ["Use if-else chain: n > 0, n < 0, n == 0", "Edge case: 0 is neither positive nor negative"], tags: ["if-else"], approach: "Comparison"},
+ {match: /even or odd|even.*odd/i, hints: ["Use modulo: n % 2 == 0 → even", "Bitwise trick: n & 1 == 0 → even"], tags: ["modulo"], approach: "Modulo"},
+ {match: /divisible by 5/i, hints: ["n % 5 == 0", "Check remainder equals zero"], tags: ["modulo"], approach: "Modulo"},
+ {match: /divisible by both 3 and 5/i, hints: ["n % 3 == 0 && n % 5 == 0", "Same as checking n % 15 == 0"], tags: ["modulo", "logical-and"], approach: "Modulo"},
+ {match: /leap year/i, hints: ["Divisible by 4, but NOT by 100, UNLESS also by 400", "Order: (y%4==0 && y%100!=0) || y%400==0", "Edge: 1900 is NOT leap, 2000 IS leap"], tags: ["compound-logic"], approach: "Multi-condition"},
+ {match: /two numbers.*larger|larger one/i, hints: ["Simple Math.max(a, b) or ternary a > b ? a : b", "Handle equal case"], tags: ["comparison"], approach: "Comparison"},
+ {match: /three numbers.*largest/i, hints: ["Nested if-else or Math.max(a, b, c)", "Compare in pairs: a>b? (a>c? a : c) : (b>c? b : c)"], tags: ["nested-if"], approach: "Nested Comparison"},
+ {match: /temperature.*cold.*warm.*hot/i, hints: ["Use range-based if-else: <15 Cold, 15-30 Warm, >30 Hot", "Define thresholds clearly first"], tags: ["range-check"], approach: "Range Comparison"},
+ {match: /vowel or consonant/i, hints: ["Check against 'aeiouAEIOU'", "First verify it's a letter, then check vowel list", "Use includes() or indexOf()"], tags: ["string-check"], approach: "Lookup"},
+ {match: /uppercase.*lowercase.*digit.*special/i, hints: ["Use ASCII ranges: A-Z(65-90), a-z(97-122), 0-9(48-57)", "Anything else → special character", "Or use regex: /[A-Z]/, /[a-z]/, /[0-9]/"], tags: ["ASCII", "char-type"], approach: "ASCII Range"},
+ // Triangles
+ {match: /valid triangle/i, hints: ["Triangle inequality: a+b>c, b+c>a, a+c>b", "All three conditions must hold", "All sides must be positive"], tags: ["geometry"], approach: "Triangle Inequality"},
+ {match: /equilateral.*isosceles.*scalene/i, hints: ["Equilateral: a==b==c", "Isosceles: any two sides equal", "Scalene: all sides different", "First check if valid triangle!"], tags: ["geometry", "nested-if"], approach: "Nested Comparison"},
+ {match: /grade.*A.*B.*C|marks.*grade/i, hints: ["Use if-else ladder: ≥90→A, ≥80→B, ≥70→C, etc.", "Check from highest to lowest", "Validate input range 0-100"], tags: ["range-check"], approach: "Range Ladder"},
+ {match: /multiple of the other/i, hints: ["Check a%b==0 || b%a==0", "Edge case: handle zero (division by zero)"], tags: ["modulo"], approach: "Modulo"},
+ {match: /Good Morning.*Afternoon.*Evening|hour.*day/i, hints: ["0-11→Morning, 12-16→Afternoon, 17-20→Evening, 21-23→Night", "Use if-else range checks", "Validate 0-23 range"], tags: ["range-check"], approach: "Range Ladder"},
+ {match: /voting eligibility|age.*18/i, hints: ["Simple: age >= 18 → eligible", "Handle edge case: age == 18"], tags: ["comparison"], approach: "Comparison"},
+ {match: /both.*even.*both.*odd/i, hints: ["a%2==0 && b%2==0 → both even", "a%2!=0 && b%2!=0 → both odd", "Else → mixed"], tags: ["modulo", "compound-logic"], approach: "Modulo + Logic"},
+ {match: /day number.*day name/i, hints: ["Use switch-case or array lookup", "Array: ['Mon','Tue',...][day-1]", "Validate range 1-7"], tags: ["switch", "array-lookup"], approach: "Lookup"},
+ {match: /month.*days/i, hints: ["Use switch/array: [31,28,31,30,31,30,31,31,30,31,30,31]", "Feb = 28 (ignore leap)", "Validate 1-12"], tags: ["array-lookup"], approach: "Lookup"},
+ // Number logic
+ {match: /3-digit.*digits.*distinct|all digits are distinct/i, hints: ["Extract digits: d1=n/100, d2=(n/10)%10, d3=n%10", "Check d1!=d2 && d2!=d3 && d1!=d3"], tags: ["digit-extraction"], approach: "Digit Extraction"},
+ {match: /middle digit.*largest|middle digit.*smallest/i, hints: ["Extract: d1, d2, d3", "Compare d2 with d1 and d3"], tags: ["digit-extraction"], approach: "Digit Extraction"},
+ {match: /first and last digits? equal/i, hints: ["First digit: keep dividing by 10", "Last digit: n % 10", "Compare them"], tags: ["digit-extraction"], approach: "Digit Extraction"},
+ {match: /quadrant/i, hints: ["Q1: x>0,y>0 | Q2: x<0,y>0 | Q3: x<0,y<0 | Q4: x>0,y<0", "On axis: x==0 or y==0", "Origin: x==0 && y==0"], tags: ["geometry", "nested-if"], approach: "Coordinate Check"},
+ {match: /perfect square/i, hints: ["Loop from 1 to n, check if i*i == n", "Optimization: loop only till i*i <= n", "Edge: 0 and 1 are perfect squares"], tags: ["loop", "math"], approach: "Iterative Check"},
+ // FizzBuzz
+ {match: /fizz.*buzz|fizzbuzz/i, hints: ["Check divisible by BOTH first (15), then by 3, then by 5", "Order matters! Check combined condition first", "Classic interview question"], tags: ["modulo", "order-matters"], approach: "Conditional Order"},
+ {match: /median value/i, hints: ["Median = neither max nor min of three", "Sort three values, pick middle", "Or: total - max - min = median"], tags: ["math", "sorting"], approach: "Elimination"},
+ {match: /electricity.*bill.*slab/i, hints: ["Use cumulative slab calculation", "First 100 units: rate1, next 100: rate2, etc.", "Calculate tier by tier"], tags: ["range-check", "accumulation"], approach: "Slab Calculation"},
+ {match: /password.*length.*digit/i, hints: ["Check length >= 8 first", "Loop through chars to find at least one digit", "Can use regex: /\\d/"], tags: ["string-validation"], approach: "Multi-rule Check"},
+ {match: /pythagorean triplet/i, hints: ["a²+b²=c² where c is the largest", "Sort the three numbers first", "Check: a*a + b*b == c*c"], tags: ["math", "geometry"], approach: "Formula Check"},
+ {match: /arithmetic progression/i, hints: ["Check if b-a == c-b", "Common difference d = b - a", "Three numbers: middle = average of other two"], tags: ["math", "series"], approach: "Common Difference"},
+ {match: /geometric progression/i, hints: ["Check if b/a == c/b (handle a=0 or b=0)", "Common ratio r = b/a", "b² == a*c is safer check"], tags: ["math", "series"], approach: "Common Ratio"},
+ // Loop problems
+ {match: /print.*1 to.*using.*loop|all numbers from 1 to/i, hints: ["Basic loop: for(i=1; i<=n; i++)", "While: initialize, condition, increment"], tags: ["basic-loop"], approach: "Simple Loop"},
+ {match: /reverse order|down to 1/i, hints: ["Loop from n to 1: for(i=n; i>=1; i--)", "Decrement counter"], tags: ["basic-loop"], approach: "Reverse Loop"},
+ {match: /multiplication table/i, hints: ["Loop 1-10, print n × i = n*i", "Use formatted output", "Nested loops for all tables"], tags: ["loop", "formatting"], approach: "Simple Loop"},
+ {match: /sum of.*first n natural/i, hints: ["Loop: sum += i for i=1 to n", "Formula: n*(n+1)/2", "Both approaches work"], tags: ["loop", "formula"], approach: "Accumulator"},
+ {match: /factorial/i, hints: ["Loop: fact *= i for i=1 to n", "Recursive: n * factorial(n-1), base: 0! = 1", "Edge: 0! = 1, 1! = 1"], tags: ["loop", "recursion"], approach: "Accumulator/Recursion"},
+ {match: /product of.*digits/i, hints: ["Extract digits: d = n%10, n = n/10", "Multiply: prod *= d", "Loop while n > 0"], tags: ["digit-extraction", "loop"], approach: "Digit Loop"},
+ {match: /count.*digits|number of digits/i, hints: ["Loop: count++ while n > 0, n = n/10", "Or: Math.floor(Math.log10(n)) + 1", "Edge: handle n = 0 separately"], tags: ["digit-extraction"], approach: "Digit Loop"},
+ {match: /reverse.*number|reversed value/i, hints: ["rev = rev*10 + n%10, n = Math.floor(n/10)", "Loop while n > 0", "Handle negative numbers"], tags: ["digit-extraction"], approach: "Digit Reversal"},
+ {match: /palindrome/i, hints: ["Reverse the number/string, compare with original", "For string: compare chars from both ends", "Don't modify original — save a copy"], tags: ["reversal", "comparison"], approach: "Reverse & Compare"},
+ {match: /armstrong number/i, hints: ["Sum of each digit raised to power of num_digits == number", "153 = 1³+5³+3³", "Count digits first, then compute sum"], tags: ["digit-extraction", "math"], approach: "Digit Power Sum"},
+ {match: /perfect number/i, hints: ["Sum of proper divisors (excluding itself) == number", "6 = 1+2+3", "Loop from 1 to n/2 to find divisors"], tags: ["divisors", "loop"], approach: "Factor Sum"},
+ {match: /prime.*number|prime.*between/i, hints: ["Check divisibility from 2 to √n", "If any divisor found → not prime", "Edge: 0 and 1 are NOT prime, 2 IS prime"], tags: ["loop", "optimization"], approach: "Trial Division"},
+ {match: /fibonacci/i, hints: ["F(0)=0, F(1)=1, F(n) = F(n-1)+F(n-2)", "Track previous two values: a, b, then a=b, b=a+b", "Recursive: slow for large n (exponential)"], tags: ["series", "two-pointer"], approach: "Iterative/Recursive"},
+ {match: /factors of|all factors/i, hints: ["Loop 1 to n, if n%i==0 → i is a factor", "Optimization: loop to √n, get pairs", "1 and n are always factors"], tags: ["loop", "divisors"], approach: "Factor Loop"},
+ {match: /HCF|GCD|highest common factor/i, hints: ["Euclid's: GCD(a,b) = GCD(b, a%b), base: b==0→a", "Iterative: while(b≠0) { t=b; b=a%b; a=t; }", "Very efficient — O(log(min(a,b)))"], tags: ["euclidean", "recursion"], approach: "Euclid's Algorithm"},
+ {match: /LCM|least common multiple/i, hints: ["LCM(a,b) = (a*b) / GCD(a,b)", "Find GCD first using Euclid's", "Handle overflow for large numbers"], tags: ["math", "formula"], approach: "Via GCD"},
+ {match: /smallest digit/i, hints: ["Extract digits one by one, track minimum", "Initialize min = 9 (largest single digit)", "Loop: d = n%10, min = Math.min(min, d)"], tags: ["digit-extraction"], approach: "Digit Loop + Min"},
+ {match: /largest digit/i, hints: ["Extract digits one by one, track maximum", "Initialize max = 0", "Loop: d = n%10, max = Math.max(max, d)"], tags: ["digit-extraction"], approach: "Digit Loop + Max"},
+ // Do-while
+ {match: /until 0.*entered.*sum|sum.*until 0/i, hints: ["do-while: take input, add to sum, repeat until input==0", "Don't add the 0 to sum", "Classic sentinel value pattern"], tags: ["do-while", "sentinel"], approach: "Sentinel Loop"},
+ {match: /until 0.*largest|largest.*until 0/i, hints: ["Track max variable, update on each input", "Initialize max = first input or INT_MIN", "Stop when 0 entered"], tags: ["do-while", "tracking-max"], approach: "Running Maximum"},
+ {match: /menu.driven/i, hints: ["do-while loop with switch-case inside", "Display options, take choice, execute, repeat", "Exit option to break the loop"], tags: ["do-while", "switch"], approach: "Menu Loop"},
+ // Nested loops
+ {match: /all possible pairs/i, hints: ["Two nested loops: for(i=1;i<=n;i++) for(j=1;j<=n;j++)", "Total pairs = n × n", "Time complexity: O(n²)"], tags: ["nested-loop", "brute-force"], approach: "Nested Iteration"},
+ {match: /number triangle/i, hints: ["Outer loop for rows, inner for columns", "Print i values per row (row number)", "Use formatted spacing for alignment"], tags: ["nested-loop", "pattern"], approach: "Row-Column Pattern"},
+ {match: /matrix.*sum.*row.*column/i, hints: ["2D array, nested loops for input", "Row sum: inner loop over columns", "Col sum: inner loop over rows"], tags: ["2D-array", "nested-loop"], approach: "Matrix Traversal"},
+ // Break/Continue
+ {match: /stop.*divisible by 17|divisible by 17.*stop/i, hints: ["Loop 1-100, if(i%17==0) break", "break exits the loop entirely", "Print which number caused the break"], tags: ["break"], approach: "Break on Condition"},
+ {match: /skip.*divisible by 5.*continue/i, hints: ["Loop 1-100, if(i%5==0) continue", "continue skips current iteration", "Other numbers still print"], tags: ["continue"], approach: "Skip with Continue"},
+ {match: /sum.*greater than 100.*stop/i, hints: ["Add numbers in loop, break when sum > 100", "Track running sum", "Print final sum and last number added"], tags: ["break", "accumulator"], approach: "Break on Threshold"},
+ // Series
+ {match: /arithmetic progression.*first term.*common difference/i, hints: ["AP: a, a+d, a+2d, ..., a+(n-1)d", "Loop n times, print a + i*d", "Sum = n/2 * (2a + (n-1)d)"], tags: ["series", "formula"], approach: "AP Formula"},
+ {match: /geometric progression.*first term.*common ratio/i, hints: ["GP: a, ar, ar², ar³, ...", "Loop n times, print a * r^i", "Sum = a*(r^n - 1)/(r - 1)"], tags: ["series", "formula"], approach: "GP Formula"},
+ {match: /1².*2².*3²|sum of squares/i, hints: ["Sum = Σi² from 1 to n", "Formula: n(n+1)(2n+1)/6", "Loop: sum += i*i"], tags: ["series", "formula"], approach: "Sum of Squares"},
+ {match: /1³.*2³.*3³|sum of cubes/i, hints: ["Sum = Σi³ from 1 to n", "Formula: [n(n+1)/2]²", "Loop: sum += i*i*i"], tags: ["series", "formula"], approach: "Sum of Cubes"},
+ {match: /1.*1\/2.*1\/3.*harmonic/i, hints: ["Harmonic series: Σ(1/i)", "Use float/double for precision", "Result is always irrational"], tags: ["series", "precision"], approach: "Harmonic Sum"},
+ {match: /powers of two|2ⁿ/i, hints: ["Series: 1, 2, 4, 8, ... 2^n", "Loop: term = 1, term *= 2 each step", "Sum = 2^(n+1) - 1"], tags: ["series", "bit-shift"], approach: "Power of 2 Loop"},
+ {match: /strong number|sum of factorials of.*digits/i, hints: ["145 = 1!+4!+5! = 1+24+120", "Extract digits, compute factorial of each, sum them", "Compare sum with original"], tags: ["digit-extraction", "factorial"], approach: "Digit Factorial Sum"},
+ // Pattern printing
+ {match: /increasing triangle.*stars/i, hints: ["Row i → print i stars", "Outer loop: rows, Inner loop: stars per row", "No spaces needed for left-aligned"], tags: ["pattern", "nested-loop"], approach: "Row-based Pattern"},
+ {match: /right.aligned triangle/i, hints: ["Row i → print (n-i) spaces then i stars", "Spaces decrease as stars increase", "Use two inner loops: spaces + stars"], tags: ["pattern", "nested-loop"], approach: "Space-Star Pattern"},
+ {match: /centered pyramid/i, hints: ["Row i → (n-i) spaces + (2i-1) stars", "Stars: 1, 3, 5, 7, ... (odd)", "Symmetric spacing on both sides"], tags: ["pattern", "nested-loop"], approach: "Centered Pattern"},
+ {match: /diamond pattern/i, hints: ["Upper half: pyramid pattern", "Lower half: inverted pyramid", "Total rows = 2n - 1"], tags: ["pattern", "nested-loop"], approach: "Upper + Lower Half"},
+ {match: /hollow square/i, hints: ["Print star only if first/last row OR first/last column", "Condition: i==0 || i==n-1 || j==0 || j==n-1", "Else print space"], tags: ["pattern", "conditional"], approach: "Border Check"},
+ {match: /pascal.*triangle/i, hints: ["Each element C(r,c) = C(r-1,c-1) + C(r-1,c)", "Or use formula: C(r,c) = r! / (c! * (r-c)!)", "First & last elements of each row = 1"], tags: ["pattern", "combinatorics"], approach: "Dynamic Pascal"},
+ {match: /floyd.*triangle/i, hints: ["Row 1: 1 | Row 2: 2,3 | Row 3: 4,5,6", "Counter starts at 1, increments continuously", "Row i has i elements"], tags: ["pattern", "counter"], approach: "Running Counter"},
+ {match: /butterfly pattern/i, hints: ["Left half + spaces + right half", "Upper: increasing stars, Lower: decreasing", "Symmetric around middle row"], tags: ["pattern", "nested-loop"], approach: "Mirror Pattern"},
+ // Recursion
+ {match: /print.*1 to n.*recursion/i, hints: ["Base: if n==0 return", "Call: f(n-1) then print n", "OR: print n then f(n-1) for reverse"], tags: ["recursion", "base-case"], approach: "Head/Tail Recursion"},
+ {match: /power.*xⁿ.*recursion|xⁿ.*using recursion/i, hints: ["Base: n==0 → return 1", "Recursive: x * power(x, n-1)", "Optimized: x^n = (x^(n/2))² for even n"], tags: ["recursion", "divide-conquer"], approach: "Recursive Power"},
+ {match: /nth fibonacci.*recursion/i, hints: ["Base: fib(0)=0, fib(1)=1", "Recursive: fib(n) = fib(n-1) + fib(n-2)", "⚠️ O(2^n) — very slow for large n, use memoization"], tags: ["recursion", "memoization"], approach: "Recursive Fibonacci"},
+ {match: /reverse.*string.*recursion/i, hints: ["Base: empty string or single char", "Take last char + reverse(rest)", "Or swap from both ends recursively"], tags: ["recursion", "string"], approach: "Recursive Reversal"},
+ {match: /binary.*recursion/i, hints: ["Base: n==0 → return", "Print binary(n/2) then n%2", "Builds binary from MSB to LSB"], tags: ["recursion", "number-system"], approach: "Recursive Division"},
+ {match: /nCr.*pascal.*recursion|combination.*recursion/i, hints: ["C(n,r) = C(n-1,r-1) + C(n-1,r)", "Base: C(n,0)=1, C(n,n)=1", "Pascal's triangle relation"], tags: ["recursion", "combinatorics"], approach: "Pascal's Relation"},
+ // Array problems
+ {match: /sum of all elements/i, hints: ["Loop through array, accumulate sum", "sum += arr[i] for each i", "Reduce: arr.reduce((a,b) => a+b, 0)"], tags: ["array", "accumulator"], approach: "Linear Scan"},
+ {match: /average of array/i, hints: ["Average = sum / length", "Calculate total sum first", "Handle empty array (division by zero)"], tags: ["array", "math"], approach: "Sum then Divide"},
+ {match: /maximum element|largest element/i, hints: ["Initialize max = arr[0]", "Loop: if arr[i] > max → update max", "Track index too if needed"], tags: ["array", "tracking"], approach: "Linear Scan"},
+ {match: /minimum element|smallest element/i, hints: ["Initialize min = arr[0]", "Loop: if arr[i] < min → update min", "Track index too if needed"], tags: ["array", "tracking"], approach: "Linear Scan"},
+ {match: /all elements.*unique|check if.*unique/i, hints: ["Nested loop: compare each pair", "If arr[i]==arr[j] for any i≠j → not unique", "O(n²) brute force or use Set O(n)"], tags: ["array", "nested-loop"], approach: "Pair Comparison"},
+ {match: /reverse.*array/i, hints: ["Two pointers: swap arr[left] and arr[right]", "Move left++, right--", "Continue while left < right"], tags: ["array", "two-pointer"], approach: "Two Pointer Swap"},
+ {match: /rotate.*left/i, hints: ["Save first element, shift all left by 1, place saved at end", "Or use splice/unshift in JS", "For k rotations: slice(k).concat(slice(0,k))"], tags: ["array", "rotation"], approach: "Shift Elements"},
+ {match: /rotate.*right/i, hints: ["Save last element, shift all right by 1, place saved at start", "Or reverse entire, reverse first k, reverse rest", "For k rotations: slice(n-k).concat(slice(0,n-k))"], tags: ["array", "rotation"], approach: "Shift Elements"},
+ {match: /second largest/i, hints: ["Track both largest and secondLargest", "If arr[i] > largest → secondLargest=largest, largest=arr[i]", "Edge: handle duplicates and arrays with < 2 unique elements"], tags: ["array", "tracking"], approach: "Two Variable Track"},
+ {match: /second smallest/i, hints: ["Track both smallest and secondSmallest", "Similar logic to second largest but inverted", "Initialize both to Infinity"], tags: ["array", "tracking"], approach: "Two Variable Track"},
+ {match: /frequency.*each.*element|frequency array/i, hints: ["Nested loop approach: for each element, count occurrences", "Mark counted elements to avoid re-counting", "Or use object/map for O(n) approach"], tags: ["array", "counting"], approach: "Frequency Count"},
+ {match: /common elements.*two arrays|elements.*common/i, hints: ["Nested loops: for each in arr1, check if exists in arr2", "O(n×m) brute force", "Optimization: use Set for O(n+m)"], tags: ["array", "nested-loop"], approach: "Pair Search"},
+ {match: /merge two arrays/i, hints: ["Create new array of size m+n", "Copy elements from both arrays sequentially", "Or use concat/spread operator"], tags: ["array", "merging"], approach: "Sequential Copy"},
+ {match: /sorted.*ascending|check.*sorted/i, hints: ["Compare adjacent elements: arr[i] <= arr[i+1]", "If any violation found → not sorted", "Loop from 0 to n-2"], tags: ["array", "adjacent-check"], approach: "Adjacent Comparison"},
+ {match: /pairs.*sum.*equal|pairs.*sum equals/i, hints: ["Nested loop: check all pairs (i,j) where i<j", "If arr[i]+arr[j]==k → found a pair", "O(n²) brute force, O(n) with hash set"], tags: ["array", "two-pointer"], approach: "Pair Sum"},
+ {match: /zeros.*end|shift.*zeros/i, hints: ["Two pointer approach: move non-zeros forward", "Fill remaining positions with zeros", "Maintain relative order of non-zero elements"], tags: ["array", "two-pointer"], approach: "Partition"},
+ // String problems
+ {match: /length of.*string|string.*length/i, hints: ["Loop until null terminator or use .length", "Recursion: 1 + length(rest)", "Don't count trailing newline/null"], tags: ["string", "basic"], approach: "Counter Loop"},
+ {match: /count.*vowels.*consonants/i, hints: ["Check each char against 'aeiouAEIOU'", "Letter that's not vowel = consonant", "Ignore non-alphabetic chars"], tags: ["string", "counting"], approach: "Character Check"},
+ {match: /reverse.*word.*sentence|reverse.*each word/i, hints: ["Split sentence into words", "Reverse each word individually", "Rejoin with spaces"], tags: ["string", "split-join"], approach: "Split-Reverse-Join"},
+ {match: /reverse.*order.*words/i, hints: ["Split by spaces, reverse the array, join", "Handle multiple spaces between words", "Trim leading/trailing spaces"], tags: ["string", "split-join"], approach: "Split-Reverse-Join"},
+ {match: /remove.*vowels/i, hints: ["Loop through string, skip vowels", "Build new string with consonants only", "Or use regex: str.replace(/[aeiou]/gi, '')"], tags: ["string", "filtering"], approach: "Filter Characters"},
+ {match: /remove.*spaces/i, hints: ["Loop, skip space characters", "Or use replace: str.replace(/ /g, '')", "split('').filter(c => c !== ' ').join('')"], tags: ["string", "filtering"], approach: "Filter Characters"},
+ {match: /duplicate characters|remove duplicate/i, hints: ["Track seen characters (array or set)", "Only add if not already seen", "Maintains first occurrence order"], tags: ["string", "set"], approach: "Seen Tracking"},
+ {match: /swap case|toggle case/i, hints: ["Uppercase → lowercase and vice versa", "Check ASCII: 'A'(65) to 'Z'(90) → add 32", "Or use: char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase()"], tags: ["string", "ASCII"], approach: "Case Toggle"},
+ {match: /longest word/i, hints: ["Split into words, track max length", "Update maxWord when word.length > maxLen", "Handle ties (first or last occurrence?)"], tags: ["string", "tracking"], approach: "Split & Track Max"},
+ {match: /shortest word/i, hints: ["Split into words, track min length", "Initialize minLen = Infinity", "Skip empty strings from split"], tags: ["string", "tracking"], approach: "Split & Track Min"},
+ {match: /capitalize.*first letter|title case/i, hints: ["Split into words, capitalize first char of each", "word[0].toUpperCase() + word.slice(1).toLowerCase()", "Handle single-char words"], tags: ["string", "formatting"], approach: "Word Processing"},
+ {match: /anagram/i, hints: ["Same chars, different order", "Sort both strings and compare", "Or: count frequency of each char and compare"], tags: ["string", "sorting"], approach: "Sort & Compare"},
+ {match: /rotation.*each other/i, hints: ["Concatenate s1+s1, check if s2 is substring", "Same length required", "e.g., 'abcd' rotations: 'bcda','cdab','dabc'"], tags: ["string", "concatenation"], approach: "Double String Check"},
+ // Mixed
+ {match: /calculator.*switch/i, hints: ["Take operator (+,-,*,/) and two numbers", "switch(op) with cases for each operation", "Handle division by zero"], tags: ["switch-case"], approach: "Switch-Case"},
+ {match: /coin.*heads.*tails|random/i, hints: ["Use Math.random() < 0.5 for heads/tails", "Loop n times, count each outcome", "Calculate percentage"], tags: ["random", "simulation"], approach: "Random Simulation"},
+ {match: /palindromic words.*sentence/i, hints: ["Split into words, check each for palindrome", "word === word.split('').reverse().join('')", "Case-sensitive or insensitive? Clarify"], tags: ["string", "palindrome"], approach: "Word-by-Word Check"},
+ {match: /subarrays/i, hints: ["Three nested loops: start, end, print", "Total subarrays = n*(n+1)/2", "Start: 0→n-1, End: start→n-1, Print: start→end"], tags: ["array", "nested-loop"], approach: "Triple Loop"},
+ {match: /spiral/i, hints: ["Use 4 boundaries: top, bottom, left, right", "Print top row → right col → bottom row → left col", "Shrink boundaries after each direction"], tags: ["matrix", "boundary"], approach: "Boundary Shrink"},
+];
+
+function getHints(questionText) {
+ const results = [];
+ for (const kp of KEY_POINTS) {
+  if (kp.match.test(questionText)) {
+   results.push(kp);
+  }
+ }
+ return results;
+}
+
 const tbody = document.getElementById("tbody");
 let idx = 0;
 const sectionNames = [];
@@ -752,10 +911,15 @@ SECTIONS.forEach(([sectionName, source, phases]) => {
     tr.dataset.phase = phaseName;
     tr.dataset.diff = diff;
     tr.dataset.name = q.toLowerCase();
+
+    // Check for key points/hints
+    const hints = getHints(q);
+    const hintBadge = hints.length > 0 ? `<span class="hint-badge" data-hint-id="${id}" title="Click to see key logic points">💡 Key Points</span>` : '';
+
     tr.innerHTML = `<td class="cb-cell"><input type="checkbox" data-id="${id}" data-field="done" ${isDone?'checked':''} aria-label="Done"></td>
       <td style="color:#555">${idx}</td>
      <td style="color:#888;font-size:.7rem">${phaseName}</td>
-     <td><b>${escapeHtml(q)}</b></td>
+     <td><b>${escapeHtml(q)}</b>${hintBadge}</td>
      <td><span class="diff ${diff}">${diff.toUpperCase()}</span></td>
      <td><span class="source-tag ${source}">${source === "loops" ? "Loops" : "Master"}</span></td>
      <td><select class="status-sel" data-id="${id}" data-field="status" aria-label="Status for problem ${idx}">
@@ -769,6 +933,23 @@ SECTIONS.forEach(([sectionName, source, phases]) => {
       <option${s.rev==="Yes"?" selected":""}>Yes</option></select></td>
      <td><input class="notes-input" data-id="${id}" data-field="notes" value="${escapeHtml(s.notes)}" placeholder="Add notes..." aria-label="Notes"></td>`;
     tbody.appendChild(tr);
+
+    // Add expandable key-points row if hints exist
+    if (hints.length > 0) {
+     const kpRow = document.createElement("tr");
+     kpRow.className = "key-points-row";
+     kpRow.dataset.section = sectionName;
+     kpRow.dataset.phase = phaseName;
+     kpRow.dataset.hintTarget = id;
+     let hintsHtml = '';
+     hints.forEach(h => {
+      const tagsHtml = h.tags.map(t => `<span class="kp-tag">${t}</span>`).join('');
+      const approachHtml = h.approach ? `<span class="kp-approach">⚡ ${h.approach}</span>` : '';
+      hintsHtml += `<div class="key-points-panel"><div class="kp-title">${approachHtml}${tagsHtml} Key Logic Points</div><ul>${h.hints.map(hint => `<li>${escapeHtml(hint)}</li>`).join('')}</ul></div>`;
+     });
+     kpRow.innerHTML = `<td colspan="10">${hintsHtml}</td>`;
+     tbody.appendChild(kpRow);
+    }
    });
   });
  });
@@ -781,6 +962,19 @@ function escapeHtml(str) {
  const map = {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"};
  return str.replace(/[&<>"']/g, c => map[c]);
 }
+
+// Toggle key-points rows on click
+document.addEventListener("click", e => {
+ const badge = e.target.closest(".hint-badge");
+ if (badge) {
+  const id = badge.dataset.hintId;
+  const kpRow = document.querySelector(`tr[data-hint-target="${id}"]`);
+  if (kpRow) {
+   kpRow.classList.toggle("visible");
+   badge.classList.toggle("active");
+  }
+ }
+});
 
 // Section tabs
 const sectionTabsEl = document.getElementById("sectionTabs");
