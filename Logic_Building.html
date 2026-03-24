@@ -79,6 +79,10 @@ input.date-input:focus{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11
 .source-tag{display:inline-block;padding:1px 6px;border-radius:6px;font-size:.6rem;font-weight:600;margin-left:4px}
 .source-tag.loops{background:#1e3a5f;color:#60a5fa}
 .source-tag.master{background:#3b1f5e;color:#c084fc}
+.cb-cell{text-align:center}
+.cb-cell input[type=checkbox]{width:18px;height:18px;accent-color:#f59e0b;cursor:pointer;border-radius:4px;vertical-align:middle}
+.row-done{opacity:.55}
+.row-done td b{text-decoration:line-through;color:#666}
 @media(max-width:768px){
  body{padding:10px}
  h1{font-size:1.5rem}
@@ -126,10 +130,9 @@ input.date-input:focus{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11
 </div>
 <div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..." aria-label="Search problems"></div>
 <div class="section-tabs" id="sectionTabs" role="group" aria-label="Section filter"></div>
-<div class="filters" id="filterBtns" role="group" aria-label="Filter by phase"></div>
 <div class="table-wrap">
 <table role="grid" aria-label="Logic Building Problems"><thead><tr>
-<th scope="col">#</th><th scope="col">Phase</th><th scope="col">Problem</th><th scope="col">Difficulty</th><th scope="col">Source</th><th scope="col">Status</th><th scope="col">Date Done</th><th scope="col">Revision</th><th scope="col">Notes</th>
+<th scope="col">✅</th><th scope="col">#</th><th scope="col">Phase</th><th scope="col">Problem</th><th scope="col">Difficulty</th><th scope="col">Source</th><th scope="col">Status</th><th scope="col">Date Done</th><th scope="col">Revision</th><th scope="col">Notes</th>
 </tr></thead><tbody id="tbody"></tbody></table>
 </div>
 </main>
@@ -726,7 +729,7 @@ SECTIONS.forEach(([sectionName, source, phases]) => {
   pr.dataset.section = sectionName;
   pr.dataset.phase = phaseName;
   const sourceLabel = source === "loops" ? "📘 Loops PDF" : "📗 Master PDF";
-  pr.innerHTML = `<td colspan="9">🔥 ${phaseName} <span class="source-tag ${source}">${sourceLabel}</span></td>`;
+  pr.innerHTML = `<td colspan="10">🔥 ${phaseName} <span class="source-tag ${source}">${sourceLabel}</span></td>`;
   tbody.appendChild(pr);
 
   categories.forEach(([catName, questions]) => {
@@ -735,19 +738,22 @@ SECTIONS.forEach(([sectionName, source, phases]) => {
    cr.className = "category-row";
    cr.dataset.section = sectionName;
    cr.dataset.phase = phaseName;
-   cr.innerHTML = `<td colspan="9">📂 ${catName} (${questions.length} Qs)</td>`;
+   cr.innerHTML = `<td colspan="10">📂 ${catName} (${questions.length} Qs)</td>`;
    tbody.appendChild(cr);
 
    questions.forEach(q => {
     idx++;
     const id = "lb" + idx;
     const s = saved[id] || { status: "Not Started", date: "", rev: "No", notes: "" };
-    const tr = document.createElement("tr");
+     const isDone = s.status === "Done";
+     const tr = document.createElement("tr");
+     if (isDone) tr.classList.add("row-done");
     tr.dataset.section = sectionName;
     tr.dataset.phase = phaseName;
     tr.dataset.diff = diff;
     tr.dataset.name = q.toLowerCase();
-    tr.innerHTML = `<td style="color:#555">${idx}</td>
+    tr.innerHTML = `<td class="cb-cell"><input type="checkbox" data-id="${id}" data-field="done" ${isDone?'checked':''} aria-label="Done"></td>
+      <td style="color:#555">${idx}</td>
      <td style="color:#888;font-size:.7rem">${phaseName}</td>
      <td><b>${escapeHtml(q)}</b></td>
      <td><span class="diff ${diff}">${diff.toUpperCase()}</span></td>
@@ -802,22 +808,7 @@ function filterBySection(s) {
  });
 }
 
-// Phase filters
-const fb = document.getElementById("filterBtns");
-const allBtn = document.createElement("button"); allBtn.textContent = "All"; allBtn.className = "active";
-allBtn.onclick = () => filterBy(""); fb.appendChild(allBtn);
-phaseNames.forEach(p => {
- const b = document.createElement("button"); b.textContent = p; b.onclick = () => filterBy(p); fb.appendChild(b);
-});
-
-function filterBy(p) {
- document.querySelectorAll(".filters button").forEach(b => b.classList.remove("active"));
- if (!p) document.querySelector(".filters button").classList.add("active");
- else [...document.querySelectorAll(".filters button")].find(b => b.textContent === p)?.classList.add("active");
- tbody.querySelectorAll("tr").forEach(r => {
-  r.style.display = (!p || r.dataset.phase === p) ? "" : "none";
- });
-}
+// Phase filters removed — section tabs are sufficient
 
 // Debounced search
 let searchTimer;
@@ -866,8 +857,36 @@ function updateStats() {
  document.getElementById("progressFill").style.width = pct + "%";
 }
 
-// Auto-save on change
-document.addEventListener("change", e => { if (e.target.dataset?.id) saveAll(); });
+// Checkbox ↔ Status sync + auto-save
+document.addEventListener("change", e => {
+ if (e.target.type === "checkbox" && e.target.dataset?.id) {
+  const row = e.target.closest("tr");
+  const sel = row.querySelector("select.status-sel");
+  if (e.target.checked) {
+   sel.value = "Done";
+   row.classList.add("row-done");
+   if (!row.querySelector(".date-input").value) row.querySelector(".date-input").value = new Date().toISOString().slice(0,10);
+  } else {
+   sel.value = "Not Started";
+   row.classList.remove("row-done");
+  }
+  saveAll();
+ } else if (e.target.classList.contains("status-sel")) {
+  const row = e.target.closest("tr");
+  const cb = row.querySelector("input[type=checkbox]");
+  if (e.target.value === "Done") {
+   cb.checked = true;
+   row.classList.add("row-done");
+   if (!row.querySelector(".date-input").value) row.querySelector(".date-input").value = new Date().toISOString().slice(0,10);
+  } else {
+   cb.checked = false;
+   row.classList.remove("row-done");
+  }
+  saveAll();
+ } else if (e.target.dataset?.id) {
+  saveAll();
+ }
+});
 
 // Export
 function exportData() {
