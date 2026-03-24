@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Master Logic Building from Basic to Advanced — 400+ practice problems covering conditionals, loops, recursion, arrays, strings, patterns and more.">
+<meta name="keywords" content="Logic Building, DSA Prep, Loops, Recursion, Arrays, Strings, Patterns, Coding Practice">
+<meta name="author" content="DSA Tracker">
+<meta name="theme-color" content="#0f0f1a">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="Logic Building Tracker — Basic to Advanced">
+<meta property="og:description" content="400+ logic building problems organized from basic to advanced.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Logic Building Tracker — Basic to Advanced">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+<title>Logic Building Tracker — Basic to Advanced</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0f0f1a;color:#e0e0e0;padding:20px;min-height:100vh}
+h1{text-align:center;font-size:2rem;background:linear-gradient(135deg,#f59e0b,#ef4444,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.subtitle{text-align:center;color:#888;margin-bottom:20px;font-size:.85rem}
+.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.stat-card{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:12px;padding:14px 22px;text-align:center;min-width:130px;transition:transform .2s}
+.stat-card:hover{transform:translateY(-2px)}
+.stat-card .num{font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,#f59e0b,#ef4444);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.stat-card .lbl{font-size:.7rem;color:#888;margin-top:2px}
+.toolbar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.toolbar button{background:#1a1a2e;border:1px solid #2a2a4a;color:#ccc;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.75rem;transition:.3s}
+.toolbar button:hover{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-color:transparent}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.filters button{background:#1a1a2e;border:1px solid #2a2a4a;color:#ccc;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.75rem;transition:.3s}
+.filters button:hover,.filters button.active{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-color:transparent}
+.search-bar{display:flex;justify-content:center;margin-bottom:18px}
+.search-bar input{background:#1a1a2e;border:1px solid #2a2a4a;color:#e0e0e0;padding:8px 18px;border-radius:20px;width:350px;max-width:90vw;font-size:.85rem;outline:none;transition:border-color .3s}
+.search-bar input:focus{border-color:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.15)}
+.section-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.section-tabs button{background:#1a1a2e;border:1px solid #2a2a4a;color:#ccc;padding:8px 18px;border-radius:25px;cursor:pointer;font-size:.8rem;font-weight:600;transition:.3s;position:relative;overflow:hidden}
+.section-tabs button::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);transition:left .5s}
+.section-tabs button:hover::before{left:100%}
+.section-tabs button:hover,.section-tabs button.active{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-color:transparent;box-shadow:0 4px 15px rgba(245,158,11,.3)}
+.section-badge{display:inline-block;background:rgba(255,255,255,.15);padding:1px 6px;border-radius:8px;font-size:.65rem;margin-left:6px}
+.table-wrap{overflow-x:auto;border-radius:12px;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:separate;border-spacing:0;background:#12121f;border-radius:12px;overflow:hidden;min-width:800px}
+thead th{background:linear-gradient(135deg,#1e1e38,#2a2a50);padding:12px 10px;font-size:.73rem;text-transform:uppercase;letter-spacing:.5px;color:#aaa;position:sticky;top:0;z-index:10;border-bottom:2px solid #f59e0b;white-space:nowrap}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:#1e1e36}
+tbody td{padding:9px 10px;border-bottom:1px solid #1e1e30;font-size:.8rem;vertical-align:middle}
+.phase-row td{background:linear-gradient(135deg,#2d1810,#3d2020);font-weight:700;font-size:.85rem;color:#fbbf24;padding:12px 10px;border-bottom:2px solid #f59e0b}
+.phase-row td:first-child{border-left:4px solid #f59e0b}
+.category-row td{background:linear-gradient(135deg,#1a1a30,#252540);font-weight:600;font-size:.8rem;color:#a78bfa;padding:10px 10px;border-bottom:1px solid #3a3a5a}
+.category-row td:first-child{border-left:3px solid #a78bfa}
+.diff{padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:600;display:inline-block}
+.diff.beginner{background:#064e3b;color:#6ee7b7}
+.diff.easy{background:#064e3b;color:#6ee7b7}
+.diff.medium{background:#713f12;color:#fbbf24}
+.diff.intermediate{background:#713f12;color:#fbbf24}
+.diff.hard{background:#7f1d1d;color:#fca5a5}
+.diff.advanced{background:#7f1d1d;color:#fca5a5}
+select.status-sel{background:#1a1a2e;color:#e0e0e0;border:1px solid #2a2a4a;padding:4px 6px;border-radius:6px;font-size:.72rem;cursor:pointer;outline:none}
+select.status-sel:focus-visible{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11,.3)}
+select.status-sel option{background:#1a1a2e}
+input.notes-input{background:transparent;border:1px solid #2a2a4a;color:#e0e0e0;padding:4px 6px;border-radius:6px;width:100%;font-size:.72rem;outline:none}
+input.notes-input:focus{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11,.15)}
+input.date-input{background:transparent;border:1px solid #2a2a4a;color:#e0e0e0;padding:4px 6px;border-radius:6px;font-size:.72rem;outline:none}
+input.date-input:focus{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11,.15)}
+.save-btn{position:fixed;bottom:24px;right:24px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border:none;padding:12px 28px;border-radius:30px;font-size:.85rem;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(245,158,11,.4);z-index:100;transition:.3s}
+.save-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(245,158,11,.6)}
+.save-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.toast{position:fixed;bottom:80px;right:24px;background:#1a1a2e;color:#6ee7b7;border:1px solid #064e3b;padding:10px 20px;border-radius:10px;font-size:.8rem;opacity:0;transition:.4s;z-index:100;pointer-events:none}
+.toast.show{opacity:1}
+.toast.error{color:#fca5a5;border-color:#7f1d1d}
+.progress-bar{width:100%;max-width:600px;margin:0 auto 20px;background:#1a1a2e;border-radius:20px;overflow:hidden;height:8px;border:1px solid #2a2a4a}
+.progress-bar .fill{height:100%;background:linear-gradient(90deg,#f59e0b,#ef4444,#ec4899);border-radius:20px;transition:width .5s ease;width:0}
+.source-tag{display:inline-block;padding:1px 6px;border-radius:6px;font-size:.6rem;font-weight:600;margin-left:4px}
+.source-tag.loops{background:#1e3a5f;color:#60a5fa}
+.source-tag.master{background:#3b1f5e;color:#c084fc}
+@media(max-width:768px){
+ body{padding:10px}
+ h1{font-size:1.5rem}
+ .stat-card{min-width:100px;padding:10px 14px}
+ .stat-card .num{font-size:1.2rem}
+ .search-bar input{width:100%}
+ .section-tabs button{font-size:.7rem;padding:6px 12px}
+}
+@media print{
+ .save-btn,.toolbar,.filters,.search-bar,.toast,.section-tabs,.progress-bar{display:none!important}
+ body{background:#fff;color:#000;padding:10px}
+ table{background:#fff}
+ thead th{background:#f3f4f6;color:#000;border-bottom:2px solid #f59e0b}
+ tbody td{border-bottom:1px solid #ddd;color:#000}
+ .phase-row td{background:#fef3c7;color:#92400e}
+ .category-row td{background:#ede9fe;color:#5b21b6}
+ select.status-sel{-webkit-appearance:none;appearance:none;border:none;background:transparent;color:#000}
+ input.notes-input,input.date-input{border:none;color:#000}
+}
+</style>
+</head>
+<body>
+<nav style="display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+ <a href="DSA.html" style="background:#1a1a2e;border:1px solid #2a2a4a;color:#ccc;padding:8px 20px;border-radius:25px;font-size:.8rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.3s" onmouseover="this.style.background='linear-gradient(135deg,#667eea,#764ba2)';this.style.color='#fff';this.style.borderColor='transparent'" onmouseout="this.style.background='#1a1a2e';this.style.color='#ccc';this.style.borderColor='#2a2a4a'">🚀 DSA Patterns Tracker</a>
+ <a href="Logic_Building.html" style="background:linear-gradient(135deg,#f59e0b,#ef4444);border:1px solid transparent;color:#fff;padding:8px 20px;border-radius:25px;font-size:.8rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px">🧠 Logic Building</a>
+ <a href="TCS_NQT.html" style="background:#1a1a2e;border:1px solid #2a2a4a;color:#ccc;padding:8px 20px;border-radius:25px;font-size:.8rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.3s" onmouseover="this.style.background='linear-gradient(135deg,#667eea,#764ba2)';this.style.color='#fff';this.style.borderColor='transparent'" onmouseout="this.style.background='#1a1a2e';this.style.color='#ccc';this.style.borderColor='#2a2a4a'">🎯 TCS NQT 2026 Sheet</a>
+</nav>
+<header>
+<h1>🧠 Logic Building — Basic to Advanced</h1>
+<p class="subtitle">400+ Problems • Conditionals → Loops → Recursion → Arrays → Strings → Mixed Challenges • Track Progress</p>
+</header>
+<main>
+<section class="stats" aria-label="Progress statistics">
+<div class="stat-card"><div class="num" id="totalQ">0</div><div class="lbl">Total Problems</div></div>
+<div class="stat-card"><div class="num" id="doneQ">0</div><div class="lbl">Completed</div></div>
+<div class="stat-card"><div class="num" id="pctQ">0%</div><div class="lbl">Progress</div></div>
+<div class="stat-card"><div class="num" id="revQ">0</div><div class="lbl">Need Revision</div></div>
+</section>
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+<div class="toolbar">
+<button onclick="exportData()" title="Export progress as JSON file">📥 Export Data</button>
+<button onclick="document.getElementById('importFile').click()" title="Import progress from JSON file">📤 Import Data</button>
+<button onclick="resetData()" title="Reset all progress">🗑️ Reset</button>
+<input type="file" id="importFile" accept=".json" style="display:none" aria-label="Import data file">
+</div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..." aria-label="Search problems"></div>
+<div class="section-tabs" id="sectionTabs" role="group" aria-label="Section filter"></div>
+<div class="filters" id="filterBtns" role="group" aria-label="Filter by phase"></div>
+<div class="table-wrap">
+<table role="grid" aria-label="Logic Building Problems"><thead><tr>
+<th scope="col">#</th><th scope="col">Phase</th><th scope="col">Problem</th><th scope="col">Difficulty</th><th scope="col">Source</th><th scope="col">Status</th><th scope="col">Date Done</th><th scope="col">Revision</th><th scope="col">Notes</th>
+</tr></thead><tbody id="tbody"></tbody></table>
+</div>
+</main>
+<button class="save-btn" onclick="saveAll()" aria-label="Save progress">💾 Save Progress</button>
+<div class="toast" id="toast" role="status" aria-live="polite">✅ Progress Saved!</div>
+<script>
+"use strict";
+
+// Data organized from BASIC → ADVANCED
+// Each section: [sectionName, source, phases[]]
+// Each phase: [phaseName, difficulty, categories[]]
+// Each category: [categoryName, questions[]]
+// Each question: string
+
+const SECTIONS = [
+
+// ============================================
+// SECTION 1: Conditional Thinking (from Master PDF)
+// ============================================
+["Conditional Thinking (If-Else, Boolean Logic)", "master", [
+ ["Level 1 – Simple Conditions", "beginner", [
+  ["Getting Started", [
+   "Take a number and print whether it's positive, negative, or zero.",
+   "Check if a number is even or odd.",
+   "Check if a number is divisible by 5.",
+   "Check if a number is divisible by both 3 and 5.",
+   "Check if a given year is a leap year.",
+   "Take two numbers and print the larger one.",
+   "Take three numbers and print the largest.",
+   "Take a temperature value and print 'Cold', 'Warm', or 'Hot' using range conditions.",
+   "Take a character and check if it's a vowel or consonant.",
+   "Take a character and check whether it's uppercase, lowercase, a digit, or a special character."
+  ]]
+ ]],
+ ["Level 2 – Nested If & Multiple Conditions", "easy", [
+  ["Nested Conditions", [
+   "Take three sides and check if they form a valid triangle.",
+   "If the sides form a valid triangle, determine whether it is equilateral, isosceles, or scalene.",
+   "Take marks (0–100) and print the corresponding grade (A/B/C/D/F).",
+   "Check if one of two given numbers is a multiple of the other.",
+   "Take the hour of the day (0–23) and print 'Good Morning', 'Good Afternoon', 'Good Evening', or 'Good Night'.",
+   "Check voting eligibility for a given age (18+).",
+   "Take two numbers and determine whether both are even, both are odd, or one is even and one is odd.",
+   "Take an alphabet character and check if it lies between 'a' and 'm' or 'n' and 'z'.",
+   "Take a day number (1–7) and print the corresponding day name.",
+   "Take a month number (1–12) and print the number of days in that month (ignore leap years)."
+  ]]
+ ]],
+ ["Level 3 – Math and Number Logic", "medium", [
+  ["Number Logic", [
+   "Take a 3-digit number and check if all digits are distinct.",
+   "Take a 3-digit number and determine if the middle digit is the largest, smallest, or neither.",
+   "Take a 4-digit number and check if the first and last digits are equal.",
+   "Check whether a given integer is single-digit, double-digit, or multi-digit.",
+   "Check if a number is a multiple of 7 or ends with 7.",
+   "Take coordinates (x, y) and determine which quadrant the point lies in.",
+   "Check if an amount can be evenly divided into 2000, 500, and 100 currency notes.",
+   "Check if a number lies within the range [100, 999].",
+   "Take two angles of a triangle and compute the third angle.",
+   "Check whether a number is a perfect square (without using the square root function)."
+  ]]
+ ]],
+ ["Level 4 – Logical Operators & Compound Statements", "medium", [
+  ["Compound Logic", [
+   "Take a character and check if it is a letter, a digit, or neither.",
+   "Take a number and print 'Fizz' if divisible by 3, 'Buzz' if divisible by 5, and 'FizzBuzz' if divisible by both.",
+   "Take three numbers and print the median value (neither maximum nor minimum).",
+   "Take 24-hour time (hours and minutes) and print whether it is AM or PM.",
+   "Take income and age, and check if eligible for tax (age > 18 and income > 5 L).",
+   "Take two numbers and check if both are positive and their sum is less than 100.",
+   "Take a single digit (0–9) and print its word form ('Zero' to 'Nine').",
+   "Take a weekday number (1–7) and determine if it is a weekday or weekend.",
+   "Take electricity units consumed and calculate the bill as per slabs (using if-else).",
+   "Take a password string and check basic rules (length ≥ 8 and contains at least one digit)."
+  ]]
+ ]],
+ ["Level 5 – Creative / Tricky Logical Scenarios", "hard", [
+  ["Tricky Logic", [
+   "Take coordinates (x, y) and check if the point lies on the X-axis, Y-axis, or at the origin.",
+   "Take three numbers and check if they can form a Pythagorean triplet.",
+   "Take day and month and check if it forms a valid calendar date (ignoring leap years).",
+   "Take time (hours and minutes) and print the smaller angle between the hour and minute hands.",
+   "Take three numbers and check if they are in arithmetic progression.",
+   "Take three numbers and check if they are in geometric progression.",
+   "Take a 3-digit number and check if the sum of the first and last digit equals the middle digit.",
+   "Take an integer (1–9999) and check if the sum of its digits is greater than the product of its digits.",
+   "Take two dates (day and month) and determine which one comes first in the calendar.",
+   "Take a year and print the corresponding century (e.g., '19th century', '20th century')."
+  ]]
+ ]]
+]],
+
+// ============================================
+// SECTION 2: Loops — While Loop (from Loops PDF)
+// ============================================
+["While Loop Mastery", "loops", [
+ ["Phase 1 – While Loop Fundamentals", "beginner", [
+  ["While Loop Problems", [
+   "Print all numbers from 1 to 10 using a loop.",
+   "Print numbers from 10 down to 1 in reverse order.",
+   "Print all even numbers between 1 and 100.",
+   "Print all odd numbers between 1 and 100.",
+   "Print the multiplication table of a given number from n × 1 to n × 10.",
+   "Calculate and print the sum of the first n natural numbers.",
+   "Calculate the sum of all even numbers from 1 up to n.",
+   "Calculate the sum of all odd numbers from 1 up to n.",
+   "Calculate and print the factorial of a given number.",
+   "Find and print the product of all digits of a given number.",
+   "Count and print the total number of digits in a given number.",
+   "Reverse the given number and print the reversed value.",
+   "Check whether the given number is a palindrome.",
+   "Find and print the sum of digits of the given number.",
+   "Check whether the given number is an Armstrong number.",
+   "Check whether the given number is a Perfect number.",
+   "Print all prime numbers between 1 and 100.",
+   "Check whether the given number is a prime number.",
+   "Print the Fibonacci series up to n terms.",
+   "Find and print the sum of the Fibonacci series up to n terms.",
+   "Print the square of each number from 1 to n.",
+   "Print the cube of each number from 1 to n.",
+   "Print all numbers between a and b that are divisible by 7.",
+   "Print all factors of the given number.",
+   "Find and print the sum of all factors of the given number.",
+   "Find the HCF (Highest Common Factor) of two given numbers.",
+   "Find the LCM (Least Common Multiple) of two given numbers.",
+   "Find the smallest digit in the given number.",
+   "Find the largest digit in the given number."
+  ]]
+ ]]
+]],
+
+// ============================================
+// SECTION 3: Loops — Do-While Loop (from Loops PDF)
+// ============================================
+["Do-While Loop Practice", "loops", [
+ ["Phase 2 – Do-While Loop", "easy", [
+  ["Do-While Problems", [
+   "Print all numbers from 1 to 10.",
+   "Print the multiplication table of a given number.",
+   "Keep taking numbers from the user until 0 is entered, then print the sum of all entered numbers.",
+   "Keep taking numbers from the user until 0 is entered, then print the largest number among all inputs.",
+   "Count and print the number of digits in the given number.",
+   "Reverse the given number and print the reversed value.",
+   "Check whether the given number is a palindrome.",
+   "Check whether the given number is an Armstrong number.",
+   "Calculate and print the factorial of the given number.",
+   "Print the Fibonacci series up to the required number of terms.",
+   "Find the HCF (Highest Common Factor) of the given numbers.",
+   "Create a menu-driven program that allows the user to choose and perform different operations.",
+   "Keep taking numbers from the user until a negative number is entered, then count how many positive numbers were entered.",
+   "Find and print the sum of digits of the given number.",
+   "Calculate and print the sum of even digits and the sum of odd digits of the given number separately."
+  ]]
+ ]]
+]],
+
+// ============================================
+// SECTION 4: Loops — For Loop (from Loops PDF)
+// ============================================
+["For Loop & Nested Loops", "loops", [
+ ["Phase 3 – For Loop", "easy", [
+  ["For Loop Problems", [
+   "Print all numbers from 1 to 10.",
+   "Print numbers from 10 down to 1 in reverse order.",
+   "Print all even numbers between 1 and 100.",
+   "Print all odd numbers between 1 and 100.",
+   "Print the multiplication table of a given number.",
+   "Calculate and print the factorial of a given number.",
+   "Calculate and print the factorial of every number from 1 to n.",
+   "Print all prime numbers between 1 and 100.",
+   "Check whether the given number is a prime number.",
+   "Print the Fibonacci series up to the required number of terms.",
+   "Find and print the sum of the Fibonacci series.",
+   "Print all factors of the given number.",
+   "Find and print the sum of all factors of the given number.",
+   "Find the HCF (Highest Common Factor) of the given numbers.",
+   "Find the LCM (Least Common Multiple) of the given numbers.",
+   "Print the square of each number from 1 to n.",
+   "Print the cube of each number from 1 to n.",
+   "Print all numbers between a and b that are divisible by 7.",
+   "Find and print the sum of the first n natural numbers.",
+   "Find and print the sum of all even numbers from 1 up to n.",
+   "Find and print the sum of all odd numbers from 1 up to n."
+  ]]
+ ]],
+ ["Phase 4 – Nested Loop Logic", "medium", [
+  ["Nested Loop Problems", [
+   "Print the multiplication tables for all numbers from 1 to 10.",
+   "Print all possible pairs (i, j) where both i and j range from 1 to n.",
+   "For every number from 1 to n, count and print the total number of its factors.",
+   "Print all prime numbers up to n using nested loop checking.",
+   "Print the Fibonacci pattern row by row, where each row prints the next Fibonacci numbers.",
+   "Generate and print a number triangle pattern using nested loops.",
+   "Print a matrix, then calculate and display the sum of each row and the sum of each column.",
+   "Print all Pythagorean triplets whose values are less than or equal to n."
+  ]]
+ ]]
+]],
+
+// ============================================
+// SECTION 5: Break/Continue & Mathematical Series (from Loops PDF)
+// ============================================
+["Break/Continue & Mathematical Series", "loops", [
+ ["Phase 5 – Break / Continue Logic", "medium", [
+  ["Break & Continue", [
+   "Print numbers from 1 to 100, and stop the loop as soon as a number divisible by 17 is encountered.",
+   "Print numbers from 1 to 100, but skip all numbers that are divisible by 5 and continue printing the rest.",
+   "Take 5 numbers as input, skip any number that is 0 using continue, and calculate the sum of the remaining numbers.",
+   "Search for a specific number in a list of inputs, and terminate the loop immediately when the number is found.",
+   "Keep taking numbers from the user and print them until a negative number appears, then stop the loop.",
+   "Skip all odd numbers and print only the even numbers.",
+   "Continuously add numbers in a loop and stop the loop when the sum becomes greater than 100."
+  ]]
+ ]],
+ ["Phase 6 – Mathematical Series", "medium", [
+  ["Series Problems", [
+   "Find and print the sum of the first n natural numbers.",
+   "Find and print the sum of the first n even numbers.",
+   "Find and print the sum of the first n odd numbers.",
+   "Print the first n terms of an arithmetic progression for the given first term and common difference.",
+   "Print the first n terms of a geometric progression for the given first term and common ratio.",
+   "Print the Fibonacci series up to the required number of terms.",
+   "Find and print the sum of the Fibonacci series up to the required number of terms.",
+   "Calculate and print the value of the series 1² + 2² + 3² + … + n².",
+   "Calculate and print the value of the series 1³ + 2³ + 3³ + … + n³.",
+   "Calculate and print the value of the series 1 + 1/2 + 1/3 + … + 1/n.",
+   "Print the series of powers of two: 1 + 2 + 4 + 8 + … + 2ⁿ.",
+   "Calculate and print the value of the series 1! + 2! + 3! + … + n!.",
+   "Calculate and print the value of the series 1 + x + x² + x³ + … + xⁿ.",
+   "Calculate and print the value of the series x − x²/2! + x³/3! − x⁴/4! + ….",
+   "Check whether the given number is a Strong number, where the number equals the sum of factorials of its digits."
+  ]]
+ ]]
+]],
+
+// ============================================
+// SECTION 6: Mixed Loop Problems & Pattern Printing (from Loops PDF)
+// ============================================
+["Mixed Loop Problems & Star Patterns", "loops", [
+ ["Phase 7 – Mixed Logical Loop Problems", "hard", [
+  ["Mixed Loop Logic", [
+   "Print all numbers between 1 and 100 whose sum of digits is even.",
+   "Count total numbers between 1 & 500 that are divisible by 7 but not divisible by 5.",
+   "Print all palindrome numbers between 1 and 500.",
+   "Print all numbers from 1 to 100 whose sum of digits is a multiple of 3.",
+   "Print all numbers from 1 to n whose binary representation contains an even number of 1s.",
+   "Print a pattern where the i-th row prints the value i × i.",
+   "Find & print the sum of odd digits & the sum of even digits of the given number.",
+   "Print all Armstrong numbers between 1 and 1000.",
+   "Print all Perfect numbers between 1 and 1000.",
+   "Find the number between 1 and n that has the maximum digit sum, and print that number along with its digit sum."
+  ]]
+ ]],
+ ["Phase 8 – Star Pattern Printing", "medium", [
+  ["Star Patterns", [
+   "Print a Single Star (*).",
+   "Print Four Stars (****).",
+   "Print n Stars on Same Line.",
+   "Print Square of Stars (n × n Stars).",
+   "Print an Increasing Triangle of Stars.",
+   "Print a Right-Aligned Triangle of Stars.",
+   "Print Stars in Even Numbers (2, 4, 6, 8, 10).",
+   "Print Stars in Odd Numbers (1, 3, 5, 7, 9).",
+   "Print a Centered Pyramid of Stars.",
+   "Print Stars and Spaces Alternating.",
+   "Print Numbers in an Increasing Sequence (1, 12, 123, 1234, 12345).",
+   "Print Repeated Numbers per Row (Same Number Repeated).",
+   "Print Inverted Triangle of Stars.",
+   "Print Diamond Pattern of Stars.",
+   "Print Hollow Square of Stars.",
+   "Print Hollow Triangle of Stars.",
+   "Print Right-Aligned Number Triangle.",
+   "Print Butterfly Pattern.",
+   "Print Zigzag Pattern.",
+   "Print Hourglass Pattern.",
+   "Print Pascal's Number Triangle.",
+   "Print Floyd's Triangle.",
+   "Print Spiral Number Pattern.",
+   "Print Arrow Pattern.",
+   "Print Cross / X Pattern."
+  ]]
+ ]]
+]],
+
+// ============================================
+// SECTION 7: Recursion (from Master PDF)
+// ============================================
+["Recursion — Self-Reference Thinking", "master", [
+ ["Level 1 – Foundation of Recursion", "easy", [
+  ["Base + Recursive Case", [
+   "Print numbers from 1 to n using recursion.",
+   "Print numbers from n down to 1 using recursion.",
+   "Print only even numbers from 1 to n recursively.",
+   "Print only odd numbers from 1 to n recursively.",
+   "Print sum of first n natural numbers recursively.",
+   "Print factorial of a number recursively.",
+   "Calculate power of a number (xⁿ) using recursion.",
+   "Find nth Fibonacci number recursively.",
+   "Print Fibonacci series up to n terms recursively.",
+   "Find sum of digits of a number recursively."
+  ]]
+ ]],
+ ["Level 2 – Number-based Recursive Thinking", "medium", [
+  ["Recursive Number Logic", [
+   "Count the number of digits in a number recursively.",
+   "Reverse a number recursively.",
+   "Check if a number is a palindrome using recursion.",
+   "Find product of digits of a number recursively.",
+   "Find GCD (HCF) of two numbers using Euclid's algorithm recursively.",
+   "Convert a number to binary recursively.",
+   "Print digits of a number in words recursively (e.g., 123 → 'one two three').",
+   "Calculate the sum of first n even numbers recursively.",
+   "Calculate the sum of first n odd numbers recursively.",
+   "Find nCr (Combination formula) recursively using Pascal's relation."
+  ]]
+ ]],
+ ["Level 3 – Pattern & Printing Problems", "medium", [
+  ["Recursive Patterns", [
+   "Print a line of n stars recursively.",
+   "Print a square of stars recursively (n×n).",
+   "Print a triangle of stars recursively (top-down).",
+   "Print a triangle of stars recursively (bottom-up).",
+   "Print pattern of numbers recursively (1 to n each row).",
+   "Print reverse triangle pattern recursively.",
+   "Print multiplication table of n recursively.",
+   "Print numbers in increasing and decreasing order in same function.",
+   "Print sum of series 1 + 2 + 3 + ... + n recursively and display each step.",
+   "Print pattern of characters (A, AB, ABC, ...) recursively."
+  ]]
+ ]],
+ ["Level 4 – String-based Recursion", "hard", [
+  ["Recursive String Logic", [
+   "Reverse a string using recursion.",
+   "Check if a string is palindrome using recursion.",
+   "Count vowels in a string recursively.",
+   "Remove all spaces from a string recursively.",
+   "Replace all occurrences of a character (say 'a' → 'x') recursively.",
+   "Remove all occurrences of a character from a string recursively.",
+   "Print all characters of a string one by one recursively.",
+   "Print the string in reverse order recursively (without using loops).",
+   "Convert a string to uppercase recursively.",
+   "Count consonants and vowels separately using recursion."
+  ]]
+ ]]
+]],
+
+// ============================================
+// SECTION 8: Arrays (from Master PDF)
+// ============================================
+["Arrays — Iterative Logical Thinking", "master", [
+ ["Level 1 – Fundamentals of Arrays", "easy", [
+  ["Array Basics", [
+   "Input n and take n integers into an array; print them.",
+   "Find the sum of all elements in an array.",
+   "Find the average of array elements.",
+   "Find the maximum element in an array.",
+   "Find the minimum element in an array.",
+   "Count how many elements are positive, negative, or zero.",
+   "Count how many elements are even and odd.",
+   "Find the index of the maximum element.",
+   "Find the index of the minimum element.",
+   "Take n elements and print only those greater than a given value k."
+  ]]
+ ]],
+ ["Level 2 – Searching & Counting Logic", "medium", [
+  ["Search & Count", [
+   "Input an element x — check if it exists in the array.",
+   "Count how many times a given element appears.",
+   "Find the first occurrence of a given number.",
+   "Find the last occurrence of a given number.",
+   "Check if all elements in an array are unique.",
+   "Find the sum of even elements only.",
+   "Find the sum of odd elements only.",
+   "Find the count of prime numbers in the array.",
+   "Count how many numbers are divisible by 3 and 5 both.",
+   "Count how many elements are perfect squares."
+  ]]
+ ]],
+ ["Level 3 – Transformation & Manipulation", "medium", [
+  ["Array Manipulation", [
+   "Create a new array containing squares of all numbers.",
+   "Create a new array containing only even elements.",
+   "Replace every negative number with 0.",
+   "Replace all even numbers with 1 and all odd with 0.",
+   "Swap the first and last elements of the array.",
+   "Reverse an array (without using built-in reverse).",
+   "Rotate an array by one position to the left.",
+   "Rotate an array by one position to the right.",
+   "Swap alternate elements (1st ↔ 2nd, 3rd ↔ 4th, etc.).",
+   "Copy one array to another manually."
+  ]]
+ ]],
+ ["Level 4 – Aggregate & Comparative Thinking", "hard", [
+  ["Comparative Arrays", [
+   "Compare two arrays — check if they are equal (same elements & order).",
+   "Compare two arrays — check if they contain the same elements (ignore order).",
+   "Merge two arrays into a third array.",
+   "Find the common elements between two arrays.",
+   "Find elements that are in one array but not in the other.",
+   "Count how many elements are common between two arrays.",
+   "Find element-wise sum of two arrays (A[i] + B[i]).",
+   "Find element-wise product of two arrays.",
+   "Create a frequency array of numbers (count occurrence of each number).",
+   "Print all elements that appear more than once."
+  ]]
+ ]],
+ ["Level 5 – Logical & Applied Array Problems", "hard", [
+  ["Applied Array Logic", [
+   "Check if the array is sorted in ascending order.",
+   "Check if the array is sorted in descending order.",
+   "Find the second largest element in an array.",
+   "Find the second smallest element in an array.",
+   "Find the difference between the largest and smallest element.",
+   "Find the sum of all elements except the largest and smallest.",
+   "Count how many pairs of elements have a sum equal to a given number k.",
+   "Count how many elements are greater than the average of the array.",
+   "Print the frequency of each distinct element.",
+   "Print all unique elements (those that occur exactly once)."
+  ]]
+ ]]
+]],
+
+// ============================================
+// SECTION 9: Strings (from Master PDF)
+// ============================================
+["Strings — Basic Logic Building", "master", [
+ ["Category 1 – Basic String Handling", "easy", [
+  ["String Basics", [
+   "Take a string input and print its length.",
+   "Print the first and last character of a string.",
+   "Convert all characters of a string to uppercase.",
+   "Convert all characters of a string to lowercase.",
+   "Count how many characters (excluding spaces) are in the string.",
+   "Count how many words are in a sentence.",
+   "Take two strings and print them concatenated.",
+   "Compare two strings lexicographically (like dictionary order).",
+   "Print the ASCII value of each character in a string.",
+   "Check whether the string is empty or not."
+  ]]
+ ]],
+ ["Category 2 – Counting & Character Analysis", "medium", [
+  ["Character Analysis", [
+   "Count how many vowels and consonants are in a string.",
+   "Count the number of digits, letters, and special characters in a string.",
+   "Count how many uppercase and lowercase letters a string has.",
+   "Find the frequency of each character in a string (without using a map).",
+   "Count how many spaces are there in a sentence.",
+   "Count how many times a given character appears in a string.",
+   "Count how many alphabets are before 'm' and after 'm' in a given string.",
+   "Count how many substrings start and end with the same character (simple logic).",
+   "Print how many words start with a vowel in a sentence.",
+   "Count how many words end with 's'."
+  ]]
+ ]],
+ ["Category 3 – Reversing & Palindromic Thinking", "medium", [
+  ["Reverse & Palindrome", [
+   "Reverse a string without using built-in reverse.",
+   "Reverse each word in a sentence.",
+   "Reverse the order of words in a sentence.",
+   "Check whether a string is a palindrome.",
+   "Check if two strings are the reverse of each other.",
+   "Print the middle character(s) of a string.",
+   "Print the second half of the string in reverse.",
+   "Remove the first and last character and print the remaining string.",
+   "Reverse only characters, keeping digits in place.",
+   "Reverse string but skip spaces."
+  ]]
+ ]],
+ ["Category 4 – Character & Word Manipulation", "medium", [
+  ["Character Manipulation", [
+   "Remove all vowels from a string.",
+   "Remove all spaces from a string.",
+   "Replace all vowels with '*'.",
+   "Replace all spaces with '_'.",
+   "Print the string after removing all digits.",
+   "Remove duplicate characters from a string.",
+   "Keep only the first occurrence of each character.",
+   "Remove consecutive duplicate characters (e.g., 'aaabb' → 'ab').",
+   "Swap case: uppercase → lowercase and lowercase → uppercase.",
+   "Shift each character by 1 (e.g., 'abc' → 'bcd')."
+  ]]
+ ]],
+ ["Category 5 – Word-level Thinking", "hard", [
+  ["Word-level Logic", [
+   "Print each word of a sentence on a new line.",
+   "Count how many words have even length.",
+   "Find the longest word in a sentence.",
+   "Find the shortest word in a sentence.",
+   "Swap first and last words in a sentence.",
+   "Print all words that start and end with the same letter.",
+   "Count how many words contain the letter 'a'.",
+   "Capitalize the first letter of each word.",
+   "Print the sentence in title case (first letter capital, rest lowercase).",
+   "Remove extra spaces between words (normalize spacing)."
+  ]]
+ ]]
+]],
+
+// ============================================
+// SECTION 10: Mixed Logical Challenges (from Master PDF)
+// ============================================
+["Mixed Logical Challenges — Applied Reasoning", "master", [
+ ["Category 1 – Number-Based Logical Combos", "hard", [
+  ["Number Combos", [
+   "Print all numbers between 1 and N that are divisible by both 3 and 5.",
+   "Find the sum of digits of a number (use loop).",
+   "Check if a number is an Armstrong number.",
+   "Print all Armstrong numbers between 1 and 1000.",
+   "Find the factorial of a number using recursion.",
+   "Count how many even digits a number contains.",
+   "Print all prime numbers between 1 and N.",
+   "Print the reverse of a number (123 → 321).",
+   "Check if a number is palindrome (121 → true).",
+   "Check if a number is perfect (sum of factors equals number)."
+  ]]
+ ]],
+ ["Category 2 – String + Logic Mix", "hard", [
+  ["String + Logic", [
+   "Check if two strings are anagrams (without using collections).",
+   "Count vowels in each word of a sentence.",
+   "Reverse words in a string if their length is even.",
+   "Replace every vowel in a string with its position (a=1, e=2...).",
+   "Print characters that appear more than once (without map).",
+   "Count words that start and end with the same letter.",
+   "Toggle case for every alternate word in a sentence.",
+   "Check if two strings are rotations of each other.",
+   "Find the word with maximum vowels in a sentence.",
+   "Remove duplicate words from a sentence."
+  ]]
+ ]],
+ ["Category 3 – Array + Looping Logic", "hard", [
+  ["Array + Loops", [
+   "Find the maximum and minimum element in an array.",
+   "Count how many positive, negative, and zero elements are in an array.",
+   "Print all unique elements from an array.",
+   "Reverse an array in-place.",
+   "Shift all zeros to the end of the array.",
+   "Count how many elements are even at an even index.",
+   "Merge two arrays into one.",
+   "Find the second largest element in an array.",
+   "Rotate an array by one position to the right.",
+   "Find the sum of all elements at odd indices."
+  ]]
+ ]],
+ ["Category 4 – Nested Logic & Pattern Flow", "advanced", [
+  ["Nested Logic", [
+   "Print a multiplication table in a formatted grid (10x10).",
+   "Print all pairs in an array whose sum equals a given number.",
+   "Print all subarrays of a given array.",
+   "Check if an array is sorted (ascending or descending).",
+   "Count how many times a number appears consecutively in an array.",
+   "Find all pairs of characters in a string that are the same (nested loop).",
+   "Print pattern of increasing characters (A, AB, ABC...).",
+   "Print Pascal's triangle up to N rows.",
+   "Generate Fibonacci series up to N using recursion.",
+   "Print numbers in a spiral-like pattern (conceptual dry run)."
+  ]]
+ ]],
+ ["Category 5 – Applied Reasoning & Real-Life Logic", "advanced", [
+  ["Real-Life Logic", [
+   "Given marks of students, find how many passed (>= 40).",
+   "Take age inputs and count how many are adults, minors, seniors.",
+   "Validate a password (at least one uppercase, lowercase, digit, special char).",
+   "Simulate a simple calculator using switch-case.",
+   "Count how many times a coin lands on heads/tails (use random).",
+   "Print frequency of each digit in a number.",
+   "Find common elements between two arrays.",
+   "Print characters that are common in two strings.",
+   "Count how many prime numbers are there in an array.",
+   "Print all palindromic words from a sentence."
+  ]]
+ ]]
+]]
+
+];
+
+const KEY = "logic_building_v1";
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) { saved = {}; }
+
+const tbody = document.getElementById("tbody");
+let idx = 0;
+const sectionNames = [];
+const phaseNames = new Set();
+
+// Build table
+SECTIONS.forEach(([sectionName, source, phases]) => {
+ sectionNames.push(sectionName);
+ phases.forEach(([phaseName, diff, categories]) => {
+  phaseNames.add(phaseName);
+  // Phase header row
+  const pr = document.createElement("tr");
+  pr.className = "phase-row";
+  pr.dataset.section = sectionName;
+  pr.dataset.phase = phaseName;
+  const sourceLabel = source === "loops" ? "📘 Loops PDF" : "📗 Master PDF";
+  pr.innerHTML = `<td colspan="9">🔥 ${phaseName} <span class="source-tag ${source}">${sourceLabel}</span></td>`;
+  tbody.appendChild(pr);
+
+  categories.forEach(([catName, questions]) => {
+   // Category sub-header
+   const cr = document.createElement("tr");
+   cr.className = "category-row";
+   cr.dataset.section = sectionName;
+   cr.dataset.phase = phaseName;
+   cr.innerHTML = `<td colspan="9">📂 ${catName} (${questions.length} Qs)</td>`;
+   tbody.appendChild(cr);
+
+   questions.forEach(q => {
+    idx++;
+    const id = "lb" + idx;
+    const s = saved[id] || { status: "Not Started", date: "", rev: "No", notes: "" };
+    const tr = document.createElement("tr");
+    tr.dataset.section = sectionName;
+    tr.dataset.phase = phaseName;
+    tr.dataset.diff = diff;
+    tr.dataset.name = q.toLowerCase();
+    tr.innerHTML = `<td style="color:#555">${idx}</td>
+     <td style="color:#888;font-size:.7rem">${phaseName}</td>
+     <td><b>${escapeHtml(q)}</b></td>
+     <td><span class="diff ${diff}">${diff.toUpperCase()}</span></td>
+     <td><span class="source-tag ${source}">${source === "loops" ? "Loops" : "Master"}</span></td>
+     <td><select class="status-sel" data-id="${id}" data-field="status" aria-label="Status for problem ${idx}">
+      <option${s.status==="Not Started"?" selected":""}>Not Started</option>
+      <option${s.status==="In Progress"?" selected":""}>In Progress</option>
+      <option${s.status==="Done"?" selected":""}>Done</option>
+      <option${s.status==="Revisit"?" selected":""}>Revisit</option></select></td>
+     <td><input type="date" class="date-input" data-id="${id}" data-field="date" value="${s.date}" aria-label="Date done"></td>
+     <td><select class="rev-sel" data-id="${id}" data-field="rev" aria-label="Needs revision">
+      <option${s.rev==="No"?" selected":""}>No</option>
+      <option${s.rev==="Yes"?" selected":""}>Yes</option></select></td>
+     <td><input class="notes-input" data-id="${id}" data-field="notes" value="${escapeHtml(s.notes)}" placeholder="Add notes..." aria-label="Notes"></td>`;
+    tbody.appendChild(tr);
+   });
+  });
+ });
+});
+
+document.getElementById("totalQ").textContent = idx;
+
+function escapeHtml(str) {
+ if (!str) return "";
+ const map = {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"};
+ return str.replace(/[&<>"']/g, c => map[c]);
+}
+
+// Section tabs
+const sectionTabsEl = document.getElementById("sectionTabs");
+const allSectionBtn = document.createElement("button");
+allSectionBtn.textContent = "📋 All Sections";
+allSectionBtn.className = "active";
+allSectionBtn.onclick = () => filterBySection("");
+sectionTabsEl.appendChild(allSectionBtn);
+
+const sectionIcons = ["🔀","🔄","🔁","🔂","⏭️","🌟","🔃","📊","📝","🎯"];
+sectionNames.forEach((s, i) => {
+ const shortName = s.length > 25 ? s.substring(0, 25) + "…" : s;
+ const b = document.createElement("button");
+ b.textContent = (sectionIcons[i] || "📌") + " " + shortName;
+ b.onclick = () => filterBySection(s);
+ sectionTabsEl.appendChild(b);
+});
+
+function filterBySection(s) {
+ document.querySelectorAll(".section-tabs button").forEach(b => b.classList.remove("active"));
+ if (!s) document.querySelector(".section-tabs button").classList.add("active");
+ else [...document.querySelectorAll(".section-tabs button")].find(b => b.textContent.includes(s.substring(0,20)))?.classList.add("active");
+ tbody.querySelectorAll("tr").forEach(r => {
+  r.style.display = (!s || r.dataset.section === s) ? "" : "none";
+ });
+}
+
+// Phase filters
+const fb = document.getElementById("filterBtns");
+const allBtn = document.createElement("button"); allBtn.textContent = "All"; allBtn.className = "active";
+allBtn.onclick = () => filterBy(""); fb.appendChild(allBtn);
+phaseNames.forEach(p => {
+ const b = document.createElement("button"); b.textContent = p; b.onclick = () => filterBy(p); fb.appendChild(b);
+});
+
+function filterBy(p) {
+ document.querySelectorAll(".filters button").forEach(b => b.classList.remove("active"));
+ if (!p) document.querySelector(".filters button").classList.add("active");
+ else [...document.querySelectorAll(".filters button")].find(b => b.textContent === p)?.classList.add("active");
+ tbody.querySelectorAll("tr").forEach(r => {
+  r.style.display = (!p || r.dataset.phase === p) ? "" : "none";
+ });
+}
+
+// Debounced search
+let searchTimer;
+document.getElementById("searchBox").addEventListener("input", e => {
+ clearTimeout(searchTimer);
+ searchTimer = setTimeout(() => {
+  const q = e.target.value.toLowerCase().trim();
+  tbody.querySelectorAll("tr:not(.phase-row):not(.category-row)").forEach(r => {
+   r.style.display = (r.dataset.name || "").includes(q) ? "" : "none";
+  });
+  tbody.querySelectorAll(".phase-row,.category-row").forEach(r => { r.style.display = q ? "none" : ""; });
+ }, 150);
+});
+
+function showToast(msg, isError) {
+ const t = document.getElementById("toast");
+ t.textContent = msg;
+ t.classList.toggle("error", !!isError);
+ t.classList.add("show");
+ setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+function saveAll() {
+ try {
+  const d = {};
+  document.querySelectorAll("[data-id]").forEach(el => {
+   const id = el.dataset.id, f = el.dataset.field;
+   if (!d[id]) d[id] = {}; d[id][f] = el.value;
+  });
+  localStorage.setItem(KEY, JSON.stringify(d)); saved = d; updateStats();
+  showToast("✅ Progress Saved!");
+ } catch(e) {
+  console.error("Save failed:", e);
+  showToast("❌ Save failed — storage may be full", true);
+ }
+}
+
+function updateStats() {
+ let done = 0, rev = 0;
+ document.querySelectorAll("select.status-sel").forEach(s => { if (s.value === "Done") done++; });
+ document.querySelectorAll("select.rev-sel").forEach(s => { if (s.value === "Yes") rev++; });
+ document.getElementById("doneQ").textContent = done;
+ const pct = Math.round(done / idx * 100);
+ document.getElementById("pctQ").textContent = pct + "%";
+ document.getElementById("revQ").textContent = rev;
+ document.getElementById("progressFill").style.width = pct + "%";
+}
+
+// Auto-save on change
+document.addEventListener("change", e => { if (e.target.dataset?.id) saveAll(); });
+
+// Export
+function exportData() {
+ try {
+  const d = {};
+  document.querySelectorAll("[data-id]").forEach(el => {
+   const id = el.dataset.id, f = el.dataset.field;
+   if (!d[id]) d[id] = {}; d[id][f] = el.value;
+  });
+  const blob = new Blob([JSON.stringify(d, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `logic-building-backup-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast("✅ Data exported!");
+ } catch(e) { showToast("❌ Export failed", true); }
+}
+
+// Import
+document.getElementById("importFile").addEventListener("change", e => {
+ const file = e.target.files[0]; if (!file) return;
+ const reader = new FileReader();
+ reader.onload = ev => {
+  try {
+   const data = JSON.parse(ev.target.result);
+   if (typeof data !== "object" || data === null) throw new Error("Invalid");
+   localStorage.setItem(KEY, JSON.stringify(data));
+   showToast("✅ Data imported! Reloading...");
+   setTimeout(() => location.reload(), 1000);
+  } catch(err) { showToast("❌ Invalid file format", true); }
+ };
+ reader.readAsText(file); e.target.value = "";
+});
+
+// Reset
+function resetData() {
+ if (!confirm("Are you sure you want to reset ALL progress? This cannot be undone.")) return;
+ try {
+  localStorage.removeItem(KEY);
+  showToast("✅ Progress reset! Reloading...");
+  setTimeout(() => location.reload(), 1000);
+ } catch(e) { showToast("❌ Reset failed", true); }
+}
+
+// Keyboard shortcuts
+document.addEventListener("keydown", e => {
+ if ((e.ctrlKey || e.metaKey) && e.key === "s") { e.preventDefault(); saveAll(); }
+ if (e.key === "/" && !["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName)) {
+  e.preventDefault(); document.getElementById("searchBox").focus(); }
+});
+
+updateStats();
+</script>
+</body>
+</html>
