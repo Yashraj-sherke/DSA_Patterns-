@@ -44,16 +44,40 @@ firebase init hosting   # set public directory to "."
 firebase deploy
 ```
 
+## 🎯 TCS NQT 2026 — Top 100 Coding Questions
+
+A **premium dark-themed** interactive HTML page with 100 most-expected coding questions for TCS NQT 2026, built by analyzing actual questions from March 20, 21, 26 & April 1, 3 shifts.
+
+### Features
+- 🌙 **Dark glassmorphism UI** — stunning dark navy theme with glowing accents
+- 🔍 **Instant search** — filter questions by keyword in real-time
+- 📖 **Collapsible cards** — click to expand/collapse each question's code
+- 📋 **One-click copy** — copy C++ code to clipboard instantly
+- 🎨 **Syntax highlighting** — powered by Highlight.js
+- 📊 **Trend analysis** — animated bar charts showing exam pattern distribution
+- ⭐ **Difficulty ratings** — star-based difficulty for each question
+- 📱 **Responsive** — works on mobile, tablet, and desktop
+
+### How to Use
+Open [`TCS_NQT_100Q.html`](TCS_NQT_100Q.html) directly in your browser — no server needed!
+
+Or visit the live version: `https://yashraj-sherke.github.io/DSA_Patterns-/TCS_NQT_100Q.html`
+
+---
+
 ## File Structure
 
 ```
 DSA_Patterns/
-├── DSA.html          # Main application (single page)
-├── manifest.json     # PWA manifest
-├── sw.js             # Service worker for offline support
-├── _headers          # Security headers (for Netlify/Cloudflare)
-├── _redirects        # Redirect rules (for Netlify)
-└── README.md         # This file
+├── DSA.html                # DSA Problem Tracker (main app)
+├── Logic_Building.html     # Logic Building practice tracker
+├── TCS_NQT.html            # TCS NQT Reference Sheet
+├── TCS_NQT_100Q.html       # 🆕 TCS NQT 2026 Top 100 Questions
+├── manifest.json           # PWA manifest
+├── sw.js                   # Service worker for offline support
+├── _headers                # Security headers (for Netlify/Cloudflare)
+├── _redirects              # Redirect rules (for Netlify)
+└── README.md               # This file
 ```
 
 ## Keyboard Shortcuts
