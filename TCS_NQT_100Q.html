@@ -773,61 +773,164 @@ int main() {
 <div class="q-card" data-q="36"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">36</span><span class="q-title">Check Palindrome String</span><div class="q-diff"><span>⭐</span></div><span class="q-tag">TCS 2026</span><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 int main() {
-    string s; cin >> s;
-    int l=0, r=s.length()-1; bool ok=true;
-    while(l<r){if(s[l]!=s[r]){ok=false;break;}l++;r--;}
-    cout << (ok?"Palindrome":"Not Palindrome"); return 0;
+    string s;
+    cin >> s;
+    int l = 0, r = s.length() - 1;
+    bool ok = true;
+    while (l < r) {
+        if (s[l] != s[r]) {
+            ok = false;
+            break;
+        }
+        l++;
+        r--;
+    }
+    cout << (ok ? "Palindrome" : "Not Palindrome");
+    return 0;
 }</code></pre></div></div>
 
 <div class="q-card" data-q="37"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">37</span><span class="q-title">Reverse a String</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main() { string s; cin>>s; reverse(s.begin(),s.end()); cout<<s; return 0; }</code></pre></div></div>
+int main() {
+    string s;
+    cin >> s;
+    reverse(s.begin(), s.end());
+    cout << s;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="38"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">38</span><span class="q-title">Count Vowels and Consonants</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 int main() {
-    string s; getline(cin,s); int v=0,c=0;
-    for(char ch:s){ch=tolower(ch);if(ch>='a'&&ch<='z'){if(ch=='a'||ch=='e'||ch=='i'||ch=='o'||ch=='u')v++;else c++;}}
-    cout<<"Vowels: "<<v<<"\nConsonants: "<<c; return 0;
+    string s;
+    getline(cin, s);
+    int v = 0, c = 0;
+    for (char ch : s) {
+        ch = tolower(ch);
+        if (ch >= 'a' && ch <= 'z') {
+            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u')
+                v++;
+            else
+                c++;
+        }
+    }
+    cout << "Vowels: " << v << "\nConsonants: " << c;
+    return 0;
 }</code></pre></div></div>
 
 <div class="q-card" data-q="39"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">39</span><span class="q-title">Check Anagram</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-tag">TCS 2026</span><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 int main() {
-    string s1,s2; cin>>s1>>s2;
-    if(s1.length()!=s2.length()){cout<<"Not Anagram";return 0;}
-    int f[26]={0};
-    for(char c:s1)f[c-'a']++; for(char c:s2)f[c-'a']--;
-    for(int i=0;i<26;i++)if(f[i]!=0){cout<<"Not Anagram";return 0;}
-    cout<<"Anagram"; return 0;
+    string s1, s2;
+    cin >> s1 >> s2;
+    if (s1.length() != s2.length()) {
+        cout << "Not Anagram";
+        return 0;
+    }
+    int f[26] = {0};
+    for (char c : s1) f[c - 'a']++;
+    for (char c : s2) f[c - 'a']--;
+    for (int i = 0; i < 26; i++) {
+        if (f[i] != 0) {
+            cout << "Not Anagram";
+            return 0;
+        }
+    }
+    cout << "Anagram";
+    return 0;
 }</code></pre></div></div>
 
 <div class="q-card" data-q="40"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">40</span><span class="q-title">Remove Vowels</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;cin>>s;string r="";for(char c:s){char l=tolower(c);if(l!='a'&&l!='e'&&l!='i'&&l!='o'&&l!='u')r+=c;}cout<<r;return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    cin >> s;
+    string r = "";
+    for (char c : s) {
+        char l = tolower(c);
+        if (l != 'a' && l != 'e' && l != 'i' && l != 'o' && l != 'u')
+            r += c;
+    }
+    cout << r;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="41"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">41</span><span class="q-title">First Non-Repeating Character</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;cin>>s;int f[256]={0};for(char c:s)f[(int)c]++;for(char c:s)if(f[(int)c]==1){cout<<c;return 0;}cout<<-1;return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    cin >> s;
+    int f[256] = {0};
+    for (char c : s) f[(int)c]++;
+    for (char c : s) {
+        if (f[(int)c] == 1) {
+            cout << c;
+            return 0;
+        }
+    }
+    cout << -1;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="42"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">42</span><span class="q-title">Remove Duplicate Characters</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;cin>>s;bool seen[256]={0};string r="";for(char c:s)if(!seen[(int)c]){r+=c;seen[(int)c]=true;}cout<<r;return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    cin >> s;
+    bool seen[256] = {0};
+    string r = "";
+    for (char c : s) {
+        if (!seen[(int)c]) {
+            r += c;
+            seen[(int)c] = true;
+        }
+    }
+    cout << r;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="43"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">43</span><span class="q-title">Reverse Words in Sentence</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string line;getline(cin,line);istringstream iss(line);vector&lt;string&gt; w;string t;
-while(iss>>t)w.push_back(t);for(int i=w.size()-1;i>=0;i--){cout<<w[i];if(i>0)cout<<" ";}return 0;}</code></pre></div></div>
+int main() {
+    string line;
+    getline(cin, line);
+    istringstream iss(line);
+    vector&lt;string&gt; w;
+    string t;
+    while (iss >> t) w.push_back(t);
+    for (int i = w.size() - 1; i >= 0; i--) {
+        cout << w[i];
+        if (i > 0) cout << " ";
+    }
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="44"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">44</span><span class="q-title">Longest & Shortest Word</span><div class="q-diff"><span>⭐</span></div><span class="q-tag">TCS 2026</span><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string line;getline(cin,line);istringstream iss(line);string w,lo="",sh="";
-while(iss>>w){if(lo.empty()||w.length()>lo.length())lo=w;if(sh.empty()||w.length()<sh.length())sh=w;}
-cout<<"Longest: "<<lo<<"\nShortest: "<<sh;return 0;}</code></pre></div></div>
+int main() {
+    string line;
+    getline(cin, line);
+    istringstream iss(line);
+    string w, lo = "", sh = "";
+    while (iss >> w) {
+        if (lo.empty() || w.length() > lo.length()) lo = w;
+        if (sh.empty() || w.length() < sh.length()) sh = w;
+    }
+    cout << "Longest: " << lo << "\nShortest: " << sh;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="45"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">45</span><span class="q-title">Character Frequency Count</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;cin>>s;map&lt;char,int&gt; f;for(char c:s)f[c]++;for(auto&p:f)cout<<p.first<<" : "<<p.second<<endl;return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    cin >> s;
+    map&lt;char, int&gt; f;
+    for (char c : s) f[c]++;
+    for (auto &p : f)
+        cout << p.first << " : " << p.second << endl;
+    return 0;
+}</code></pre></div></div>
 </div>
 
 <!-- SECTION 5: String Med-Hard -->
@@ -840,47 +943,142 @@ int main(){string s;cin>>s;map&lt;char,int&gt; f;for(char c:s)f[c]++;for(auto&p:
 
 <div class="q-card" data-q="46"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">46</span><span class="q-title">String Compression (aabccc → a2b1c3)</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;cin>>s;string r="";for(int i=0;i<(int)s.length();i++){int c=1;while(i+1<(int)s.length()&&s[i]==s[i+1]){c++;i++;}r+=s[i]+to_string(c);}cout<<r;return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    cin >> s;
+    string r = "";
+    for (int i = 0; i < (int)s.length(); i++) {
+        int c = 1;
+        while (i + 1 < (int)s.length() && s[i] == s[i + 1]) {
+            c++;
+            i++;
+        }
+        r += s[i] + to_string(c);
+    }
+    cout << r;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="47"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">47</span><span class="q-title">Toggle Case</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;getline(cin,s);for(char&c:s){if(islower(c))c=toupper(c);else if(isupper(c))c=tolower(c);}cout<<s;return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    getline(cin, s);
+    for (char &c : s) {
+        if (islower(c)) c = toupper(c);
+        else if (isupper(c)) c = tolower(c);
+    }
+    cout << s;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="48"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">48</span><span class="q-title">Caesar Cipher Encryption</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;int sh;getline(cin,s);cin>>sh;
-for(char&c:s){if(c>='a'&&c<='z')c=(c-'a'+sh)%26+'a';else if(c>='A'&&c<='Z')c=(c-'A'+sh)%26+'A';}
-cout<<s;return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    int sh;
+    getline(cin, s);
+    cin >> sh;
+    for (char &c : s) {
+        if (c >= 'a' && c <= 'z') c = (c - 'a' + sh) % 26 + 'a';
+        else if (c >= 'A' && c <= 'Z') c = (c - 'A' + sh) % 26 + 'A';
+    }
+    cout << s;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="49"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">49</span><span class="q-title">Check String Rotation</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s1,s2;cin>>s1>>s2;if(s1.length()!=s2.length()){cout<<"No";return 0;}cout<<((s1+s1).find(s2)!=string::npos?"Yes":"No");return 0;}</code></pre></div></div>
+int main() {
+    string s1, s2;
+    cin >> s1 >> s2;
+    if (s1.length() != s2.length()) {
+        cout << "No";
+        return 0;
+    }
+    cout << ((s1 + s1).find(s2) != string::npos ? "Yes" : "No");
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="50"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">50</span><span class="q-title">Longest Substring Without Repeating</span><div class="q-diff"><span>⭐</span><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;cin>>s;int maxL=0,st=0,ls[256];fill(ls,ls+256,-1);
-for(int i=0;i<(int)s.length();i++){if(ls[(int)s[i]]>=st)st=ls[(int)s[i]]+1;ls[(int)s[i]]=i;maxL=max(maxL,i-st+1);}
-cout<<maxL;return 0;}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+int main() {
+    string s;
+    cin >> s;
+    int maxL = 0, st = 0, ls[256];
+    fill(ls, ls + 256, -1);
+    for (int i = 0; i < (int)s.length(); i++) {
+        if (ls[(int)s[i]] >= st) st = ls[(int)s[i]] + 1;
+        ls[(int)s[i]] = i;
+        maxL = max(maxL, i - st + 1);
+    }
+    cout << maxL;
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
 
 <div class="q-card" data-q="51"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">51</span><span class="q-title">Count Words in String</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string l;getline(cin,l);istringstream is(l);string w;int c=0;while(is>>w)c++;cout<<c;return 0;}</code></pre></div></div>
+int main() {
+    string l;
+    getline(cin, l);
+    istringstream is(l);
+    string w;
+    int c = 0;
+    while (is >> w) c++;
+    cout << c;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="52"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">52</span><span class="q-title">Remove All Spaces</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;getline(cin,s);string r="";for(char c:s)if(c!=' ')r+=c;cout<<r;return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    getline(cin, s);
+    string r = "";
+    for (char c : s)
+        if (c != ' ') r += c;
+    cout << r;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="53"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">53</span><span class="q-title">Sort Characters</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;cin>>s;sort(s.begin(),s.end());cout<<s;return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    cin >> s;
+    sort(s.begin(), s.end());
+    cout << s;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="54"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">54</span><span class="q-title">Check Only Digits</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;cin>>s;bool ok=true;for(char c:s)if(!isdigit(c)){ok=false;break;}cout<<(ok?"Yes":"No");return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    cin >> s;
+    bool ok = true;
+    for (char c : s) {
+        if (!isdigit(c)) {
+            ok = false;
+            break;
+        }
+    }
+    cout << (ok ? "Yes" : "No");
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="55"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">55</span><span class="q-title">Replace Spaces with Character</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;char ch;getline(cin,s);cin>>ch;for(char&c:s)if(c==' ')c=ch;cout<<s;return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    char ch;
+    getline(cin, s);
+    cin >> ch;
+    for (char &c : s)
+        if (c == ' ') c = ch;
+    cout << s;
+    return 0;
+}</code></pre></div></div>
 </div>
 
 <!-- SECTION 6: Math -->
@@ -893,67 +1091,223 @@ int main(){string s;char ch;getline(cin,s);cin>>ch;for(char&c:s)if(c==' ')c=ch;c
 
 <div class="q-card" data-q="56"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">56</span><span class="q-title">Check Prime Number</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;if(n<=1){cout<<"Not Prime";return 0;}for(int i=2;i*i<=n;i++)if(n%i==0){cout<<"Not Prime";return 0;}cout<<"Prime";return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    if (n <= 1) {
+        cout << "Not Prime";
+        return 0;
+    }
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            cout << "Not Prime";
+            return 0;
+        }
+    }
+    cout << "Prime";
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="57"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">57</span><span class="q-title">Sieve of Eratosthenes</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;vector&lt;bool&gt; s(n+1,true);s[0]=s[1]=false;
-for(int i=2;i*i<=n;i++)if(s[i])for(int j=i*i;j<=n;j+=i)s[j]=false;
-for(int i=2;i<=n;i++)if(s[i])cout<<i<<" ";return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;bool&gt; s(n + 1, true);
+    s[0] = s[1] = false;
+    for (int i = 2; i * i <= n; i++) {
+        if (s[i]) {
+            for (int j = i * i; j <= n; j += i)
+                s[j] = false;
+        }
+    }
+    for (int i = 2; i <= n; i++)
+        if (s[i]) cout << i << " ";
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="58"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">58</span><span class="q-title">Fibonacci Series</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;long long a=0,b=1;for(int i=0;i<n;i++){cout<<a<<" ";long long t=a+b;a=b;b=t;}return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    long long a = 0, b = 1;
+    for (int i = 0; i < n; i++) {
+        cout << a << " ";
+        long long t = a + b;
+        a = b;
+        b = t;
+    }
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="59"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">59</span><span class="q-title">GCD and LCM</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int gcd(int a,int b){return b==0?a:gcd(b,a%b);}
-int main(){int a,b;cin>>a>>b;int g=gcd(a,b);cout<<"GCD: "<<g<<"\nLCM: "<<(a/g)*b;return 0;}</code></pre></div></div>
+int gcd(int a, int b) {
+    return b == 0 ? a : gcd(b, a % b);
+}
+int main() {
+    int a, b;
+    cin >> a >> b;
+    int g = gcd(a, b);
+    cout << "GCD: " << g << "\nLCM: " << (a / g) * b;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="60"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">60</span><span class="q-title">Armstrong Number</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;int t=n,s=0,d=to_string(n).length();while(t>0){s+=pow(t%10,d);t/=10;}cout<<(s==n?"Armstrong":"Not Armstrong");return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    int t = n, s = 0, d = to_string(n).length();
+    while (t > 0) {
+        s += pow(t % 10, d);
+        t /= 10;
+    }
+    cout << (s == n ? "Armstrong" : "Not Armstrong");
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="61"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">61</span><span class="q-title">Palindrome Number</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;int o=n,r=0;while(n>0){r=r*10+n%10;n/=10;}cout<<(o==r?"Palindrome":"Not Palindrome");return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    int o = n, r = 0;
+    while (n > 0) {
+        r = r * 10 + n % 10;
+        n /= 10;
+    }
+    cout << (o == r ? "Palindrome" : "Not Palindrome");
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="62"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">62</span><span class="q-title">Perfect Number</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;int s=0;for(int i=1;i<=n/2;i++)if(n%i==0)s+=i;cout<<(s==n?"Perfect":"Not Perfect");return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    int s = 0;
+    for (int i = 1; i <= n / 2; i++)
+        if (n % i == 0) s += i;
+    cout << (s == n ? "Perfect" : "Not Perfect");
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="63"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">63</span><span class="q-title">Decimal to Binary</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;if(n==0){cout<<0;return 0;}string b="";while(n>0){b=to_string(n%2)+b;n/=2;}cout<<b;return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    if (n == 0) { cout << 0; return 0; }
+    string b = "";
+    while (n > 0) {
+        b = to_string(n % 2) + b;
+        n /= 2;
+    }
+    cout << b;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="64"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">64</span><span class="q-title">Decimal to Hexadecimal</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;if(n==0){cout<<"0";return 0;}string h="";char hc[]="0123456789ABCDEF";while(n>0){h=hc[n%16]+h;n/=16;}cout<<h;return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    if (n == 0) { cout << "0"; return 0; }
+    string h = "";
+    char hc[] = "0123456789ABCDEF";
+    while (n > 0) {
+        h = hc[n % 16] + h;
+        n /= 16;
+    }
+    cout << h;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="65"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">65</span><span class="q-title">Sum of Digits</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;int s=0;while(n>0){s+=n%10;n/=10;}cout<<s;return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    int s = 0;
+    while (n > 0) {
+        s += n % 10;
+        n /= 10;
+    }
+    cout << s;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="66"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">66</span><span class="q-title">Factorial</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;long long f=1;for(int i=2;i<=n;i++)f*=i;cout<<f;return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    long long f = 1;
+    for (int i = 2; i <= n; i++) f *= i;
+    cout << f;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="67"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">67</span><span class="q-title">Fast Exponentiation</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-long long power(long long b,int e){long long r=1;while(e>0){if(e%2==1)r*=b;b*=b;e/=2;}return r;}
-int main(){long long b;int e;cin>>b>>e;cout<<power(b,e);return 0;}</code></pre><div class="complexity"><span><b>Time:</b> O(log n)</span></div></div></div>
+long long power(long long b, int e) {
+    long long r = 1;
+    while (e > 0) {
+        if (e % 2 == 1) r *= b;
+        b *= b;
+        e /= 2;
+    }
+    return r;
+}
+int main() {
+    long long b;
+    int e;
+    cin >> b >> e;
+    cout << power(b, e);
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(log n)</span></div></div></div>
 
 <div class="q-card" data-q="68"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">68</span><span class="q-title">Leap Year Check</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int y;cin>>y;cout<<((y%4==0&&y%100!=0)||y%400==0?"Leap Year":"Not Leap Year");return 0;}</code></pre></div></div>
+int main() {
+    int y;
+    cin >> y;
+    if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
+        cout << "Leap Year";
+    else
+        cout << "Not Leap Year";
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="69"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">69</span><span class="q-title">Digital Root</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;while(n>=10){int s=0;while(n>0){s+=n%10;n/=10;}n=s;}cout<<n;return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    while (n >= 10) {
+        int s = 0;
+        while (n > 0) {
+            s += n % 10;
+            n /= 10;
+        }
+        n = s;
+    }
+    cout << n;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="70"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">70</span><span class="q-title">Trailing Zeros in N!</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;int c=0;for(int i=5;i<=n;i*=5)c+=n/i;cout<<c;return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    int c = 0;
+    for (int i = 5; i <= n; i *= 5) c += n / i;
+    cout << c;
+    return 0;
+}</code></pre></div></div>
 </div>
 
 <!-- SECTION 7: TCS Actual -->
@@ -968,73 +1322,185 @@ int main(){int n;cin>>n;int c=0;for(int i=5;i<=n;i*=5)c+=n/i;cout<<c;return 0;}<
 <div class="io-box"><span class="label">Input:</span> distance=1000, time=30<br><span class="label">Output:</span> 120.00 km/h<br><span class="label">Rule:</span> If time NOT in [1,60] → "Error"</div>
 <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){double d,t;cin>>d>>t;if(t<1||t>60){cout<<"Error";return 0;}cout<<fixed<<setprecision(2)<<(d/t)*(18.0/5.0);return 0;}</code></pre></div></div>
+int main() {
+    double d, t;
+    cin >> d >> t;
+    if (t < 1 || t > 60) {
+        cout << "Error";
+        return 0;
+    }
+    cout << fixed << setprecision(2) << (d / t) * (18.0 / 5.0);
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="72"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">72</span><span class="q-title">Tiered Discount Calculation</span><div class="q-diff"><span>⭐</span></div><span class="q-tag">21 Mar 2026</span><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){double c;cin>>c;if(c<0){cout<<"Error";return 0;}double d;
-if(c<=1000)d=0.05;else if(c<=5000)d=0.10;else d=0.15;
-cout<<fixed<<setprecision(2)<<c-(c*d);return 0;}</code></pre></div></div>
+int main() {
+    double c;
+    cin >> c;
+    if (c < 0) { cout << "Error"; return 0; }
+    double d;
+    if (c <= 1000) d = 0.05;
+    else if (c <= 5000) d = 0.10;
+    else d = 0.15;
+    cout << fixed << setprecision(2) << c - (c * d);
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="73"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">73</span><span class="q-title">Gym Membership Fee</span><div class="q-diff"><span>⭐</span></div><span class="q-tag">20 Mar 2026</span><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int m;cin>>m;if(m<=0){cout<<"Error";return 0;}double f;
-if(m<=3)f=m*1000;else if(m<=6)f=m*800;else if(m<=12)f=m*600;else f=m*500;cout<<f;return 0;}</code></pre></div></div>
+int main() {
+    int m;
+    cin >> m;
+    if (m <= 0) { cout << "Error"; return 0; }
+    double f;
+    if (m <= 3) f = m * 1000;
+    else if (m <= 6) f = m * 800;
+    else if (m <= 12) f = m * 600;
+    else f = m * 500;
+    cout << f;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="74"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">74</span><span class="q-title">Fraud Detection System</span><div class="q-diff"><span>⭐</span><span>⭐</span><span>⭐</span></div><span class="q-tag">20 Mar 2026 — HARD</span><span class="q-arrow">▼</span></div><div class="q-body">
 <div class="io-box"><span class="label">Rule:</span> Detect duplicate transactions — same sender, receiver, amount within 60 seconds</div>
 <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-struct Txn{string s,r;double a;int t;};
-int main(){
-    int n;cin>>n;vector&lt;Txn&gt; tx(n);
-    for(int i=0;i&lt;n;i++) cin>>tx[i].s>>tx[i].r>>tx[i].a>>tx[i].t;
+struct Txn { string s, r; double a; int t; };
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;Txn&gt; tx(n);
+    for (int i = 0; i &lt; n; i++)
+        cin >> tx[i].s >> tx[i].r >> tx[i].a >> tx[i].t;
     vector&lt;int&gt; fr;
-    for(int i=0;i&lt;n;i++)for(int j=0;j&lt;i;j++)
-        if(tx[i].s==tx[j].s&&tx[i].r==tx[j].r&&tx[i].a==tx[j].a&&abs(tx[i].t-tx[j].t)<=60){fr.push_back(i);break;}
-    if(fr.empty())cout<<"No fraud detected";
-    else for(int i:fr)cout<<tx[i].s<<" "<<tx[i].r<<" "<<tx[i].a<<" "<<tx[i].t<<endl;
+    for (int i = 0; i &lt; n; i++) {
+        for (int j = 0; j &lt; i; j++) {
+            if (tx[i].s == tx[j].s && tx[i].r == tx[j].r &&
+                tx[i].a == tx[j].a && abs(tx[i].t - tx[j].t) <= 60) {
+                fr.push_back(i);
+                break;
+            }
+        }
+    }
+    if (fr.empty()) cout << "No fraud detected";
+    else {
+        for (int i : fr)
+            cout << tx[i].s << " " << tx[i].r << " "
+                 << tx[i].a << " " << tx[i].t << endl;
+    }
     return 0;
 }</code></pre></div></div>
 
 <div class="q-card" data-q="75"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">75</span><span class="q-title">State Population Simulation</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-tag">1 Apr 2026</span><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){double h,s;int k;cin>>h>>s>>k;
-for(int i=0;i&lt;k;i++){double nh=h-(h*0.1)+(s*0.05),ns=s-(s*0.05)+(h*0.1);h=nh;s=ns;}
-cout<<fixed<<setprecision(2)<<"Happy: "<<h<<"\nSad: "<<s;return 0;}</code></pre></div></div>
+int main() {
+    double h, s;
+    int k;
+    cin >> h >> s >> k;
+    for (int i = 0; i &lt; k; i++) {
+        double nh = h - (h * 0.1) + (s * 0.05);
+        double ns = s - (s * 0.05) + (h * 0.1);
+        h = nh;
+        s = ns;
+    }
+    cout << fixed << setprecision(2) << "Happy: " << h << "\nSad: " << s;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="76"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">76</span><span class="q-title">Electricity Bill</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int u;cin>>u;if(u<0){cout<<"Error";return 0;}double b=0;
-if(u<=100)b=u*1.5;else if(u<=300)b=150+(u-100)*2.0;else if(u<=500)b=150+400+(u-300)*3.0;else b=150+400+600+(u-500)*5.0;
-cout<<fixed<<setprecision(2)<<b;return 0;}</code></pre></div></div>
+int main() {
+    int u;
+    cin >> u;
+    if (u < 0) { cout << "Error"; return 0; }
+    double b = 0;
+    if (u <= 100) b = u * 1.5;
+    else if (u <= 300) b = 150 + (u - 100) * 2.0;
+    else if (u <= 500) b = 150 + 400 + (u - 300) * 3.0;
+    else b = 150 + 400 + 600 + (u - 500) * 5.0;
+    cout << fixed << setprecision(2) << b;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="77"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">77</span><span class="q-title">Temperature Converter</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){char c;double t;cin>>c>>t;if(c=='C')cout<<fixed<<setprecision(2)<<(t*9.0/5.0)+32<<" F";
-else if(c=='F')cout<<fixed<<setprecision(2)<<(t-32)*5.0/9.0<<" C";else cout<<"Error";return 0;}</code></pre></div></div>
+int main() {
+    char c;
+    double t;
+    cin >> c >> t;
+    if (c == 'C')
+        cout << fixed << setprecision(2) << (t * 9.0 / 5.0) + 32 << " F";
+    else if (c == 'F')
+        cout << fixed << setprecision(2) << (t - 32) * 5.0 / 9.0 << " C";
+    else
+        cout << "Error";
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="78"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">78</span><span class="q-title">ATM Withdrawal</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int bal,amt;cin>>bal>>amt;if(amt<=0||amt%100!=0)cout<<"Invalid amount";
-else if(amt>bal)cout<<"Insufficient balance";else{bal-=amt;cout<<"Remaining: "<<bal;}return 0;}</code></pre></div></div>
+int main() {
+    int bal, amt;
+    cin >> bal >> amt;
+    if (amt <= 0 || amt % 100 != 0)
+        cout << "Invalid amount";
+    else if (amt > bal)
+        cout << "Insufficient balance";
+    else {
+        bal -= amt;
+        cout << "Remaining: " << bal;
+    }
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="79"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">79</span><span class="q-title">Simple & Compound Interest</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){double p,r,t;cin>>p>>r>>t;cout<<fixed<<setprecision(2)<<"SI: "<<(p*r*t)/100<<"\nCI: "<<p*pow(1+r/100,t)-p;return 0;}</code></pre></div></div>
+int main() {
+    double p, r, t;
+    cin >> p >> r >> t;
+    cout << fixed << setprecision(2);
+    cout << "SI: " << (p * r * t) / 100 << "\nCI: " << p * pow(1 + r / 100, t) - p;
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="80"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">80</span><span class="q-title">nCr Combinations</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-long long f(int n){long long r=1;for(int i=2;i<=n;i++)r*=i;return r;}
-int main(){int n,r;cin>>n>>r;if(r>n)cout<<0;else cout<<f(n)/(f(r)*f(n-r));return 0;}</code></pre></div></div>
+long long f(int n) {
+    long long r = 1;
+    for (int i = 2; i <= n; i++) r *= i;
+    return r;
+}
+int main() {
+    int n, r;
+    cin >> n >> r;
+    if (r > n) cout << 0;
+    else cout << f(n) / (f(r) * f(n - r));
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="81"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">81</span><span class="q-title">Power of 2 Check</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;cout<<(n>0&&(n&(n-1))==0?"Yes":"No");return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    cout << (n > 0 && (n & (n - 1)) == 0 ? "Yes" : "No");
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="82"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">82</span><span class="q-title">Print All Divisors</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;for(int i=1;i*i<=n;i++)if(n%i==0){cout<<i<<" ";if(i!=n/i)cout<<n/i<<" ";}return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    for (int i = 1; i * i <= n; i++) {
+        if (n % i == 0) {
+            cout << i << " ";
+            if (i != n / i) cout << n / i << " ";
+        }
+    }
+    return 0;
+}</code></pre></div></div>
 </div>
 
 <!-- SECTION 8: Sorting -->
@@ -1047,51 +1513,147 @@ int main(){int n;cin>>n;for(int i=1;i*i<=n;i++)if(n%i==0){cout<<i<<" ";if(i!=n/i
 
 <div class="q-card" data-q="83"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">83</span><span class="q-title">Selection Sort</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;vector&lt;int&gt;a(n);for(int i=0;i&lt;n;i++)cin>>a[i];
-for(int i=0;i&lt;n-1;i++){int m=i;for(int j=i+1;j&lt;n;j++)if(a[j]<a[m])m=j;swap(a[i],a[m]);}
-for(int x:a)cout<<x<<" ";return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+    for (int i = 0; i &lt; n - 1; i++) {
+        int m = i;
+        for (int j = i + 1; j &lt; n; j++)
+            if (a[j] < a[m]) m = j;
+        swap(a[i], a[m]);
+    }
+    for (int x : a) cout << x << " ";
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="84"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">84</span><span class="q-title">Bubble Sort</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;vector&lt;int&gt;a(n);for(int i=0;i&lt;n;i++)cin>>a[i];
-for(int i=0;i&lt;n-1;i++){bool sw=false;for(int j=0;j&lt;n-i-1;j++)if(a[j]>a[j+1]){swap(a[j],a[j+1]);sw=true;}if(!sw)break;}
-for(int x:a)cout<<x<<" ";return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+    for (int i = 0; i &lt; n - 1; i++) {
+        bool sw = false;
+        for (int j = 0; j &lt; n - i - 1; j++) {
+            if (a[j] > a[j + 1]) {
+                swap(a[j], a[j + 1]);
+                sw = true;
+            }
+        }
+        if (!sw) break;
+    }
+    for (int x : a) cout << x << " ";
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="85"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">85</span><span class="q-title">Insertion Sort</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;vector&lt;int&gt;a(n);for(int i=0;i&lt;n;i++)cin>>a[i];
-for(int i=1;i&lt;n;i++){int k=a[i],j=i-1;while(j>=0&&a[j]>k){a[j+1]=a[j];j--;}a[j+1]=k;}
-for(int x:a)cout<<x<<" ";return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+    for (int i = 1; i &lt; n; i++) {
+        int k = a[i], j = i - 1;
+        while (j >= 0 && a[j] > k) {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = k;
+    }
+    for (int x : a) cout << x << " ";
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="86"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">86</span><span class="q-title">Binary Search</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n,t;cin>>n;vector&lt;int&gt;a(n);for(int i=0;i&lt;n;i++)cin>>a[i];cin>>t;
-int lo=0,hi=n-1;while(lo<=hi){int m=(lo+hi)/2;if(a[m]==t){cout<<m;return 0;}else if(a[m]<t)lo=m+1;else hi=m-1;}
-cout<<"Not Found";return 0;}</code></pre><div class="complexity"><span><b>Time:</b> O(log n)</span></div></div></div>
+int main() {
+    int n, t;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+    cin >> t;
+    int lo = 0, hi = n - 1;
+    while (lo <= hi) {
+        int m = (lo + hi) / 2;
+        if (a[m] == t) { cout << m; return 0; }
+        else if (a[m] < t) lo = m + 1;
+        else hi = m - 1;
+    }
+    cout << "Not Found";
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(log n)</span></div></div></div>
 
 <div class="q-card" data-q="87"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">87</span><span class="q-title">Linear Search</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n,t;cin>>n;vector&lt;int&gt;a(n);for(int i=0;i&lt;n;i++)cin>>a[i];cin>>t;
-for(int i=0;i&lt;n;i++)if(a[i]==t){cout<<i;return 0;}cout<<"Not Found";return 0;}</code></pre></div></div>
+int main() {
+    int n, t;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+    cin >> t;
+    for (int i = 0; i &lt; n; i++) {
+        if (a[i] == t) { cout << i; return 0; }
+    }
+    cout << "Not Found";
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="88"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">88</span><span class="q-title">Count Occurrences (Sorted)</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n,t;cin>>n;vector&lt;int&gt;a(n);for(int i=0;i&lt;n;i++)cin>>a[i];cin>>t;
-cout<<(upper_bound(a.begin(),a.end(),t)-lower_bound(a.begin(),a.end(),t));return 0;}</code></pre></div></div>
+int main() {
+    int n, t;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+    cin >> t;
+    cout << (upper_bound(a.begin(), a.end(), t) - lower_bound(a.begin(), a.end(), t));
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="89"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">89</span><span class="q-title">First & Last Position (Sorted)</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n,t;cin>>n;vector&lt;int&gt;a(n);for(int i=0;i&lt;n;i++)cin>>a[i];cin>>t;
-auto lb=lower_bound(a.begin(),a.end(),t),ub=upper_bound(a.begin(),a.end(),t);
-if(lb==a.end()||*lb!=t)cout<<"-1 -1";else cout<<(lb-a.begin())<<" "<<(ub-a.begin()-1);return 0;}</code></pre></div></div>
+int main() {
+    int n, t;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+    cin >> t;
+    auto lb = lower_bound(a.begin(), a.end(), t);
+    auto ub = upper_bound(a.begin(), a.end(), t);
+    if (lb == a.end() || *lb != t)
+        cout << "-1 -1";
+    else
+        cout << (lb - a.begin()) << " " << (ub - a.begin() - 1);
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="90"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">90</span><span class="q-title">Search in Rotated Sorted Array</span><div class="q-diff"><span>⭐</span><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n,t;cin>>n;vector&lt;int&gt;a(n);for(int i=0;i&lt;n;i++)cin>>a[i];cin>>t;
-int lo=0,hi=n-1;while(lo<=hi){int m=(lo+hi)/2;if(a[m]==t){cout<<m;return 0;}
-if(a[lo]<=a[m]){if(t>=a[lo]&&t<a[m])hi=m-1;else lo=m+1;}
-else{if(t>a[m]&&t<=a[hi])lo=m+1;else hi=m-1;}}
-cout<<"Not Found";return 0;}</code></pre></div></div>
+int main() {
+    int n, t;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+    cin >> t;
+    int lo = 0, hi = n - 1;
+    while (lo <= hi) {
+        int m = (lo + hi) / 2;
+        if (a[m] == t) { cout << m; return 0; }
+        if (a[lo] <= a[m]) {
+            if (t >= a[lo] && t < a[m]) hi = m - 1;
+            else lo = m + 1;
+        } else {
+            if (t > a[m] && t <= a[hi]) lo = m + 1;
+            else hi = m - 1;
+        }
+    }
+    cout << "Not Found";
+    return 0;
+}</code></pre></div></div>
 </div>
 
 <!-- SECTION 9: Matrix -->
@@ -1104,33 +1666,98 @@ cout<<"Not Found";return 0;}</code></pre></div></div>
 
 <div class="q-card" data-q="91"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">91</span><span class="q-title">Matrix Addition</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int r,c;cin>>r>>c;vector&lt;vector&lt;int&gt;&gt;a(r,vector&lt;int&gt;(c)),b(r,vector&lt;int&gt;(c));
-for(int i=0;i&lt;r;i++)for(int j=0;j&lt;c;j++)cin>>a[i][j];for(int i=0;i&lt;r;i++)for(int j=0;j&lt;c;j++)cin>>b[i][j];
-for(int i=0;i&lt;r;i++){for(int j=0;j&lt;c;j++)cout<<a[i][j]+b[i][j]<<" ";cout<<endl;}return 0;}</code></pre></div></div>
+int main() {
+    int r, c;
+    cin >> r >> c;
+    vector&lt;vector&lt;int&gt;&gt; a(r, vector&lt;int&gt;(c)), b(r, vector&lt;int&gt;(c));
+    for (int i = 0; i &lt; r; i++)
+        for (int j = 0; j &lt; c; j++) cin >> a[i][j];
+    for (int i = 0; i &lt; r; i++)
+        for (int j = 0; j &lt; c; j++) cin >> b[i][j];
+    for (int i = 0; i &lt; r; i++) {
+        for (int j = 0; j &lt; c; j++)
+            cout << a[i][j] + b[i][j] << " ";
+        cout << endl;
+    }
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="92"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">92</span><span class="q-title">Matrix Transpose</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int r,c;cin>>r>>c;vector&lt;vector&lt;int&gt;&gt;m(r,vector&lt;int&gt;(c));for(int i=0;i&lt;r;i++)for(int j=0;j&lt;c;j++)cin>>m[i][j];
-for(int j=0;j&lt;c;j++){for(int i=0;i&lt;r;i++)cout<<m[i][j]<<" ";cout<<endl;}return 0;}</code></pre></div></div>
+int main() {
+    int r, c;
+    cin >> r >> c;
+    vector&lt;vector&lt;int&gt;&gt; m(r, vector&lt;int&gt;(c));
+    for (int i = 0; i &lt; r; i++)
+        for (int j = 0; j &lt; c; j++) cin >> m[i][j];
+    for (int j = 0; j &lt; c; j++) {
+        for (int i = 0; i &lt; r; i++)
+            cout << m[i][j] << " ";
+        cout << endl;
+    }
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="93"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">93</span><span class="q-title">Matrix Multiplication</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int r1,c1,r2,c2;cin>>r1>>c1>>r2>>c2;if(c1!=r2){cout<<"Error";return 0;}
-vector&lt;vector&lt;int&gt;&gt;a(r1,vector&lt;int&gt;(c1)),b(r2,vector&lt;int&gt;(c2));
-for(int i=0;i&lt;r1;i++)for(int j=0;j&lt;c1;j++)cin>>a[i][j];for(int i=0;i&lt;r2;i++)for(int j=0;j&lt;c2;j++)cin>>b[i][j];
-for(int i=0;i&lt;r1;i++){for(int j=0;j&lt;c2;j++){int s=0;for(int k=0;k&lt;c1;k++)s+=a[i][k]*b[k][j];cout<<s<<" ";}cout<<endl;}return 0;}</code></pre></div></div>
+int main() {
+    int r1, c1, r2, c2;
+    cin >> r1 >> c1 >> r2 >> c2;
+    if (c1 != r2) { cout << "Error"; return 0; }
+    vector&lt;vector&lt;int&gt;&gt; a(r1, vector&lt;int&gt;(c1)), b(r2, vector&lt;int&gt;(c2));
+    for (int i = 0; i &lt; r1; i++)
+        for (int j = 0; j &lt; c1; j++) cin >> a[i][j];
+    for (int i = 0; i &lt; r2; i++)
+        for (int j = 0; j &lt; c2; j++) cin >> b[i][j];
+    for (int i = 0; i &lt; r1; i++) {
+        for (int j = 0; j &lt; c2; j++) {
+            int s = 0;
+            for (int k = 0; k &lt; c1; k++) s += a[i][k] * b[k][j];
+            cout << s << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="94"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">94</span><span class="q-title">Spiral Matrix Traversal</span><div class="q-diff"><span>⭐</span><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n,m;cin>>n>>m;vector&lt;vector&lt;int&gt;&gt;mat(n,vector&lt;int&gt;(m));
-for(int i=0;i&lt;n;i++)for(int j=0;j&lt;m;j++)cin>>mat[i][j];
-int t=0,b=n-1,l=0,r=m-1;
-while(t<=b&&l<=r){for(int i=l;i<=r;i++)cout<<mat[t][i]<<" ";t++;for(int i=t;i<=b;i++)cout<<mat[i][r]<<" ";r--;
-if(t<=b){for(int i=r;i>=l;i--)cout<<mat[b][i]<<" ";b--;}if(l<=r){for(int i=b;i>=t;i--)cout<<mat[i][l]<<" ";l++;}}return 0;}</code></pre></div></div>
+int main() {
+    int n, m;
+    cin >> n >> m;
+    vector&lt;vector&lt;int&gt;&gt; mat(n, vector&lt;int&gt;(m));
+    for (int i = 0; i &lt; n; i++)
+        for (int j = 0; j &lt; m; j++) cin >> mat[i][j];
+    int t = 0, b = n - 1, l = 0, r = m - 1;
+    while (t <= b && l <= r) {
+        for (int i = l; i <= r; i++) cout << mat[t][i] << " ";
+        t++;
+        for (int i = t; i <= b; i++) cout << mat[i][r] << " ";
+        r--;
+        if (t <= b) {
+            for (int i = r; i >= l; i--) cout << mat[b][i] << " ";
+            b--;
+        }
+        if (l <= r) {
+            for (int i = b; i >= t; i--) cout << mat[i][l] << " ";
+            l++;
+        }
+    }
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="95"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">95</span><span class="q-title">Star Pyramid Pattern</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n;cin>>n;for(int i=1;i<=n;i++){for(int j=1;j<=n-i;j++)cout<<" ";for(int j=1;j<=2*i-1;j++)cout<<"*";cout<<endl;}return 0;}</code></pre></div></div>
+int main() {
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n - i; j++) cout << " ";
+        for (int j = 1; j <= 2 * i - 1; j++) cout << "*";
+        cout << endl;
+    }
+    return 0;
+}</code></pre></div></div>
 </div>
 
 <!-- SECTION 10: Advanced -->
@@ -1143,39 +1770,115 @@ int main(){int n;cin>>n;for(int i=1;i<=n;i++){for(int j=1;j<=n-i;j++)cout<<" ";f
 
 <div class="q-card" data-q="96"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">96</span><span class="q-title">Balanced Parentheses (Stack)</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s;cin>>s;stack&lt;char&gt;st;
-for(char c:s){if(c=='('||c=='{'||c=='[')st.push(c);else{if(st.empty()){cout<<"Not Balanced";return 0;}
-char t=st.top();st.pop();if((c==')'&&t!='(')||(c=='}'&&t!='{')||(c==']'&&t!='[')){cout<<"Not Balanced";return 0;}}}
-cout<<(st.empty()?"Balanced":"Not Balanced");return 0;}</code></pre></div></div>
+int main() {
+    string s;
+    cin >> s;
+    stack&lt;char&gt; st;
+    for (char c : s) {
+        if (c == '(' || c == '{' || c == '[') {
+            st.push(c);
+        } else {
+            if (st.empty()) { cout << "Not Balanced"; return 0; }
+            char t = st.top();
+            st.pop();
+            if ((c == ')' && t != '(') ||
+                (c == '}' && t != '{') ||
+                (c == ']' && t != '[')) {
+                cout << "Not Balanced";
+                return 0;
+            }
+        }
+    }
+    cout << (st.empty() ? "Balanced" : "Not Balanced");
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="97"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">97</span><span class="q-title">Linked List — Insert & Display</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-struct Node{int data;Node*next;};Node*head=NULL;
-void ins(int v){Node*n=new Node{v,NULL};if(!head)head=n;else{Node*t=head;while(t->next)t=t->next;t->next=n;}}
-void disp(){Node*t=head;while(t){cout<<t->data<<" -> ";t=t->next;}cout<<"NULL";}
-int main(){ins(10);ins(20);ins(30);ins(40);disp();return 0;}</code></pre></div></div>
+struct Node {
+    int data;
+    Node* next;
+};
+Node* head = NULL;
+
+void ins(int v) {
+    Node* n = new Node{v, NULL};
+    if (!head) head = n;
+    else {
+        Node* t = head;
+        while (t->next) t = t->next;
+        t->next = n;
+    }
+}
+void disp() {
+    Node* t = head;
+    while (t) {
+        cout << t->data << " -> ";
+        t = t->next;
+    }
+    cout << "NULL";
+}
+int main() {
+    ins(10); ins(20); ins(30); ins(40);
+    disp();
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="98"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">98</span><span class="q-title">Tower of Hanoi</span><div class="q-diff"><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-void hanoi(int n,char f,char t,char a){if(n==0)return;hanoi(n-1,f,a,t);
-cout<<"Move disk "<<n<<" from "<<f<<" to "<<t<<endl;hanoi(n-1,a,t,f);}
-int main(){int n;cin>>n;hanoi(n,'A','C','B');return 0;}</code></pre></div></div>
+void hanoi(int n, char f, char t, char a) {
+    if (n == 0) return;
+    hanoi(n - 1, f, a, t);
+    cout << "Move disk " << n << " from " << f << " to " << t << endl;
+    hanoi(n - 1, a, t, f);
+}
+int main() {
+    int n;
+    cin >> n;
+    hanoi(n, 'A', 'C', 'B');
+    return 0;
+}</code></pre></div></div>
 
 <div class="q-card" data-q="99"><div class="q-head" onclick="toggleQ(this)"><span class="q-num">99</span><span class="q-title">Longest Common Subsequence (DP)</span><div class="q-diff"><span>⭐</span><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){string s1,s2;cin>>s1>>s2;int m=s1.length(),n=s2.length();
-vector&lt;vector&lt;int&gt;&gt;dp(m+1,vector&lt;int&gt;(n+1,0));
-for(int i=1;i<=m;i++)for(int j=1;j<=n;j++){
-if(s1[i-1]==s2[j-1])dp[i][j]=dp[i-1][j-1]+1;else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);}
-cout<<dp[m][n];return 0;}</code></pre><div class="complexity"><span><b>Time:</b> O(m*n)</span></div></div></div>
+int main() {
+    string s1, s2;
+    cin >> s1 >> s2;
+    int m = s1.length(), n = s2.length();
+    vector&lt;vector&lt;int&gt;&gt; dp(m + 1, vector&lt;int&gt;(n + 1, 0));
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (s1[i - 1] == s2[j - 1])
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            else
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+        }
+    }
+    cout << dp[m][n];
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(m*n)</span></div></div></div>
 
 <div class="q-card" data-q="100"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff5252,#ff9100);">100</span><span class="q-title">0/1 Knapsack (DP)</span><div class="q-diff"><span>⭐</span><span>⭐</span><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body"><pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
-int main(){int n,W;cin>>n>>W;vector&lt;int&gt;wt(n),val(n);for(int i=0;i&lt;n;i++)cin>>wt[i]>>val[i];
-vector&lt;vector&lt;int&gt;&gt;dp(n+1,vector&lt;int&gt;(W+1,0));
-for(int i=1;i<=n;i++)for(int w=0;w<=W;w++){if(wt[i-1]<=w)dp[i][w]=max(val[i-1]+dp[i-1][w-wt[i-1]],dp[i-1][w]);else dp[i][w]=dp[i-1][w];}
-cout<<dp[n][W];return 0;}</code></pre><div class="complexity"><span><b>Time:</b> O(n*W)</span></div></div></div>
+int main() {
+    int n, W;
+    cin >> n >> W;
+    vector&lt;int&gt; wt(n), val(n);
+    for (int i = 0; i &lt; n; i++) cin >> wt[i] >> val[i];
+    vector&lt;vector&lt;int&gt;&gt; dp(n + 1, vector&lt;int&gt;(W + 1, 0));
+    for (int i = 1; i <= n; i++) {
+        for (int w = 0; w <= W; w++) {
+            if (wt[i - 1] <= w)
+                dp[i][w] = max(val[i - 1] + dp[i - 1][w - wt[i - 1]], dp[i - 1][w]);
+            else
+                dp[i][w] = dp[i - 1][w];
+        }
+    }
+    cout << dp[n][W];
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n*W)</span></div></div></div>
 </div>
+
 
 <!-- SECTION 11: Final Tips -->
 <div class="section" id="sec11">
