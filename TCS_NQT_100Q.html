@@ -1879,8 +1879,748 @@ int main() {
 }</code></pre><div class="complexity"><span><b>Time:</b> O(n*W)</span></div></div></div>
 </div>
 
+<!-- SECTION 11: Key Patterns & Templates -->
+<div class="section" id="sec11">
+<div class="section-header">
+<div class="icon" style="background:linear-gradient(135deg,#ff910030,#ff525210);">🧠</div>
+<h2>30 Key Patterns & Algorithm Templates</h2>
+<span class="count">Must-Know for Exam</span>
+</div>
 
-<!-- SECTION 11: Final Tips -->
+<!-- Pattern 1 -->
+<div class="q-card" data-q="P1"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P1</span><span class="q-title">Kadane's Algorithm — Max Subarray Sum</span><div class="q-diff"><span>🔥</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find maximum sum of contiguous subarray"<br><span class="label">Key Idea:</span> At each element — extend previous OR start fresh</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    int maxSum = a[0], currSum = a[0];
+    for (int i = 1; i &lt; n; i++) {
+        currSum = max(a[i], currSum + a[i]);
+        maxSum = max(maxSum, currSum);
+    }
+    cout &lt;&lt; maxSum;
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 2 -->
+<div class="q-card" data-q="P2"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P2</span><span class="q-title">Maximum Product Subarray</span><div class="q-diff"><span>🔥</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find max product of contiguous subarray"<br><span class="label">Key Idea:</span> Track both max AND min (negative × negative = positive)</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    int maxP = a[0], minP = a[0], result = a[0];
+    for (int i = 1; i &lt; n; i++) {
+        if (a[i] &lt; 0) swap(maxP, minP);
+        maxP = max(a[i], maxP * a[i]);
+        minP = min(a[i], minP * a[i]);
+        result = max(result, maxP);
+    }
+    cout &lt;&lt; result;
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 3 -->
+<div class="q-card" data-q="P3"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P3</span><span class="q-title">Dutch National Flag — Sort 0s, 1s, 2s</span><div class="q-diff"><span>🔥</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Sort array containing only 0,1,2 in single pass"<br><span class="label">Key Idea:</span> 3 pointers — lo (0s boundary), mid (scanner), hi (2s boundary)</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    int lo = 0, mid = 0, hi = n - 1;
+    while (mid &lt;= hi) {
+        if (a[mid] == 0) swap(a[lo++], a[mid++]);
+        else if (a[mid] == 1) mid++;
+        else swap(a[mid], a[hi--]);
+    }
+    for (int x : a) cout &lt;&lt; x &lt;&lt; " ";
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 4 -->
+<div class="q-card" data-q="P4"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P4</span><span class="q-title">Two Pointer — Pair with Given Sum</span><div class="q-diff"><span>🔥</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find pair with target sum" / sorted array problems<br><span class="label">Key Idea:</span> Left + Right pointers moving inward</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n, target;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+    cin >> target;
+    sort(a.begin(), a.end());
+
+    int left = 0, right = n - 1;
+    while (left &lt; right) {
+        int sum = a[left] + a[right];
+        if (sum == target) {
+            cout &lt;&lt; a[left] &lt;&lt; " " &lt;&lt; a[right];
+            return 0;
+        }
+        else if (sum &lt; target) left++;
+        else right--;
+    }
+    cout &lt;&lt; "Not Found";
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n log n)</span></div></div></div>
+
+<!-- Pattern 5 -->
+<div class="q-card" data-q="P5"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P5</span><span class="q-title">Sliding Window — Fixed Size K</span><div class="q-diff"><span>🔥</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Max/Min sum of subarray of size K"<br><span class="label">Key Idea:</span> Slide window — add new element, remove leftmost</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n, k;
+    cin >> n >> k;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    int windowSum = 0;
+    for (int i = 0; i &lt; k; i++) windowSum += a[i];
+    int maxSum = windowSum;
+    for (int i = k; i &lt; n; i++) {
+        windowSum += a[i] - a[i - k];
+        maxSum = max(maxSum, windowSum);
+    }
+    cout &lt;&lt; maxSum;
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 6 -->
+<div class="q-card" data-q="P6"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P6</span><span class="q-title">Prefix Sum Array</span><div class="q-diff"><span>⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Multiple range sum queries on array"<br><span class="label">Key Idea:</span> Pre-compute cumulative sums, answer any range in O(1)</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n, q;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    // Build prefix sum
+    vector&lt;int&gt; pre(n + 1, 0);
+    for (int i = 0; i &lt; n; i++) pre[i + 1] = pre[i] + a[i];
+
+    // Answer queries: sum from index l to r
+    cin >> q;
+    while (q--) {
+        int l, r;
+        cin >> l >> r;
+        cout &lt;&lt; pre[r + 1] - pre[l] &lt;&lt; "\n";
+    }
+    return 0;
+}</code></pre><div class="complexity"><span><b>Build:</b> O(n) | <b>Query:</b> O(1)</span></div></div></div>
+
+<!-- Pattern 7 -->
+<div class="q-card" data-q="P7"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P7</span><span class="q-title">Frequency Count using Map</span><div class="q-diff"><span>⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Count occurrences" / "Find most frequent" / "Find duplicates"<br><span class="label">Key Idea:</span> map[element]++ to count, then iterate map</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    map&lt;int, int&gt; freq;
+    for (int x : a) freq[x]++;
+
+    // Find most frequent element
+    int maxFreq = 0, result = 0;
+    for (auto &amp;p : freq) {
+        if (p.second > maxFreq) {
+            maxFreq = p.second;
+            result = p.first;
+        }
+    }
+    cout &lt;&lt; result &lt;&lt; " appears " &lt;&lt; maxFreq &lt;&lt; " times";
+    return 0;
+}</code></pre></div></div>
+
+<!-- Pattern 8 -->
+<div class="q-card" data-q="P8"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P8</span><span class="q-title">Reverse an Array / String</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Reverse" / "Palindrome check"<br><span class="label">Key Idea:</span> Two pointers from both ends, swap inward</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    // Method 1: Manual
+    int l = 0, r = n - 1;
+    while (l &lt; r) { swap(a[l++], a[r--]); }
+
+    // Method 2: Built-in
+    // reverse(a.begin(), a.end());
+
+    for (int x : a) cout &lt;&lt; x &lt;&lt; " ";
+    return 0;
+}</code></pre></div></div>
+
+<!-- Pattern 9 -->
+<div class="q-card" data-q="P9"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P9</span><span class="q-title">Array Rotation (Left by D places)</span><div class="q-diff"><span>⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Rotate array left/right by D positions"<br><span class="label">Key Idea:</span> Reverse 3 times — first D, rest, then whole</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n, d;
+    cin >> n >> d;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    d = d % n;
+    reverse(a.begin(), a.begin() + d);   // reverse first d
+    reverse(a.begin() + d, a.end());     // reverse rest
+    reverse(a.begin(), a.end());          // reverse all
+
+    for (int x : a) cout &lt;&lt; x &lt;&lt; " ";
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n) | <b>Space:</b> O(1)</span></div></div></div>
+
+<!-- Pattern 10 -->
+<div class="q-card" data-q="P10"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P10</span><span class="q-title">Find Duplicates in Array</span><div class="q-diff"><span>⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find duplicate / repeated elements"<br><span class="label">Key Idea:</span> Use set — if already present, it's a duplicate</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    set&lt;int&gt; seen;
+    vector&lt;int&gt; dups;
+    for (int x : a) {
+        if (seen.count(x)) dups.push_back(x);
+        else seen.insert(x);
+    }
+    if (dups.empty()) cout &lt;&lt; "No duplicates";
+    else for (int x : dups) cout &lt;&lt; x &lt;&lt; " ";
+    return 0;
+}</code></pre></div></div>
+
+<!-- Pattern 11 -->
+<div class="q-card" data-q="P11"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P11</span><span class="q-title">Find Missing Number (1 to N)</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find missing number from 1 to N"<br><span class="label">Key Idea:</span> Expected sum - Actual sum = Missing number</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n - 1);
+    int actualSum = 0;
+    for (int i = 0; i &lt; n - 1; i++) {
+        cin >> a[i];
+        actualSum += a[i];
+    }
+    int expectedSum = n * (n + 1) / 2;
+    cout &lt;&lt; "Missing: " &lt;&lt; expectedSum - actualSum;
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n) | <b>Space:</b> O(1)</span></div></div></div>
+
+<!-- Pattern 12 -->
+<div class="q-card" data-q="P12"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P12</span><span class="q-title">Merge Two Sorted Arrays</span><div class="q-diff"><span>⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Merge two sorted arrays into one sorted"<br><span class="label">Key Idea:</span> Two pointers, compare and pick smaller</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int m, n;
+    cin >> m >> n;
+    vector&lt;int&gt; a(m), b(n), c;
+    for (int i = 0; i &lt; m; i++) cin >> a[i];
+    for (int i = 0; i &lt; n; i++) cin >> b[i];
+
+    int i = 0, j = 0;
+    while (i &lt; m &amp;&amp; j &lt; n) {
+        if (a[i] &lt;= b[j]) c.push_back(a[i++]);
+        else c.push_back(b[j++]);
+    }
+    while (i &lt; m) c.push_back(a[i++]);
+    while (j &lt; n) c.push_back(b[j++]);
+
+    for (int x : c) cout &lt;&lt; x &lt;&lt; " ";
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(m+n)</span></div></div></div>
+
+<!-- Pattern 13 -->
+<div class="q-card" data-q="P13"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P13</span><span class="q-title">Second Largest Element</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find second largest / second smallest"<br><span class="label">Key Idea:</span> Track first and second max in single pass</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    int first = INT_MIN, second = INT_MIN;
+    for (int x : a) {
+        if (x > first) { second = first; first = x; }
+        else if (x > second &amp;&amp; x != first) second = x;
+    }
+    if (second == INT_MIN) cout &lt;&lt; "No second largest";
+    else cout &lt;&lt; second;
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 14 -->
+<div class="q-card" data-q="P14"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P14</span><span class="q-title">Move Zeros to End</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Move all zeros to end maintaining order"<br><span class="label">Key Idea:</span> Place non-zeros at front, fill rest with 0</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    int pos = 0;
+    for (int i = 0; i &lt; n; i++)
+        if (a[i] != 0) a[pos++] = a[i];
+    while (pos &lt; n) a[pos++] = 0;
+
+    for (int x : a) cout &lt;&lt; x &lt;&lt; " ";
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 15 -->
+<div class="q-card" data-q="P15"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P15</span><span class="q-title">String Palindrome Check</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Check if string is palindrome"<br><span class="label">Key Idea:</span> Two pointers from both ends, compare inward</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    string s;
+    cin >> s;
+    int l = 0, r = s.length() - 1;
+    bool isPalin = true;
+    while (l &lt; r) {
+        if (s[l] != s[r]) { isPalin = false; break; }
+        l++; r--;
+    }
+    cout &lt;&lt; (isPalin ? "Palindrome" : "Not Palindrome");
+    return 0;
+}</code></pre></div></div>
+
+<!-- Pattern 16 -->
+<div class="q-card" data-q="P16"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P16</span><span class="q-title">Anagram Check</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Check if two strings are anagrams"<br><span class="label">Key Idea:</span> Sort both, compare. Or use frequency array.</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    string a, b;
+    cin >> a >> b;
+    if (a.length() != b.length()) { cout &lt;&lt; "No"; return 0; }
+
+    // Method: frequency array
+    int freq[26] = {0};
+    for (char c : a) freq[c - 'a']++;
+    for (char c : b) freq[c - 'a']--;
+    bool isAnagram = true;
+    for (int i = 0; i &lt; 26; i++)
+        if (freq[i] != 0) { isAnagram = false; break; }
+    cout &lt;&lt; (isAnagram ? "Anagram" : "Not Anagram");
+    return 0;
+}</code></pre></div></div>
+
+<!-- Pattern 17 -->
+<div class="q-card" data-q="P17"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P17</span><span class="q-title">Count Vowels & Consonants</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Count vowels, consonants, digits, spaces"<br><span class="label">Key Idea:</span> Iterate chars, classify using conditions</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    string s;
+    getline(cin, s);
+    int v = 0, c = 0, d = 0, sp = 0;
+    for (char ch : s) {
+        ch = tolower(ch);
+        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') v++;
+        else if (isalpha(ch)) c++;
+        else if (isdigit(ch)) d++;
+        else if (ch == ' ') sp++;
+    }
+    cout &lt;&lt; "Vowels: " &lt;&lt; v &lt;&lt; " Consonants: " &lt;&lt; c
+         &lt;&lt; " Digits: " &lt;&lt; d &lt;&lt; " Spaces: " &lt;&lt; sp;
+    return 0;
+}</code></pre></div></div>
+
+<!-- Pattern 18 -->
+<div class="q-card" data-q="P18"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P18</span><span class="q-title">Binary Search Template</span><div class="q-diff"><span>⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Search in sorted array" / "Find position"<br><span class="label">Key Idea:</span> Halve search space each step</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n, target;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+    cin >> target;
+
+    int lo = 0, hi = n - 1, ans = -1;
+    while (lo &lt;= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (a[mid] == target) { ans = mid; break; }
+        else if (a[mid] &lt; target) lo = mid + 1;
+        else hi = mid - 1;
+    }
+    cout &lt;&lt; (ans != -1 ? to_string(ans) : "Not Found");
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(log n)</span></div></div></div>
+
+<!-- Pattern 19 -->
+<div class="q-card" data-q="P19"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P19</span><span class="q-title">Bubble / Selection / Insertion Sort</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Implement sorting from scratch"<br><span class="label">Key Idea:</span> Know all three — TCS may ask any</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">// BUBBLE SORT
+for (int i = 0; i &lt; n-1; i++)
+    for (int j = 0; j &lt; n-i-1; j++)
+        if (a[j] > a[j+1]) swap(a[j], a[j+1]);
+
+// SELECTION SORT
+for (int i = 0; i &lt; n-1; i++) {
+    int m = i;
+    for (int j = i+1; j &lt; n; j++)
+        if (a[j] &lt; a[m]) m = j;
+    swap(a[i], a[m]);
+}
+
+// INSERTION SORT
+for (int i = 1; i &lt; n; i++) {
+    int key = a[i], j = i - 1;
+    while (j >= 0 &amp;&amp; a[j] > key) { a[j+1] = a[j]; j--; }
+    a[j+1] = key;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n²) all three</span></div></div></div>
+
+<!-- Pattern 20 -->
+<div class="q-card" data-q="P20"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P20</span><span class="q-title">Remove Duplicates from Sorted Array</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Remove duplicates in-place from sorted array"<br><span class="label">Key Idea:</span> Use write pointer, skip same values</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    int j = 0;
+    for (int i = 1; i &lt; n; i++)
+        if (a[i] != a[j]) a[++j] = a[i];
+
+    for (int i = 0; i &lt;= j; i++) cout &lt;&lt; a[i] &lt;&lt; " ";
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n) | <b>Space:</b> O(1)</span></div></div></div>
+
+<!-- Pattern 21 -->
+<div class="q-card" data-q="P21"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P21</span><span class="q-title">Union & Intersection of Arrays</span><div class="q-diff"><span>⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find common elements / unique combined elements"<br><span class="label">Key Idea:</span> Use set for union, nested check for intersection</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int m, n;
+    cin >> m >> n;
+    vector&lt;int&gt; a(m), b(n);
+    for (int i = 0; i &lt; m; i++) cin >> a[i];
+    for (int i = 0; i &lt; n; i++) cin >> b[i];
+
+    // UNION
+    set&lt;int&gt; u(a.begin(), a.end());
+    for (int x : b) u.insert(x);
+    cout &lt;&lt; "Union: ";
+    for (int x : u) cout &lt;&lt; x &lt;&lt; " ";
+
+    // INTERSECTION
+    set&lt;int&gt; sa(a.begin(), a.end());
+    cout &lt;&lt; "\nIntersection: ";
+    for (int x : b) if (sa.count(x)) { cout &lt;&lt; x &lt;&lt; " "; sa.erase(x); }
+    return 0;
+}</code></pre></div></div>
+
+<!-- Pattern 22 -->
+<div class="q-card" data-q="P22"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P22</span><span class="q-title">Subarray with Given Sum (Positive)</span><div class="q-diff"><span>⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find contiguous subarray with target sum (positive numbers)"<br><span class="label">Key Idea:</span> Sliding window — expand right, shrink left</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n, target;
+    cin >> n >> target;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    int left = 0, sum = 0;
+    for (int right = 0; right &lt; n; right++) {
+        sum += a[right];
+        while (sum > target &amp;&amp; left &lt;= right) sum -= a[left++];
+        if (sum == target) {
+            cout &lt;&lt; "Found: [" &lt;&lt; left &lt;&lt; ", " &lt;&lt; right &lt;&lt; "]";
+            return 0;
+        }
+    }
+    cout &lt;&lt; "Not Found";
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 23 -->
+<div class="q-card" data-q="P23"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P23</span><span class="q-title">Leaders in Array</span><div class="q-diff"><span>⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find elements greater than all to their right"<br><span class="label">Key Idea:</span> Traverse from right, track max seen</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    vector&lt;int&gt; leaders;
+    int maxRight = a[n - 1];
+    leaders.push_back(maxRight);
+    for (int i = n - 2; i >= 0; i--) {
+        if (a[i] > maxRight) {
+            maxRight = a[i];
+            leaders.push_back(a[i]);
+        }
+    }
+    reverse(leaders.begin(), leaders.end());
+    for (int x : leaders) cout &lt;&lt; x &lt;&lt; " ";
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 24 -->
+<div class="q-card" data-q="P24"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P24</span><span class="q-title">Stock Buy & Sell (Max Profit)</span><div class="q-diff"><span>⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find max profit from one buy-sell transaction"<br><span class="label">Key Idea:</span> Track min price so far, compute profit at each day</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; prices(n);
+    for (int i = 0; i &lt; n; i++) cin >> prices[i];
+
+    int minPrice = prices[0], maxProfit = 0;
+    for (int i = 1; i &lt; n; i++) {
+        maxProfit = max(maxProfit, prices[i] - minPrice);
+        minPrice = min(minPrice, prices[i]);
+    }
+    cout &lt;&lt; maxProfit;
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 25 -->
+<div class="q-card" data-q="P25"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P25</span><span class="q-title">Trapping Rain Water</span><div class="q-diff"><span>⭐⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Calculate trapped water between bars"<br><span class="label">Key Idea:</span> Water at i = min(leftMax, rightMax) - height[i]</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; h(n);
+    for (int i = 0; i &lt; n; i++) cin >> h[i];
+
+    vector&lt;int&gt; leftMax(n), rightMax(n);
+    leftMax[0] = h[0];
+    for (int i = 1; i &lt; n; i++) leftMax[i] = max(leftMax[i-1], h[i]);
+    rightMax[n-1] = h[n-1];
+    for (int i = n-2; i >= 0; i--) rightMax[i] = max(rightMax[i+1], h[i]);
+
+    int water = 0;
+    for (int i = 0; i &lt; n; i++)
+        water += min(leftMax[i], rightMax[i]) - h[i];
+    cout &lt;&lt; water;
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 26 -->
+<div class="q-card" data-q="P26"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P26</span><span class="q-title">Majority Element (Moore's Voting)</span><div class="q-diff"><span>⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find element appearing more than n/2 times"<br><span class="label">Key Idea:</span> Cancel different elements, survivor is candidate</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    // Phase 1: Find candidate
+    int candidate = a[0], count = 1;
+    for (int i = 1; i &lt; n; i++) {
+        if (count == 0) { candidate = a[i]; count = 1; }
+        else if (a[i] == candidate) count++;
+        else count--;
+    }
+    // Phase 2: Verify
+    count = 0;
+    for (int x : a) if (x == candidate) count++;
+    if (count > n / 2) cout &lt;&lt; candidate;
+    else cout &lt;&lt; "No majority";
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n) | <b>Space:</b> O(1)</span></div></div></div>
+
+<!-- Pattern 27 -->
+<div class="q-card" data-q="P27"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P27</span><span class="q-title">Next Greater Element (Stack)</span><div class="q-diff"><span>⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find next greater element for each element"<br><span class="label">Key Idea:</span> Use stack — pop elements smaller than current</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector&lt;int&gt; a(n), nge(n, -1);
+    for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+    stack&lt;int&gt; st;
+    for (int i = n - 1; i >= 0; i--) {
+        while (!st.empty() &amp;&amp; st.top() &lt;= a[i]) st.pop();
+        if (!st.empty()) nge[i] = st.top();
+        st.push(a[i]);
+    }
+    for (int i = 0; i &lt; n; i++)
+        cout &lt;&lt; a[i] &lt;&lt; " -> " &lt;&lt; nge[i] &lt;&lt; "\n";
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 28 -->
+<div class="q-card" data-q="P28"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P28</span><span class="q-title">Longest Substring Without Repeat</span><div class="q-diff"><span>⭐⭐⭐</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> "Find longest substring with all unique characters"<br><span class="label">Key Idea:</span> Sliding window + set to track current chars</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    string s;
+    cin >> s;
+    set&lt;char&gt; window;
+    int left = 0, maxLen = 0;
+    for (int right = 0; right &lt; s.size(); right++) {
+        while (window.count(s[right])) {
+            window.erase(s[left]);
+            left++;
+        }
+        window.insert(s[right]);
+        maxLen = max(maxLen, right - left + 1);
+    }
+    cout &lt;&lt; maxLen;
+    return 0;
+}</code></pre><div class="complexity"><span><b>Time:</b> O(n)</span></div></div></div>
+
+<!-- Pattern 29 -->
+<div class="q-card" data-q="P29"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P29</span><span class="q-title">Tiered If-Else Template (Q1 Pattern)</span><div class="q-diff"><span>🔥</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">When:</span> TCS Q1 — Discount / Bill / Fee / Grade calculation<br><span class="label">Key Idea:</span> validate → classify tier → compute → print with precision</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main() {
+    double input;
+    cin >> input;
+
+    // Step 1: VALIDATE
+    if (input &lt; 0) { cout &lt;&lt; "Error"; return 0; }
+
+    // Step 2: CLASSIFY into tiers
+    double rate;
+    if (input &lt;= 1000) rate = 0.05;
+    else if (input &lt;= 5000) rate = 0.10;
+    else rate = 0.15;
+
+    // Step 3: COMPUTE result
+    double result = input - (input * rate);
+
+    // Step 4: OUTPUT with precision
+    cout &lt;&lt; fixed &lt;&lt; setprecision(2) &lt;&lt; result;
+    return 0;
+}</code></pre></div></div>
+
+<!-- Pattern 30 -->
+<div class="q-card" data-q="P30"><div class="q-head" onclick="toggleQ(this)"><span class="q-num" style="background:linear-gradient(135deg,#ff9100,#ff5252);">P30</span><span class="q-title">Quick Reference — STL Cheat Sheet</span><div class="q-diff"><span>🔥</span></div><span class="q-arrow">▼</span></div><div class="q-body">
+<div class="io-box"><span class="label">Must-know:</span> These one-liners save time in exam!</div>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code class="language-cpp">// ===== INPUT =====
+int n; cin >> n;
+vector&lt;int&gt; a(n);
+for (int i = 0; i &lt; n; i++) cin >> a[i];
+
+// ===== SORT =====
+sort(a.begin(), a.end());              // ascending
+sort(a.begin(), a.end(), greater&lt;int&gt;()); // descending
+
+// ===== REVERSE =====
+reverse(a.begin(), a.end());
+
+// ===== MIN / MAX =====
+int mn = *min_element(a.begin(), a.end());
+int mx = *max_element(a.begin(), a.end());
+
+// ===== SUM =====
+int total = accumulate(a.begin(), a.end(), 0);
+
+// ===== COUNT =====
+int cnt = count(a.begin(), a.end(), target);
+
+// ===== FIND =====
+auto it = find(a.begin(), a.end(), target);
+if (it != a.end()) cout &lt;&lt; "Found at " &lt;&lt; (it - a.begin());
+
+// ===== UNIQUE (remove adj duplicates) =====
+sort(a.begin(), a.end());
+a.erase(unique(a.begin(), a.end()), a.end());
+
+// ===== BINARY SEARCH =====
+bool found = binary_search(a.begin(), a.end(), target);
+
+// ===== LOWER/UPPER BOUND =====
+auto lb = lower_bound(a.begin(), a.end(), target);
+auto ub = upper_bound(a.begin(), a.end(), target);
+
+// ===== STRING =====
+string s; cin >> s;
+int len = s.length();
+string sub = s.substr(start, length);
+int pos = s.find("abc");  // npos if not found
+transform(s.begin(), s.end(), s.begin(), ::tolower);
+transform(s.begin(), s.end(), s.begin(), ::toupper);
+
+// ===== DECIMAL OUTPUT =====
+cout &lt;&lt; fixed &lt;&lt; setprecision(2) &lt;&lt; value;
+
+// ===== CONVERSIONS =====
+int num = stoi("123");
+string str = to_string(456);</code></pre></div></div>
+
+<!-- Quick Lookup Table -->
+<div class="tip-card" style="margin-top:20px;">
+<h3>⚡ Pattern Recognition — What to Use When</h3>
+<table class="strat-table">
+<tr><th>Problem Says...</th><th>Use This Pattern →</th></tr>
+<tr><td>"Maximum sum subarray"</td><td><b>P1 — Kadane's Algorithm</b></td></tr>
+<tr><td>"Maximum product subarray"</td><td><b>P2 — Track max & min product</b></td></tr>
+<tr><td>"Sort 0s, 1s, 2s"</td><td><b>P3 — Dutch National Flag</b></td></tr>
+<tr><td>"Pair with given sum"</td><td><b>P4 — Two Pointer</b></td></tr>
+<tr><td>"Max sum of size K window"</td><td><b>P5 — Sliding Window</b></td></tr>
+<tr><td>"Range sum queries"</td><td><b>P6 — Prefix Sum</b></td></tr>
+<tr><td>"Count frequency / most common"</td><td><b>P7 — Frequency Map</b></td></tr>
+<tr><td>"Rotate array"</td><td><b>P9 — Triple Reverse</b></td></tr>
+<tr><td>"Find missing number"</td><td><b>P11 — Sum Formula</b></td></tr>
+<tr><td>"Merge sorted arrays"</td><td><b>P12 — Two Pointer Merge</b></td></tr>
+<tr><td>"Move zeros"</td><td><b>P14 — Write Pointer</b></td></tr>
+<tr><td>"Check palindrome"</td><td><b>P15 — Two End Pointers</b></td></tr>
+<tr><td>"Check anagram"</td><td><b>P16 — Frequency Array</b></td></tr>
+<tr><td>"Best time to buy stock"</td><td><b>P24 — Track Min Price</b></td></tr>
+<tr><td>"Majority element"</td><td><b>P26 — Moore's Voting</b></td></tr>
+<tr><td>"Next greater element"</td><td><b>P27 — Stack</b></td></tr>
+<tr><td>"Longest unique substring"</td><td><b>P28 — Sliding Window + Set</b></td></tr>
+<tr><td>"Discount / bill / fee calc"</td><td><b>P29 — Tiered If-Else</b></td></tr>
+</table>
+</div>
+
+</div>
+
+<!-- SECTION 12: Final Tips -->
 <div class="section" id="sec11">
 <div class="section-header">
 <div class="icon" style="background:linear-gradient(135deg,#00d4ff30,#00d4ff10);">🚀</div>
