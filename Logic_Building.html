@@ -117,6 +117,38 @@ input.date-input:focus{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11
 .cb-cell input[type=checkbox]{width:18px;height:18px;accent-color:#f59e0b;cursor:pointer;border-radius:4px;vertical-align:middle}
 .row-done{opacity:.55}
 .row-done td b{text-decoration:line-through;color:#666}
+/* ======== Hub Topic Cards Grid ======== */
+.hub-section{margin-bottom:32px}
+.hub-title{text-align:center;font-size:1.1rem;font-weight:700;color:#a78bfa;margin-bottom:6px;letter-spacing:.5px}
+.hub-subtitle{text-align:center;font-size:.78rem;color:#666;margin-bottom:22px}
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.topic-card{background:linear-gradient(145deg,#12121f,#1a1a30);border:1px solid #2a2a4a;border-radius:16px;padding:22px 20px;transition:all .35s;cursor:pointer;position:relative;overflow:hidden;text-decoration:none;color:inherit;display:block}
+.topic-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);opacity:0;transition:opacity .3s}
+.topic-card:hover{transform:translateY(-5px);box-shadow:0 10px 35px rgba(0,0,0,.4);border-color:var(--accent)}
+.topic-card:hover::before{opacity:1}
+.topic-icon{font-size:2rem;margin-bottom:10px;display:block}
+.topic-name{font-size:1rem;font-weight:700;margin-bottom:4px;color:#fff}
+.topic-desc{font-size:.72rem;color:#888;line-height:1.5;margin-bottom:12px}
+.topic-meta{display:flex;gap:8px;flex-wrap:wrap}
+.tm{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:2px 8px;border-radius:8px;font-size:.62rem;color:#aaa}
+.tm strong{color:var(--accent)}
+.progress-mini{width:100%;height:4px;background:#1e1e30;border-radius:10px;margin-top:12px;overflow:hidden}
+.progress-mini .fill{height:100%;background:var(--accent);border-radius:10px;transition:width .5s;width:0}
+.completed-text{font-size:.6rem;color:#555;margin-top:4px;text-align:right}
+.view-toggle{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.view-toggle button{background:#1a1a2e;border:1px solid #2a2a4a;color:#ccc;padding:8px 18px;border-radius:25px;cursor:pointer;font-size:.8rem;font-weight:600;transition:.3s}
+.view-toggle button:hover,.view-toggle button.active{background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border-color:transparent;box-shadow:0 4px 15px rgba(139,92,246,.3)}
+.divider{display:flex;align-items:center;gap:14px;margin:28px 0 20px;color:#555;font-size:.75rem;text-transform:uppercase;letter-spacing:1px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,#2a2a4a,transparent)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.topic-card{animation:fadeUp .4s ease both}
+.topic-card:nth-child(2){animation-delay:.04s}
+.topic-card:nth-child(3){animation-delay:.08s}
+.topic-card:nth-child(4){animation-delay:.12s}
+.topic-card:nth-child(5){animation-delay:.16s}
+.topic-card:nth-child(6){animation-delay:.2s}
+.topic-card:nth-child(7){animation-delay:.24s}
+.topic-card:nth-child(8){animation-delay:.28s}
 @media(max-width:768px){
  body{padding:10px}
  h1{font-size:1.5rem}
@@ -124,9 +156,10 @@ input.date-input:focus{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11
  .stat-card .num{font-size:1.2rem}
  .search-bar input{width:100%}
  .section-tabs button{font-size:.7rem;padding:6px 12px}
+ .hub-grid{grid-template-columns:1fr}
 }
 @media print{
- .save-btn,.toolbar,.filters,.search-bar,.toast,.section-tabs,.progress-bar{display:none!important}
+ .save-btn,.toolbar,.filters,.search-bar,.toast,.section-tabs,.progress-bar,.hub-section,.view-toggle,.divider{display:none!important}
  body{background:#fff;color:#000;padding:10px}
  table{background:#fff}
  thead th{background:#f3f4f6;color:#000;border-bottom:2px solid #f59e0b}
@@ -147,7 +180,7 @@ input.date-input:focus{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11
 </nav>
 <header>
 <h1>🧠 Logic Building — Basic to Advanced</h1>
-<p class="subtitle">400+ Problems • Conditionals → Loops → Recursion → Arrays → Strings → Mixed Challenges • Track Progress</p>
+<p class="subtitle">🎯 <strong style="color:#f59e0b">400+ Problems</strong> across 8 core topics — with hints, approaches & progress tracking.<br>Conditionals → Loops → Patterns → Recursion → Arrays → Strings → Math → Mixed Challenges</p>
 </header>
 <main>
 <section class="stats" aria-label="Progress statistics">
@@ -157,6 +190,80 @@ input.date-input:focus{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11
 <div class="stat-card"><div class="num" id="revQ">0</div><div class="lbl">Need Revision</div></div>
 </section>
 <div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+
+<!-- ======== TOPIC HUB CARDS ======== -->
+<section class="hub-section">
+<div class="hub-title">📚 Deep-Dive Topic Pages — 50 Problems Each</div>
+<div class="hub-subtitle">Each topic has detailed problem statements, examples, constraints, hints & approaches</div>
+<div class="hub-grid">
+ <a href="topic_conditionals.html" class="topic-card" style="--accent:#10b981">
+  <span class="topic-icon">🔀</span>
+  <div class="topic-name">Conditionals</div>
+  <div class="topic-desc">If-else, nested conditions, boolean logic, decision making, range checks, and compound conditions.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-conditionals"></div></div>
+  <div class="completed-text" id="done-conditionals">0/50</div>
+ </a>
+ <a href="topic_loops.html" class="topic-card" style="--accent:#3b82f6">
+  <span class="topic-icon">🔄</span>
+  <div class="topic-name">Loops (While, For, Do-While)</div>
+  <div class="topic-desc">Loop fundamentals, iteration patterns, counters, accumulators, break/continue, and nested loops.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-loops"></div></div>
+  <div class="completed-text" id="done-loops">0/50</div>
+ </a>
+ <a href="topic_patterns.html" class="topic-card" style="--accent:#8b5cf6">
+  <span class="topic-icon">🔷</span>
+  <div class="topic-name">Patterns</div>
+  <div class="topic-desc">Star patterns, number patterns, alphabet patterns, hollow shapes, pyramids, and diamond patterns.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Moderate</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-patterns"></div></div>
+  <div class="completed-text" id="done-patterns">0/50</div>
+ </a>
+ <a href="topic_recursion.html" class="topic-card" style="--accent:#ec4899">
+  <span class="topic-icon">🪞</span>
+  <div class="topic-name">Recursion</div>
+  <div class="topic-desc">Base cases, recursive calls, number recursion, string recursion, and recursive pattern printing.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-recursion"></div></div>
+  <div class="completed-text" id="done-recursion">0/50</div>
+ </a>
+ <a href="topic_arrays.html" class="topic-card" style="--accent:#f59e0b">
+  <span class="topic-icon">📦</span>
+  <div class="topic-name">Arrays</div>
+  <div class="topic-desc">Traversal, searching, counting, manipulation, two-pointer basics, frequency arrays, and merging.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-arrays"></div></div>
+  <div class="completed-text" id="done-arrays">0/50</div>
+ </a>
+ <a href="topic_strings.html" class="topic-card" style="--accent:#ef4444">
+  <span class="topic-icon">🔤</span>
+  <div class="topic-name">Strings</div>
+  <div class="topic-desc">Character manipulation, counting, reversing, palindromes, word-level operations, and case conversion.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-strings"></div></div>
+  <div class="completed-text" id="done-strings">0/50</div>
+ </a>
+ <a href="topic_math.html" class="topic-card" style="--accent:#06b6d4">
+  <span class="topic-icon">🔢</span>
+  <div class="topic-name">Basic Math</div>
+  <div class="topic-desc">Digit extraction, divisibility, primes, GCD/LCM, factorials, series, and number properties.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-math"></div></div>
+  <div class="completed-text" id="done-math">0/50</div>
+ </a>
+ <a href="topic_mixed.html" class="topic-card" style="--accent:#a855f7">
+  <span class="topic-icon">🧩</span>
+  <div class="topic-name">Mixed Logic Problems</div>
+  <div class="topic-desc">Combining arrays+loops, strings+conditions, number+recursion — real applied reasoning challenges.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Easy → Moderate</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-mixed"></div></div>
+  <div class="completed-text" id="done-mixed">0/50</div>
+ </a>
+</div>
+</section>
+
+<div class="divider">📋 Full Problem Tracker — All 400+ Problems</div>
 <div class="toolbar">
 <button onclick="exportData()" title="Export progress as JSON file">📥 Export Data</button>
 <button onclick="document.getElementById('importFile').click()" title="Import progress from JSON file">📤 Import Data</button>
@@ -1193,6 +1300,20 @@ document.addEventListener("keydown", e => {
 });
 
 updateStats();
+
+// ======== Hub Topic Cards Progress ========
+const hubTopics = ['conditionals','loops','patterns','recursion','arrays','strings','math','mixed'];
+hubTopics.forEach(t => {
+ try {
+  const d = JSON.parse(localStorage.getItem('logic50_' + t) || '{}');
+  const count = Object.values(d).filter(v => v === true).length;
+  const pct = Math.round((count / 50) * 100);
+  const bar = document.getElementById('prog-' + t);
+  if(bar) bar.style.width = pct + '%';
+  const txt = document.getElementById('done-' + t);
+  if(txt) txt.textContent = count + '/50';
+ } catch(e) {}
+});
 </script>
 </body>
 </html>
