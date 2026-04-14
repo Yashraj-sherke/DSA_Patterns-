@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔤 Strings — 50 Beginner Problems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="topic_styles.css">
+<style>:root{--accent:#ef4444;--accent2:#dc2626;--glow1:rgba(239,68,68,.08);--glow2:rgba(220,38,38,.06)}</style>
+</head>
+<body>
+<div class="bg-glow"></div><div class="bg-glow2"></div>
+<div class="container">
+<nav>
+ <a href="logic_hub.html">📚 Hub</a><a href="topic_conditionals.html">🔀 Conditionals</a><a href="topic_loops.html">🔄 Loops</a>
+ <a href="topic_patterns.html">🔷 Patterns</a><a href="topic_recursion.html">🪞 Recursion</a><a href="topic_arrays.html">📦 Arrays</a>
+ <a href="topic_strings.html" class="active">🔤 Strings</a><a href="topic_math.html">🔢 Math</a><a href="topic_mixed.html">🧩 Mixed</a>
+</nav>
+<header><h1>🔤 Strings</h1><p class="subtitle">50 Beginner Problems — Character Ops, Counting, Reversing, Palindromes & Word Logic</p></header>
+<div class="stats-row">
+ <div class="stat-card"><div class="num" id="totalCount">50</div><div class="lbl">Total</div></div>
+ <div class="stat-card"><div class="num" id="doneCount">0</div><div class="lbl">Done</div></div>
+ <div class="stat-card"><div class="num" id="pctCount">0%</div><div class="lbl">Progress</div></div>
+</div>
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..."></div>
+<div class="toolbar"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="done">✅ Done</button><button class="filter-btn" data-filter="todo">📝 To-Do</button></div>
+<div id="questionsContainer"></div>
+<div class="supp-section"><div class="supp-title must-do">🏆 Top 10 Must-Do Questions</div><div id="mustDoList"></div></div>
+<div class="supp-section"><div class="supp-title mistakes">❌ Common Mistakes Beginners Make</div><div id="mistakesList"></div></div>
+<div class="supp-section"><div class="supp-title patterns-title">🔑 Key Patterns & Logic Used</div><div id="patternsList"></div></div>
+<div class="footer">🔤 Strings — 50 Problems • Logic Building Hub</div>
+</div>
+<script>
+const TOPIC_KEY = 'strings';
+const QUESTIONS = [
+{title:"Find String Length (Manual)",difficulty:"Very Easy",problem:"Take a string and find its length WITHOUT using built-in length function.",inputEx:"s = 'hello'",outputEx:"Length = 5",constraints:"0 ≤ length ≤ 1000",hint:"Loop through the string counting characters until you reach the end.",approach:"count=0. Traverse each character, increment count. In C: until '\\0'. In others: iterate chars."},
+{title:"Print First and Last Character",difficulty:"Very Easy",problem:"Print the first and last character of a string.",inputEx:"s = 'programming'",outputEx:"First='p', Last='g'",constraints:"length ≥ 1",hint:"First = s[0], Last = s[length-1].",approach:"Direct index access: s[0] for first, s[len-1] for last."},
+{title:"Convert to Uppercase",difficulty:"Very Easy",problem:"Convert all lowercase letters in a string to uppercase.",inputEx:"s = 'Hello World'",outputEx:"HELLO WORLD",constraints:"1 ≤ length ≤ 1000",hint:"If char is between 'a'-'z', subtract 32 (ASCII) or use toUpper function.",approach:"Loop each char: if 'a'<=ch<='z', convert ch = ch - 32 (or ch - 'a' + 'A')."},
+{title:"Convert to Lowercase",difficulty:"Very Easy",problem:"Convert all uppercase letters in a string to lowercase.",inputEx:"s = 'Hello World'",outputEx:"hello world",constraints:"1 ≤ length ≤ 1000",hint:"If char is between 'A'-'Z', add 32 (ASCII) or use toLower function.",approach:"Loop: if 'A'<=ch<='Z', convert ch = ch + 32."},
+{title:"Count Characters (Excluding Spaces)",difficulty:"Very Easy",problem:"Count the total number of characters in a string, excluding spaces.",inputEx:"s = 'hello world'",outputEx:"Count = 10",constraints:"0 ≤ length ≤ 1000",hint:"Loop through string. If character is not a space, increment count.",approach:"count=0. For each char: if ch != ' ', count++."},
+{title:"Count Words in a Sentence",difficulty:"Very Easy",problem:"Count how many words are in a sentence (words separated by single spaces).",inputEx:"s = 'I love coding'",outputEx:"3 words",constraints:"1 ≤ length ≤ 1000",hint:"Count spaces + 1 gives word count. Or count transitions from space to non-space.",approach:"words=1. For each char: if ch == ' ', words++. (Assumes no leading/trailing spaces.)"},
+{title:"Concatenate Two Strings",difficulty:"Very Easy",problem:"Take two strings and print them concatenated (joined).",inputEx:"s1 = 'Hello', s2 = ' World'",outputEx:"Hello World",constraints:"1 ≤ length of each ≤ 500",hint:"Simply append s2 after s1. Most languages have + or strcat for this.",approach:"Loop through s1 printing chars, then loop through s2. Or use built-in concatenation."},
+{title:"Print ASCII Value of Each Character",difficulty:"Very Easy",problem:"For each character in the string, print its ASCII value.",inputEx:"s = 'ABC'",outputEx:"A=65, B=66, C=67",constraints:"1 ≤ length ≤ 100",hint:"Cast each character to int to get its ASCII value.",approach:"Loop: for each ch, print ch and (int)ch."},
+{title:"Check if String is Empty",difficulty:"Very Easy",problem:"Check whether the input string is empty (length = 0) or not.",inputEx:"s = ''",outputEx:"String is empty",constraints:"0 ≤ length ≤ 1000",hint:"Check if length is 0 or string equals empty string.",approach:"if(s.length() == 0) or if(s == '') → empty. Simple condition check."},
+{title:"Compare Two Strings",difficulty:"Very Easy",problem:"Compare two strings lexicographically (dictionary order). Print which comes first.",inputEx:"s1 = 'apple', s2 = 'banana'",outputEx:"apple comes first",constraints:"1 ≤ length ≤ 100",hint:"Compare character by character from left. First difference determines order.",approach:"Loop: compare s1[i] vs s2[i]. Smaller ASCII = comes first. If all same, shorter comes first."},
+{title:"Count Vowels and Consonants",difficulty:"Easy",problem:"Count how many vowels and consonants are in a string (ignore non-letters).",inputEx:"s = 'Hello World'",outputEx:"Vowels=3, Consonants=7",constraints:"1 ≤ length ≤ 1000",hint:"Check each character against aeiouAEIOU. If letter but not vowel, it's consonant.",approach:"For each char: if it's a letter → check if vowel (increment vowels) or consonant (increment consonants)."},
+{title:"Count Digits, Letters, and Special Characters",difficulty:"Easy",problem:"Count how many digits, letters, and special characters are in a string.",inputEx:"s = 'Hello123!@#'",outputEx:"Letters=5, Digits=3, Special=3",constraints:"1 ≤ length ≤ 1000",hint:"Check ASCII ranges: A-Z/a-z for letters, 0-9 for digits, else special.",approach:"Three counters. Categorize each char using range checks."},
+{title:"Count Uppercase and Lowercase",difficulty:"Easy",problem:"Count the number of uppercase and lowercase letters in a string.",inputEx:"s = 'Hello World'",outputEx:"Upper=2, Lower=8",constraints:"1 ≤ length ≤ 1000",hint:"Range check: A-Z for upper, a-z for lower.",approach:"Two counters: if 'A'<=ch<='Z' → upper++. If 'a'<=ch<='z' → lower++."},
+{title:"Character Frequency",difficulty:"Easy",problem:"Find and print the frequency of each character in the string (case-sensitive).",inputEx:"s = 'aabbcc'",outputEx:"a=2, b=2, c=2",constraints:"1 ≤ length ≤ 1000",hint:"Use a frequency array of size 256 (ASCII). Increment freq[ch] for each character.",approach:"int freq[256]={0}. Loop: freq[(int)ch]++. Then print non-zero entries."},
+{title:"Count Spaces in a String",difficulty:"Easy",problem:"Count the number of space characters in a sentence.",inputEx:"s = 'I love to code'",outputEx:"3 spaces",constraints:"0 ≤ length ≤ 1000",hint:"Loop, check if ch == ' ', increment counter.",approach:"count=0. For each char: if ch==' ' count++."},
+{title:"Count Occurrences of a Character",difficulty:"Easy",problem:"Count how many times character X appears in the string.",inputEx:"s = 'banana', X='a'",outputEx:"3",constraints:"1 ≤ length ≤ 1000",hint:"Loop through string, compare each char with X.",approach:"count=0. For each ch in s: if ch==X, count++."},
+{title:"Words Starting with a Vowel",difficulty:"Easy",problem:"Count how many words in a sentence start with a vowel.",inputEx:"s = 'apple is an amazing fruit'",outputEx:"4 words",constraints:"1 ≤ length ≤ 1000",hint:"Split by spaces, check first character of each word.",approach:"Track word starts: beginning of string or character after space. Check if start char is vowel."},
+{title:"Words Ending with 's'",difficulty:"Easy",problem:"Count how many words end with the letter 's' (case-insensitive).",inputEx:"s = 'cats and dogs play games'",outputEx:"3 words",constraints:"1 ≤ length ≤ 1000",hint:"Word ends at a space or end of string. Check the character before it.",approach:"Track word endings: char before space or last char. Check if it's 's' or 'S'."},
+{title:"Reverse a String",difficulty:"Easy",problem:"Reverse a string without using built-in reverse.",inputEx:"s = 'hello'",outputEx:"olleh",constraints:"1 ≤ length ≤ 1000",hint:"Two pointers: swap s[left] and s[right], move inward.",approach:"left=0, right=len-1. While left<right: swap, left++, right--. Same as array reverse."},
+{title:"Check String Palindrome",difficulty:"Easy",problem:"Check if a string reads the same forwards and backwards.",inputEx:"s = 'racecar'",outputEx:"Palindrome",constraints:"1 ≤ length ≤ 1000",hint:"Compare s[i] with s[len-1-i] from both ends. Or reverse and compare.",approach:"Two pointers: left and right. If s[left]!=s[right] → not palindrome. Move inward."},
+{title:"Reverse Each Word in a Sentence",difficulty:"Easy",problem:"Reverse each word individually while keeping the word order the same.",inputEx:"s = 'hello world'",outputEx:"olleh dlrow",constraints:"1 ≤ length ≤ 1000",hint:"Find each word (between spaces). Reverse it in-place.",approach:"Find start and end of each word. Reverse characters within that range. Move to next word."},
+{title:"Reverse Word Order in a Sentence",difficulty:"Easy",problem:"Reverse the order of words. First word becomes last, etc.",inputEx:"s = 'I love coding'",outputEx:"coding love I",constraints:"1 ≤ length ≤ 1000",hint:"Split into words. Print from last word to first.",approach:"Store words in array. Print from last index to first. Or reverse entire string, then reverse each word."},
+{title:"Check if Two Strings are Reverse of Each Other",difficulty:"Easy",problem:"Check if string A is the exact reverse of string B.",inputEx:"A = 'abc', B = 'cba'",outputEx:"Yes, reverse of each other",constraints:"1 ≤ length ≤ 1000",hint:"Compare A[i] with B[len-1-i] for all i.",approach:"If lengths differ → no. Loop: compare A[i] with B[lenB-1-i]. All must match."},
+{title:"Print Middle Character(s)",difficulty:"Easy",problem:"Print the middle character of a string. If even length, print the two middle characters.",inputEx:"s = 'abcde'",outputEx:"c",constraints:"1 ≤ length ≤ 1000",hint:"Middle index = len/2. If even: indices len/2-1 and len/2.",approach:"If len is odd: s[len/2]. If even: s[len/2-1] and s[len/2]."},
+{title:"Remove All Vowels",difficulty:"Easy",problem:"Remove all vowels from a string and print the result.",inputEx:"s = 'Hello World'",outputEx:"Hll Wrld",constraints:"1 ≤ length ≤ 1000",hint:"Build new string: include char only if it's NOT a vowel.",approach:"Loop: if ch is not in {a,e,i,o,u,A,E,I,O,U}, append to result."},
+{title:"Remove All Spaces",difficulty:"Easy",problem:"Remove every space character from the string.",inputEx:"s = 'h e l l o'",outputEx:"hello",constraints:"0 ≤ length ≤ 1000",hint:"Build new string: skip space characters.",approach:"Loop: if ch != ' ', append to result."},
+{title:"Replace Vowels with *",difficulty:"Easy",problem:"Replace every vowel in the string with '*'.",inputEx:"s = 'Hello'",outputEx:"H*ll*",constraints:"1 ≤ length ≤ 1000",hint:"If char is a vowel, output '*' instead. Else output the char.",approach:"Loop: if isVowel(ch) → append '*', else append ch."},
+{title:"Replace Spaces with Underscore",difficulty:"Easy",problem:"Replace all spaces with '_' in the string.",inputEx:"s = 'hello world'",outputEx:"hello_world",constraints:"0 ≤ length ≤ 1000",hint:"If ch == ' ', replace with '_'.",approach:"Loop: if ch==' ' output '_', else output ch."},
+{title:"Remove All Digits from String",difficulty:"Easy",problem:"Remove all digit characters (0-9) from the string.",inputEx:"s = 'abc123def456'",outputEx:"abcdef",constraints:"1 ≤ length ≤ 1000",hint:"If ch is between '0'-'9', skip it.",approach:"Loop: if ch < '0' || ch > '9', include it in result."},
+{title:"Remove Duplicate Characters",difficulty:"Moderate",problem:"Remove duplicate characters: keep only the first occurrence of each character.",inputEx:"s = 'programming'",outputEx:"progamin",constraints:"1 ≤ length ≤ 1000",hint:"Track which characters have been seen using a boolean array (256 ASCII).",approach:"seen[256]={false}. For each ch: if !seen[ch], append to result and set seen[ch]=true."},
+{title:"Remove Consecutive Duplicates",difficulty:"Moderate",problem:"Remove adjacent duplicate characters: 'aaabbbcc' becomes 'abc'.",inputEx:"s = 'aabbccdd'",outputEx:"abcd",constraints:"1 ≤ length ≤ 1000",hint:"Compare each character with the previous one. Include only if different from previous.",approach:"Always include first char. For i≥1: if s[i]!=s[i-1], include s[i]."},
+{title:"Swap Case (Toggle Case)",difficulty:"Easy",problem:"Convert uppercase to lowercase and vice versa.",inputEx:"s = 'Hello World'",outputEx:"hELLO wORLD",constraints:"1 ≤ length ≤ 1000",hint:"If upper → convert to lower (add 32). If lower → convert to upper (subtract 32).",approach:"For each char: if A-Z, add 32. If a-z, subtract 32. Else keep as is."},
+{title:"Shift Characters by 1 (Caesar +1)",difficulty:"Easy",problem:"Shift each letter by 1 position: 'a'→'b', 'z'→'a'.",inputEx:"s = 'xyz'",outputEx:"yza",constraints:"1 ≤ length ≤ 1000; only lowercase letters",hint:"ch = (ch - 'a' + 1) % 26 + 'a' handles the wrap-around from z to a.",approach:"For each letter: shift = (ch - 'a' + 1) % 26 + 'a'. Non-letters stay unchanged."},
+{title:"Print Each Word on New Line",difficulty:"Easy",problem:"Split a sentence into words and print each word on a new line.",inputEx:"s = 'I love coding'",outputEx:"I\nlove\ncoding",constraints:"1 ≤ length ≤ 1000",hint:"Print characters normally. When you hit a space, print newline instead.",approach:"Loop: if ch==' ', output newline, else output ch."},
+{title:"Count Words with Even Length",difficulty:"Easy",problem:"Count how many words in a sentence have even length.",inputEx:"s = 'I love to code'",outputEx:"2 (love=4, to=2)",constraints:"1 ≤ length ≤ 1000",hint:"Find each word, count its length. If length%2==0, increment counter.",approach:"Track word length between spaces. When word ends, check if even length."},
+{title:"Find Longest Word",difficulty:"Moderate",problem:"Find and print the longest word in a sentence.",inputEx:"s = 'I love programming'",outputEx:"programming",constraints:"1 ≤ length ≤ 1000",hint:"Track word lengths. Keep the longest one and its start index.",approach:"Split into words, track maxLength and the word itself. Update when longer word found."},
+{title:"Find Shortest Word",difficulty:"Moderate",problem:"Find and print the shortest word in a sentence.",inputEx:"s = 'I love to code'",outputEx:"I",constraints:"1 ≤ length ≤ 1000",hint:"Same as longest but track minimum length instead.",approach:"Track minLength (init to large value) and the word. Update when shorter word found."},
+{title:"Capitalize First Letter of Each Word",difficulty:"Moderate",problem:"Convert the first letter of every word to uppercase.",inputEx:"s = 'hello world from java'",outputEx:"Hello World From Java",constraints:"1 ≤ length ≤ 1000",hint:"A char is a word start if it's the first char or follows a space. Capitalize it.",approach:"If i==0 or s[i-1]==' ': uppercase s[i]. Else: keep as is (or lowercase)."},
+{title:"Title Case",difficulty:"Moderate",problem:"Convert to title case: first letter uppercase, rest lowercase for each word.",inputEx:"s = 'hELLO wORLD'",outputEx:"Hello World",constraints:"1 ≤ length ≤ 1000",hint:"First letter of each word → upper. All other letters → lower.",approach:"Combine: if word start → toUpper, else → toLower."},
+{title:"Remove Extra Spaces",difficulty:"Moderate",problem:"Reduce multiple consecutive spaces to a single space. Remove leading/trailing spaces.",inputEx:"s = '  hello   world  '",outputEx:"hello world",constraints:"0 ≤ length ≤ 1000",hint:"Skip leading spaces. In middle, include space only if previous char wasn't a space. Trim trailing.",approach:"Build result: skip leading spaces, for middle: only add space if prev wasn't space and current is non-space."},
+{title:"Count Alphabets Before and After M",difficulty:"Easy",problem:"Count how many lowercase letters come before 'm' and how many come after (inclusive of 'm').",inputEx:"s = 'abcmnoz'",outputEx:"Before m: 3, From m onward: 4",constraints:"1 ≤ length ≤ 1000; lowercase only",hint:"Each letter: if ch < 'm' → before, if ch >= 'm' → after.",approach:"Two counters. Compare each lowercase letter with 'm'."},
+{title:"Words Starting and Ending with Same Letter",difficulty:"Moderate",problem:"Print all words in a sentence where the first letter equals the last letter.",inputEx:"s = 'level test wow data'",outputEx:"level, wow, data",constraints:"1 ≤ length ≤ 1000",hint:"Extract each word, compare first and last character.",approach:"Split into words. For each: if word[0] == word[last], print it."},
+{title:"Count Words Containing Letter 'a'",difficulty:"Easy",problem:"Count how many words contain the letter 'a' (case-insensitive).",inputEx:"s = 'apples and bananas are great'",outputEx:"4 words",constraints:"1 ≤ length ≤ 1000",hint:"For each word, check if any character is 'a' or 'A'.",approach:"Split into words. For each word, scan characters for 'a'/'A'. If found, count word."},
+{title:"Reverse String but Keep Digits in Place",difficulty:"Moderate",problem:"Reverse only the alphabetic characters. Digits and special chars stay in their positions.",inputEx:"s = 'a1b2c3'",outputEx:"c1b2a3",constraints:"1 ≤ length ≤ 1000",hint:"Two pointers: skip non-alpha from both ends. Swap only alpha characters.",approach:"left=0, right=len-1. Skip non-alpha from both sides. Swap alpha chars. Move pointers."},
+{title:"Swap First and Last Word",difficulty:"Moderate",problem:"Swap the first and last words in a sentence.",inputEx:"s = 'hello beautiful world'",outputEx:"world beautiful hello",constraints:"At least 2 words",hint:"Identify first and last word. Reconstruct with them swapped.",approach:"Find first word, last word, and middle. Rebuild: lastWord + middle + firstWord."},
+{title:"Reverse String but Skip Spaces",difficulty:"Moderate",problem:"Reverse the string, but keep all spaces in their original positions.",inputEx:"s = 'ab c de'",outputEx:"ed c ba",constraints:"1 ≤ length ≤ 1000",hint:"Extract non-space chars, reverse them. Then fill back skipping original space positions.",approach:"Get all non-space chars reversed. Rebuild: if original had space → keep space, else take from reversed."},
+{title:"Count Substrings Starting and Ending with Same Char",difficulty:"Moderate",problem:"Count how many substrings start and end with the same character.",inputEx:"s = 'aba'",outputEx:"4 (a, b, a, aba)",constraints:"1 ≤ length ≤ 100",hint:"Each single character is a valid substring. Then check all pairs i<j where s[i]==s[j].",approach:"Count = len (each char itself). Plus: for each pair (i,j) where i<j and s[i]==s[j], add 1."},
+{title:"Check if Subsequence",difficulty:"Moderate",problem:"Given two strings A and B, check if A is a subsequence of B (characters of A appear in B in order).",inputEx:"A='ace', B='abcde'",outputEx:"Yes (a...c...e found in order)",constraints:"1 ≤ len(A) ≤ len(B) ≤ 1000",hint:"Use two pointers: one for A, one for B. Move B pointer always, move A pointer only on match.",approach:"i=0 (for A), j=0 (for B). While j<lenB: if A[i]==B[j], i++. j++. If i reaches lenA → subsequence."},
+{title:"Compress String (Run-Length)",difficulty:"Moderate",problem:"Compress a string by replacing consecutive duplicate characters with the character followed by count. Single chars keep count 1.",inputEx:"s = 'aaabbc'",outputEx:"a3b2c1",constraints:"1 ≤ length ≤ 1000",hint:"Track current char and its count. When char changes, output char+count.",approach:"current=s[0], count=1. Loop i=1: if same, count++. Else output current+count, reset."},
+{title:"Interleave Two Strings",difficulty:"Moderate",problem:"Given two strings, interleave them character by character. If one is longer, append the rest.",inputEx:"s1='abc', s2='12345'",outputEx:"a1b2c345",constraints:"0 ≤ length of each ≤ 500",hint:"Use two pointers. Take one char from each alternately. Append remaining of the longer string.",approach:"i=j=0. While both valid: take s1[i], then s2[j]. Append remaining chars from whichever is longer."},
+];
+
+const MUST_DO = [
+"Count Vowels and Consonants — fundamental character classification",
+"Reverse a String — most asked string problem, teaches two-pointer",
+"Check String Palindrome — combines reversal with comparison logic",
+"Character Frequency — introduces frequency array concept (essential for DSA)",
+"Remove Duplicate Characters — tracking seen characters with boolean array",
+"Capitalize First Letter of Each Word — word boundary detection logic",
+"Find Longest Word — word extraction + comparison tracking",
+"Reverse Word Order — string manipulation at word level",
+"Swap Case — ASCII arithmetic on characters",
+"Remove Extra Spaces — tricky string cleaning, common in real-world input processing"
+];
+
+const MISTAKES = [
+"String index out of bounds: accessing s[len] instead of s[len-1]",
+"Not handling empty strings or single-character strings as edge cases",
+"Modifying strings in-place in languages where strings are immutable (Java, Python)",
+"Confusing character comparison with string comparison: 'a' vs \"a\"",
+"Not considering case sensitivity: 'A' is different from 'a' in ASCII",
+"Extra spaces: not handling leading, trailing, or multiple consecutive spaces",
+"Off-by-one in word counting: 'hello world' has 2 words but only 1 space",
+"Forgetting that ASCII 'A' is 65 and 'a' is 97 — the difference is 32",
+"Not resetting word-tracking variables when moving to the next word",
+"Using wrong loop bounds when building new strings from character filters"
+];
+
+const KEY_PATTERNS = [
+"<strong>Character Traversal:</strong> Loop through each character — the foundation of all string problems",
+"<strong>ASCII Arithmetic:</strong> ch - 'a' gives position (0-25). ch + 32 converts upper to lower",
+"<strong>Frequency Array:</strong> int freq[256] — count occurrences of each character in O(N)",
+"<strong>Two-Pointer Reverse:</strong> left and right meet in middle — reverse, palindrome check",
+"<strong>Word Boundary Detection:</strong> Word starts after space (or at index 0), ends before space (or at end)",
+"<strong>Filter & Build:</strong> Create new string by conditionally including characters from original",
+"<strong>Boolean Seen Array:</strong> Track which characters have appeared — for dedup and uniqueness",
+"<strong>In-place vs New String:</strong> Some languages allow in-place modification, others need new string",
+"<strong>Split & Process:</strong> Break sentence into words, process each separately, rejoin",
+"<strong>Character Classification:</strong> Is it letter? digit? space? vowel? — the fundamental branching logic"
+];
+</script>
+<script src="topic_template.js"></script>
+</body>
+</html>

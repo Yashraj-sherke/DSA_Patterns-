@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔷 Patterns — 50 Beginner Problems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="topic_styles.css">
+<style>:root{--accent:#8b5cf6;--accent2:#7c3aed;--glow1:rgba(139,92,246,.08);--glow2:rgba(124,58,237,.06)}</style>
+</head>
+<body>
+<div class="bg-glow"></div><div class="bg-glow2"></div>
+<div class="container">
+<nav>
+ <a href="logic_hub.html">📚 Hub</a><a href="topic_conditionals.html">🔀 Conditionals</a><a href="topic_loops.html">🔄 Loops</a>
+ <a href="topic_patterns.html" class="active">🔷 Patterns</a><a href="topic_recursion.html">🪞 Recursion</a><a href="topic_arrays.html">📦 Arrays</a>
+ <a href="topic_strings.html">🔤 Strings</a><a href="topic_math.html">🔢 Math</a><a href="topic_mixed.html">🧩 Mixed</a>
+</nav>
+<header><h1>🔷 Patterns</h1><p class="subtitle">50 Beginner Problems — Star, Number, Alphabet, Hollow & Pyramid Patterns</p></header>
+<div class="stats-row">
+ <div class="stat-card"><div class="num" id="totalCount">50</div><div class="lbl">Total</div></div>
+ <div class="stat-card"><div class="num" id="doneCount">0</div><div class="lbl">Done</div></div>
+ <div class="stat-card"><div class="num" id="pctCount">0%</div><div class="lbl">Progress</div></div>
+</div>
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..."></div>
+<div class="toolbar"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="done">✅ Done</button><button class="filter-btn" data-filter="todo">📝 To-Do</button></div>
+<div id="questionsContainer"></div>
+<div class="supp-section"><div class="supp-title must-do">🏆 Top 10 Must-Do Questions</div><div id="mustDoList"></div></div>
+<div class="supp-section"><div class="supp-title mistakes">❌ Common Mistakes Beginners Make</div><div id="mistakesList"></div></div>
+<div class="supp-section"><div class="supp-title patterns-title">🔑 Key Patterns & Logic Used</div><div id="patternsList"></div></div>
+<div class="footer">🔷 Patterns — 50 Problems • Logic Building Hub</div>
+</div>
+<script>
+const TOPIC_KEY = 'patterns';
+const QUESTIONS = [
+{title:"Square of Stars",difficulty:"Very Easy",problem:"Print an N×N square grid of stars.",inputEx:"N = 4",outputEx:"* * * *\n* * * *\n* * * *\n* * * *",constraints:"1 ≤ N ≤ 20",hint:"Two nested loops. Outer for rows, inner prints N stars per row.",approach:"for(i=1 to N) { for(j=1 to N) print '*'; print newline; }"},
+{title:"Right-Angled Triangle of Stars",difficulty:"Very Easy",problem:"Print a right-angled triangle. Row i has i stars.",inputEx:"N = 5",outputEx:"*\n* *\n* * *\n* * * *\n* * * * *",constraints:"1 ≤ N ≤ 20",hint:"Outer loop i=1 to N. Inner loop prints i stars.",approach:"Row i prints exactly i stars. Inner loop runs from 1 to i."},
+{title:"Inverted Right Triangle of Stars",difficulty:"Very Easy",problem:"Print an inverted right triangle. Row i has (N-i+1) stars.",inputEx:"N = 5",outputEx:"* * * * *\n* * * *\n* * *\n* *\n*",constraints:"1 ≤ N ≤ 20",hint:"Row 1 has N stars, row 2 has N-1, etc. Inner loop goes 1 to (N-i+1).",approach:"Outer i=1 to N. Inner j=1 to N-i+1, print star. Print newline."},
+{title:"Right-Aligned Star Triangle",difficulty:"Very Easy",problem:"Print a right-aligned triangle using spaces and stars.",inputEx:"N = 5",outputEx:"    *\n   **\n  ***\n ****\n*****",constraints:"1 ≤ N ≤ 20",hint:"Each row: print (N-i) spaces first, then i stars.",approach:"Row i: N-i spaces + i stars. Two inner loops: one for spaces, one for stars."},
+{title:"Number Right Triangle (1 2 3...)",difficulty:"Very Easy",problem:"Print a triangle where row i contains numbers 1 to i.",inputEx:"N = 5",outputEx:"1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5",constraints:"1 ≤ N ≤ 9",hint:"Inner loop prints j from 1 to i.",approach:"Outer i=1 to N. Inner j=1 to i, print j."},
+{title:"Same Number Repeated per Row",difficulty:"Very Easy",problem:"Print a triangle where row i repeats the number i, i times.",inputEx:"N = 5",outputEx:"1\n2 2\n3 3 3\n4 4 4 4\n5 5 5 5 5",constraints:"1 ≤ N ≤ 9",hint:"Inner loop prints the value i (not j) repeated i times.",approach:"Row i: print i, i times. Inner loop j=1 to i, always print i."},
+{title:"Star Line (N stars on one line)",difficulty:"Very Easy",problem:"Print N stars on a single line separated by spaces.",inputEx:"N = 6",outputEx:"* * * * * *",constraints:"1 ≤ N ≤ 50",hint:"Single loop, print star without newline, newline at end.",approach:"Loop i=1 to N: print '*' followed by space. Just one loop, no nesting needed."},
+{title:"Increasing Number Rows (1, 12, 123...)",difficulty:"Very Easy",problem:"Print rows where row i shows numbers concatenated: 1, 12, 123, 1234...",inputEx:"N = 5",outputEx:"1\n12\n123\n1234\n12345",constraints:"1 ≤ N ≤ 9",hint:"Print numbers 1 to i without spaces in row i.",approach:"Outer i=1 to N. Inner j=1 to i: print j without separator. Newline after each row."},
+{title:"Stars in Even Count Rows",difficulty:"Very Easy",problem:"Print 5 rows with 2, 4, 6, 8, 10 stars respectively.",inputEx:"N = 5",outputEx:"* *\n* * * *\n* * * * * *\n...",constraints:"1 ≤ N ≤ 10",hint:"Row i has 2*i stars.",approach:"Outer i=1 to N. Inner j=1 to 2*i: print star."},
+{title:"Stars in Odd Count Rows",difficulty:"Very Easy",problem:"Print 5 rows with 1, 3, 5, 7, 9 stars respectively.",inputEx:"N = 5",outputEx:"*\n* * *\n* * * * *\n...",constraints:"1 ≤ N ≤ 10",hint:"Row i has (2*i - 1) stars.",approach:"Outer i=1 to N. Inner j=1 to 2*i-1: print star."},
+{title:"Centered Pyramid of Stars",difficulty:"Easy",problem:"Print a centered pyramid with N rows.",inputEx:"N = 5",outputEx:"    *\n   ***\n  *****\n *******\n*********",constraints:"1 ≤ N ≤ 20",hint:"Row i: (N-i) spaces + (2*i-1) stars.",approach:"For each row i: print N-i spaces, then 2*i-1 stars."},
+{title:"Inverted Centered Pyramid",difficulty:"Easy",problem:"Print an inverted centered pyramid with N rows.",inputEx:"N = 5",outputEx:"*********\n *******\n  *****\n   ***\n    *",constraints:"1 ≤ N ≤ 20",hint:"Row i: (i-1) spaces + (2*(N-i)+1) stars.",approach:"Reverse of centered pyramid. Spaces increase, stars decrease each row."},
+{title:"Diamond Pattern",difficulty:"Easy",problem:"Print a diamond shape with the widest row having (2*N-1) stars.",inputEx:"N = 5",outputEx:"    *\n   ***\n  *****\n *******\n*********\n *******\n  *****\n   ***\n    *",constraints:"1 ≤ N ≤ 15",hint:"Upper half = centered pyramid. Lower half = inverted pyramid (skip the middle row).",approach:"Print upper pyramid (N rows) then lower inverted pyramid (N-1 rows)."},
+{title:"Right-Aligned Number Triangle",difficulty:"Easy",problem:"Print right-aligned numbers where row i has numbers 1 to i.",inputEx:"N = 5",outputEx:"        1\n      1 2\n    1 2 3\n  1 2 3 4\n1 2 3 4 5",constraints:"1 ≤ N ≤ 9",hint:"Each row: (N-i) groups of spaces, then numbers 1 to i.",approach:"Row i: print spaces for alignment, then numbers 1 to i."},
+{title:"Floyd's Triangle",difficulty:"Easy",problem:"Print Floyd's triangle: consecutive numbers filling rows (row i has i numbers).",inputEx:"N = 5",outputEx:"1\n2 3\n4 5 6\n7 8 9 10\n11 12 13 14 15",constraints:"1 ≤ N ≤ 15",hint:"Use a single counter starting from 1. Print counter and increment for each position.",approach:"counter=1. Outer i=1 to N. Inner j=1 to i: print counter, counter++."},
+{title:"Pascal's Triangle",difficulty:"Easy",problem:"Print Pascal's triangle with N rows. Each element is sum of two elements above it.",inputEx:"N = 5",outputEx:"1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1",constraints:"1 ≤ N ≤ 12",hint:"Element at position (i,j) = C(i,j) = i! / (j! × (i-j)!). Or compute from previous: val = val*(i-j)/j.",approach:"Each row starts and ends with 1. Middle values: val = val * (row-col) / col."},
+{title:"Alphabet Right Triangle",difficulty:"Easy",problem:"Print a triangle using alphabets: A, AB, ABC, ABCD...",inputEx:"N = 5",outputEx:"A\nA B\nA B C\nA B C D\nA B C D E",constraints:"1 ≤ N ≤ 26",hint:"Inner loop prints characters from 'A' to 'A'+i-1.",approach:"Row i: print char from 'A' to 'A'+(i-1). Use char arithmetic: 'A'+j."},
+{title:"Same Alphabet per Row",difficulty:"Easy",problem:"Print pattern where row 1 has A, row 2 has BB, row 3 has CCC...",inputEx:"N = 5",outputEx:"A\nB B\nC C C\nD D D D\nE E E E E",constraints:"1 ≤ N ≤ 26",hint:"Row i prints the character ('A'+i-1) repeated i times.",approach:"Row i: character is 'A'+(i-1). Print it i times."},
+{title:"Continuous Alphabet Triangle",difficulty:"Easy",problem:"Print triangle with continuously incrementing alphabets across rows.",inputEx:"N = 4",outputEx:"A\nB C\nD E F\nG H I J",constraints:"1 ≤ N ≤ 7 (so we don't exceed Z)",hint:"Like Floyd's triangle but with letters. counter starts at 'A'.",approach:"ch='A'. Outer i=1 to N. Inner j=1 to i: print ch, ch++."},
+{title:"Reverse Number Triangle",difficulty:"Easy",problem:"Print a triangle where row i has numbers from i down to 1.",inputEx:"N = 5",outputEx:"1\n2 1\n3 2 1\n4 3 2 1\n5 4 3 2 1",constraints:"1 ≤ N ≤ 9",hint:"Inner loop goes from i down to 1.",approach:"Row i: for j=i downto 1, print j."},
+{title:"Hollow Square",difficulty:"Easy",problem:"Print a hollow square of size N (stars on border only).",inputEx:"N = 5",outputEx:"* * * * *\n*       *\n*       *\n*       *\n* * * * *",constraints:"3 ≤ N ≤ 20",hint:"Print star if it's first row, last row, first column, or last column. Else space.",approach:"if(i==1 || i==N || j==1 || j==N) print '*' else print ' '."},
+{title:"Hollow Right Triangle",difficulty:"Easy",problem:"Print a hollow right triangle of size N.",inputEx:"N = 5",outputEx:"*\n* *\n*   *\n*     *\n* * * * *",constraints:"3 ≤ N ≤ 20",hint:"Print star if: first column, last row, or last column of that row (j==i).",approach:"Star if j==1 || j==i || i==N. Otherwise space."},
+{title:"Stars and Spaces Alternating",difficulty:"Easy",problem:"Print N rows where each row alternates stars and spaces.",inputEx:"N = 5",outputEx:"* * * * *\n * * * * \n* * * * *\n * * * * \n* * * * *",constraints:"3 ≤ N ≤ 20",hint:"Odd rows start with star, even rows start with space.",approach:"If row is odd, pattern starts with *. If even, starts with space. Alternate within row."},
+{title:"Number Pyramid (Centered)",difficulty:"Easy",problem:"Print a centered number pyramid where each row has numbers 1 to i.",inputEx:"N = 5",outputEx:"    1\n   1 2\n  1 2 3\n 1 2 3 4\n1 2 3 4 5",constraints:"1 ≤ N ≤ 9",hint:"Same as centered pyramid but use numbers instead of stars.",approach:"Row i: N-i spaces, then numbers 1 to i."},
+{title:"Mirror Number Pattern",difficulty:"Easy",problem:"Print mirror numbers: row i shows 1 to i then i-1 down to 1.",inputEx:"N = 5",outputEx:"1\n1 2 1\n1 2 3 2 1\n1 2 3 4 3 2 1\n1 2 3 4 5 4 3 2 1",constraints:"1 ≤ N ≤ 9",hint:"Two inner loops: first 1 to i (ascending), then i-1 to 1 (descending).",approach:"Row i: print 1..i then (i-1)..1. Total elements in row = 2*i-1."},
+{title:"Binary Triangle (0s and 1s)",difficulty:"Easy",problem:"Print a triangle of alternating 0s and 1s.",inputEx:"N = 5",outputEx:"1\n0 1\n1 0 1\n0 1 0 1\n1 0 1 0 1",constraints:"1 ≤ N ≤ 20",hint:"Use (i+j)%2 to determine whether to print 0 or 1.",approach:"At position (i,j): if (i+j) is even print 1, else print 0. Or track a toggle variable."},
+{title:"Sandglass Pattern (Hourglass)",difficulty:"Moderate",problem:"Print a sandglass/hourglass shape: inverted pyramid on top, pyramid on bottom.",inputEx:"N = 5",outputEx:"*********\n *******\n  *****\n   ***\n    *\n   ***\n  *****\n *******\n*********",constraints:"3 ≤ N ≤ 15",hint:"Top half = inverted pyramid. Bottom half = pyramid (skip the single star row).",approach:"Print inverted pyramid (N rows) then regular pyramid (N-1 rows, starting from 2 stars)."},
+{title:"Butterfly Pattern",difficulty:"Moderate",problem:"Print a butterfly pattern of size N.",inputEx:"N = 4",outputEx:"*      *\n**    **\n***  ***\n********\n********\n***  ***\n**    **\n*      *",constraints:"2 ≤ N ≤ 15",hint:"Left stars + middle spaces + right stars. Upper half: i stars, then 2*(N-i) spaces, then i stars.",approach:"Upper half: row i has i stars, 2*(N-i) spaces, i stars. Lower half is mirror."},
+{title:"Arrow Pattern (→)",difficulty:"Moderate",problem:"Print a right-pointing arrow pattern.",inputEx:"N = 5",outputEx:"    *\n   **\n  ***\n ****\n*****\n ****\n  ***\n   **\n    *",constraints:"2 ≤ N ≤ 15",hint:"Upper half: right-aligned triangle. Lower half: inverted right-aligned triangle.",approach:"Top: (N-i) spaces + i stars for i=1 to N. Bottom: i spaces + (N-i) stars for i=1 to N-1."},
+{title:"X / Cross Pattern",difficulty:"Moderate",problem:"Print an X pattern of size N (N should be odd for symmetry).",inputEx:"N = 5",outputEx:"*   *\n * * \n  *  \n * * \n*   *",constraints:"N is odd, 3 ≤ N ≤ 21",hint:"Print star at position j if j==i or j==N-1-i (0-indexed).",approach:"For each (i,j): if j equals i or j equals (N-1-i), print star, else space."},
+{title:"Zigzag Pattern",difficulty:"Moderate",problem:"Print a zigzag pattern with 3 rows and N columns.",inputEx:"N = 9",outputEx:"*   *   *\n * * * * \n*   *   *",constraints:"N ≥ 5, should be odd",hint:"Row 1 and 3: star at positions 0, 4, 8... Row 2: star at positions 2, 6, 10...",approach:"Row patterns repeat every 4 columns. Use modulo to determine star positions."},
+{title:"Spiral Number Pattern (Flat)",difficulty:"Moderate",problem:"Print numbers 1 to N² in an N×N grid row by row.",inputEx:"N = 3",outputEx:"1 2 3\n4 5 6\n7 8 9",constraints:"1 ≤ N ≤ 10",hint:"Just use a counter starting from 1, print in N×N grid format.",approach:"counter=1. Two loops i,j = 1 to N. Print counter++ in each cell. Newline after each row."},
+{title:"Reverse Star Triangle",difficulty:"Easy",problem:"Print triangle where row 1 has N stars, row 2 has N-1, ..., row N has 1 star, left-aligned.",inputEx:"N = 5",outputEx:"* * * * *\n* * * *\n* * *\n* *\n*",constraints:"1 ≤ N ≤ 20",hint:"Row i has (N-i+1) stars.",approach:"Outer i=1 to N. Inner j=1 to N-i+1: print star."},
+{title:"Number Square Pattern",difficulty:"Easy",problem:"Print an N×N grid where every cell has the same number N.",inputEx:"N = 4",outputEx:"4 4 4 4\n4 4 4 4\n4 4 4 4\n4 4 4 4",constraints:"1 ≤ N ≤ 9",hint:"Two nested loops, always print N.",approach:"Simple N×N nested loop, print the value N in every cell."},
+{title:"Descending Number Triangle",difficulty:"Easy",problem:"Print a triangle where row i has numbers from N down to N-i+1.",inputEx:"N = 5",outputEx:"5\n5 4\n5 4 3\n5 4 3 2\n5 4 3 2 1",constraints:"1 ≤ N ≤ 9",hint:"Row i: print numbers from N down to N-i+1.",approach:"Outer i=1 to N. Inner j=N downto N-i+1: print j."},
+{title:"Column Number Pattern",difficulty:"Easy",problem:"Print pattern where each column shows the same number as the column index.",inputEx:"N = 5",outputEx:"1 2 3 4 5\n1 2 3 4 5\n1 2 3 4 5\n1 2 3 4 5\n1 2 3 4 5",constraints:"1 ≤ N ≤ 9",hint:"Every row is the same: print 1 2 3 ... N.",approach:"N rows, each row prints j from 1 to N."},
+{title:"Row Number Pattern",difficulty:"Easy",problem:"Print pattern where each row shows the same number as the row index.",inputEx:"N = 5",outputEx:"1 1 1 1 1\n2 2 2 2 2\n3 3 3 3 3\n4 4 4 4 4\n5 5 5 5 5",constraints:"1 ≤ N ≤ 9",hint:"Row i: print i repeated N times.",approach:"Outer i=1 to N. Inner j=1 to N: print i."},
+{title:"Hollow Centered Pyramid",difficulty:"Moderate",problem:"Print a hollow centered pyramid.",inputEx:"N = 5",outputEx:"    *\n   * *\n  *   *\n *     *\n*********",constraints:"3 ≤ N ≤ 20",hint:"First and last rows are full. Middle rows have star at start and end with spaces in between.",approach:"Row 1: centered star. Last row: all stars. Middle: star, spaces, star with leading spaces."},
+{title:"Right Half Diamond",difficulty:"Moderate",problem:"Print a right-half diamond pattern.",inputEx:"N = 5",outputEx:"*\n**\n***\n****\n*****\n****\n***\n**\n*",constraints:"2 ≤ N ≤ 20",hint:"Upper triangle (1 to N stars) + lower triangle (N-1 to 1 stars).",approach:"Two parts: increasing triangle + decreasing triangle (skip row N in second part)."},
+{title:"Left Half Diamond",difficulty:"Moderate",problem:"Print a left-half diamond (right-aligned).",inputEx:"N = 5",outputEx:"    *\n   **\n  ***\n ****\n*****\n ****\n  ***\n   **\n    *",constraints:"2 ≤ N ≤ 20",hint:"Right-aligned increasing triangle + right-aligned decreasing triangle.",approach:"Upper: (N-i) spaces + i stars. Lower: i spaces + (N-i) stars."},
+{title:"Number Diamond",difficulty:"Moderate",problem:"Print a diamond shape using numbers instead of stars.",inputEx:"N = 4",outputEx:"   1\n  1 2\n 1 2 3\n1 2 3 4\n 1 2 3\n  1 2\n   1",constraints:"1 ≤ N ≤ 9",hint:"Same structure as diamond pattern but print numbers 1 to i instead of stars.",approach:"Upper: spaces + numbers 1..i. Lower: spaces + numbers 1..(N-i)."},
+{title:"Hollow Diamond",difficulty:"Moderate",problem:"Print a hollow diamond inside a rectangle.",inputEx:"N = 5",outputEx:"*****\n** **\n*   *\n** **\n*****",constraints:"N is odd, ≥ 3",hint:"Stars on edges plus filling logic. Stars where j <= spaces_before_diamond OR j > N-spaces.",approach:"Each row: determine how many are hollow in the middle. First/last row fully filled."},
+{title:"Palindromic Number Triangle",difficulty:"Moderate",problem:"Print a centered palindromic number triangle.",inputEx:"N = 5",outputEx:"    1\n   121\n  12321\n 1234321\n123454321",constraints:"1 ≤ N ≤ 9",hint:"Row i: spaces + ascending 1..i + descending (i-1)..1.",approach:"Three parts per row: (N-i) spaces, numbers 1 to i ascending, numbers i-1 to 1 descending."},
+{title:"Rhombus Pattern",difficulty:"Moderate",problem:"Print a rhombus (parallelogram) of stars.",inputEx:"N = 5",outputEx:"    * * * * *\n   * * * * *\n  * * * * *\n * * * * *\n* * * * *",constraints:"2 ≤ N ≤ 20",hint:"Each row has N stars, but shifted by (N-i) spaces.",approach:"Row i: (N-i) spaces + N stars. All rows have same number of stars."},
+{title:"Heart Pattern",difficulty:"Moderate",problem:"Print a rough heart shape using stars (approximate for console).",inputEx:"N = 6",outputEx:" **   **\n**** ****\n*********\n *******\n  *****\n   ***\n    *",constraints:"N ≥ 4, even",hint:"Top part has two bumps (half circles). Bottom part is inverted pyramid.",approach:"Top 2-3 rows create the two humps. Bottom is a standard inverted centered pyramid."},
+{title:"Checkerboard Pattern",difficulty:"Easy",problem:"Print an N×N checkerboard: alternate * and spaces.",inputEx:"N = 5",outputEx:"* * *\n * * \n* * *\n * * \n* * *",constraints:"2 ≤ N ≤ 20",hint:"At (i,j): if (i+j) is even print *, else print space.",approach:"Use (i+j)%2 == 0 to decide star or space. Classic alternating pattern."},
+{title:"Border-Only Rectangle",difficulty:"Easy",problem:"Print a hollow rectangle of R rows and C columns.",inputEx:"R = 4, C = 6",outputEx:"* * * * * *\n*         *\n*         *\n* * * * * *",constraints:"R,C ≥ 3",hint:"Star at borders: i==1, i==R, j==1, or j==C.",approach:"Print star if on any edge, else space. Same logic as hollow square but with different dimensions."},
+{title:"Reverse Alphabet Triangle",difficulty:"Easy",problem:"Print a triangle where row 1 has 'A' repeated N times, row 2 has 'B' repeated N-1 times, etc.",inputEx:"N = 5",outputEx:"A A A A A\nB B B B\nC C C\nD D\nE",constraints:"1 ≤ N ≤ 26",hint:"Row i has character ('A'+i-1) repeated (N-i+1) times.",approach:"Outer i=1 to N. ch = 'A'+i-1. Inner j=1 to N-i+1: print ch."},
+{title:"Increasing-Decreasing Star Pattern",difficulty:"Moderate",problem:"Print a pattern with increasing stars in the first half, then decreasing. Like a right-half diamond but with 2*N-1 rows.",inputEx:"N = 4",outputEx:"*\n* *\n* * *\n* * * *\n* * *\n* *\n*",constraints:"2 ≤ N ≤ 15",hint:"First N rows: row i has i stars. Next N-1 rows: stars decrease from N-1 to 1.",approach:"Upper: i=1 to N, print i stars. Lower: i=N-1 downto 1, print i stars."},
+{title:"Number Spiral Shell Pattern",difficulty:"Moderate",problem:"Print an N×N matrix where the border has N, next inner border has N-1, and so on.",inputEx:"N = 4",outputEx:"4 4 4 4 4 4 4\n4 3 3 3 3 3 4\n4 3 2 2 2 3 4\n4 3 2 1 2 3 4\n4 3 2 2 2 3 4\n4 3 3 3 3 3 4\n4 4 4 4 4 4 4",constraints:"1 ≤ N ≤ 10",hint:"Value at (i,j) in a (2N-1)×(2N-1) grid = N - min(i, j, 2N-2-i, 2N-2-j).",approach:"For each cell: find its distance from the nearest edge. value = N - min_distance."},
+];
+
+const MUST_DO = [
+"Right-Angled Triangle — the fundamental nested loop pattern",
+"Centered Pyramid — teaches spaces + stars calculation",
+"Inverted Right Triangle — reverse thinking for patterns",
+"Diamond Pattern — combines pyramid + inverted pyramid",
+"Hollow Square — introduces conditional printing inside loops",
+"Floyd's Triangle — running counter across rows",
+"Pascal's Triangle — combinatorics in a pattern",
+"Butterfly Pattern — left-right symmetry with spaces",
+"Palindromic Number Triangle — ascending + descending in one row",
+"X / Cross Pattern — diagonal logic with coordinates"
+];
+
+const MISTAKES = [
+"Miscounting spaces: the number of leading spaces is usually (N - current_row), not N",
+"Forgetting to print newline after each row — everything prints on one line",
+"Confusing row index with column index in nested loops",
+"Off-by-one: using < instead of <= makes the pattern one row/column short",
+"Not handling even vs odd N differently when symmetry requires it",
+"Printing extra trailing spaces which makes the pattern look correct but fails auto-grading",
+"Forgetting the border condition in hollow patterns (checking only first/last row, not columns)",
+"Using wrong formula for centered patterns: spaces = N-i, stars = 2*i-1 (not 2*i)",
+"Not resetting the inner loop variable when using while loops instead of for loops",
+"Trying to figure out complex patterns all at once instead of breaking into top-half and bottom-half"
+];
+
+const KEY_PATTERNS = [
+"<strong>Row-Column Framework:</strong> Outer loop = rows, inner loop = columns — universal pattern structure",
+"<strong>Spaces + Stars:</strong> Left-aligned = no spaces needed. Right/Center aligned = leading spaces = N - i",
+"<strong>Two-Half Approach:</strong> Most symmetric patterns (diamond, butterfly, hourglass) = upper half + lower half",
+"<strong>Hollow Condition:</strong> Print only on boundaries: first row, last row, first col, last col of each row",
+"<strong>Counting Formula:</strong> Stars per row often follow: i, N-i+1, 2*i-1, or 2*(N-i)+1",
+"<strong>Running Counter:</strong> Floyd's triangle — one counter shared across all positions",
+"<strong>Mirror / Palindrome:</strong> Print ascending 1..i, then descending (i-1)..1 in same row",
+"<strong>Diagonal Logic:</strong> j==i for main diagonal, j==N-1-i for anti-diagonal (0-indexed)",
+"<strong>Modulo Alternation:</strong> (i+j)%2 for checkerboard-style alternating patterns",
+"<strong>Character Arithmetic:</strong> 'A' + offset gives alphabet patterns — treat chars as numbers"
+];
+</script>
+<script src="topic_template.js"></script>
+</body>
+</html>

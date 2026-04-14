@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DSA Logic Building Hub — 400 beginner problems across 8 topics with hints, approaches, and progress tracking.">
+<title>🧠 Logic Building Hub — 50 Problems × 8 Topics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a14;color:#e0e0e0;min-height:100vh;overflow-x:hidden}
+.bg-glow{position:fixed;top:-200px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(139,92,246,.08),transparent 70%);pointer-events:none;z-index:0}
+.bg-glow2{position:fixed;bottom:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(245,158,11,.06),transparent 70%);pointer-events:none;z-index:0}
+.container{max-width:1100px;margin:0 auto;padding:30px 20px;position:relative;z-index:1}
+nav{display:flex;justify-content:center;gap:10px;margin-bottom:30px;flex-wrap:wrap}
+nav a{background:#1a1a2e;border:1px solid #2a2a4a;color:#ccc;padding:8px 20px;border-radius:25px;font-size:.8rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.3s}
+nav a:hover{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent}
+nav a.active{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-color:transparent}
+header{text-align:center;margin-bottom:40px}
+h1{font-size:2.6rem;font-weight:900;background:linear-gradient(135deg,#f59e0b,#ef4444,#ec4899,#8b5cf6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;letter-spacing:-1px}
+.tagline{color:#888;font-size:.95rem;margin-bottom:24px;line-height:1.6}
+.tagline strong{color:#f59e0b}
+.overall-stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.os-card{background:linear-gradient(135deg,#1a1a2e,#1e1e38);border:1px solid #2a2a4a;border-radius:16px;padding:20px 30px;text-align:center;min-width:140px;transition:transform .3s,box-shadow .3s}
+.os-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(139,92,246,.15)}
+.os-card .num{font-size:2rem;font-weight:900;background:linear-gradient(135deg,#f59e0b,#ef4444);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.os-card .lbl{font-size:.72rem;color:#888;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;margin-bottom:40px}
+.topic-card{background:linear-gradient(145deg,#12121f,#1a1a30);border:1px solid #2a2a4a;border-radius:18px;padding:28px 24px;transition:all .35s;cursor:pointer;position:relative;overflow:hidden;text-decoration:none;color:inherit;display:block}
+.topic-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);opacity:0;transition:opacity .3s}
+.topic-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.4);border-color:var(--accent)}
+.topic-card:hover::before{opacity:1}
+.topic-icon{font-size:2.4rem;margin-bottom:14px;display:block}
+.topic-name{font-size:1.15rem;font-weight:700;margin-bottom:6px;color:#fff}
+.topic-desc{font-size:.78rem;color:#888;line-height:1.55;margin-bottom:16px}
+.topic-meta{display:flex;gap:10px;flex-wrap:wrap}
+.tm{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:3px 10px;border-radius:10px;font-size:.65rem;color:#aaa}
+.tm strong{color:var(--accent)}
+.progress-mini{width:100%;height:5px;background:#1e1e30;border-radius:10px;margin-top:14px;overflow:hidden}
+.progress-mini .fill{height:100%;background:var(--accent);border-radius:10px;transition:width .5s;width:0}
+.completed-text{font-size:.65rem;color:#666;margin-top:6px;text-align:right}
+.footer{text-align:center;color:#444;font-size:.75rem;padding:30px 0;border-top:1px solid #1a1a2e;margin-top:20px}
+@media(max-width:768px){
+ h1{font-size:1.8rem}
+ .grid{grid-template-columns:1fr}
+ .os-card{min-width:100px;padding:14px 18px}
+ .os-card .num{font-size:1.5rem}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.topic-card{animation:fadeUp .5s ease both}
+.topic-card:nth-child(2){animation-delay:.05s}
+.topic-card:nth-child(3){animation-delay:.1s}
+.topic-card:nth-child(4){animation-delay:.15s}
+.topic-card:nth-child(5){animation-delay:.2s}
+.topic-card:nth-child(6){animation-delay:.25s}
+.topic-card:nth-child(7){animation-delay:.3s}
+.topic-card:nth-child(8){animation-delay:.35s}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div class="container">
+<nav>
+ <a href="DSA.html">🚀 DSA Patterns</a>
+ <a href="Logic_Building.html">🧠 Logic Tracker</a>
+ <a href="logic_hub.html" class="active">📚 50×8 Problem Hub</a>
+ <a href="TCS_NQT_100Q.html">🔥 Top 100 TCS</a>
+</nav>
+<header>
+ <h1>Logic Building Hub</h1>
+ <p class="tagline">🎯 <strong>400 Beginner Problems</strong> across 8 core topics — each with hints, approaches & examples.<br>Built for absolute beginners who want to master coding logic step by step.</p>
+</header>
+
+<div class="overall-stats">
+ <div class="os-card"><div class="num">400</div><div class="lbl">Total Problems</div></div>
+ <div class="os-card"><div class="num">8</div><div class="lbl">Topics</div></div>
+ <div class="os-card"><div class="num" id="totalDone">0</div><div class="lbl">Completed</div></div>
+ <div class="os-card"><div class="num" id="totalPct">0%</div><div class="lbl">Progress</div></div>
+</div>
+
+<div class="grid">
+ <a href="topic_conditionals.html" class="topic-card" style="--accent:#10b981">
+  <span class="topic-icon">🔀</span>
+  <div class="topic-name">Conditionals</div>
+  <div class="topic-desc">If-else, nested conditions, boolean logic, decision making, range checks, and compound conditions.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-conditionals"></div></div>
+  <div class="completed-text" id="done-conditionals">0/50</div>
+ </a>
+ <a href="topic_loops.html" class="topic-card" style="--accent:#3b82f6">
+  <span class="topic-icon">🔄</span>
+  <div class="topic-name">Loops (While, For, Do-While)</div>
+  <div class="topic-desc">Loop fundamentals, iteration patterns, counters, accumulators, break/continue, and nested loops.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-loops"></div></div>
+  <div class="completed-text" id="done-loops">0/50</div>
+ </a>
+ <a href="topic_patterns.html" class="topic-card" style="--accent:#8b5cf6">
+  <span class="topic-icon">🔷</span>
+  <div class="topic-name">Patterns</div>
+  <div class="topic-desc">Star patterns, number patterns, alphabet patterns, hollow shapes, pyramids, and diamond patterns.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Moderate</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-patterns"></div></div>
+  <div class="completed-text" id="done-patterns">0/50</div>
+ </a>
+ <a href="topic_recursion.html" class="topic-card" style="--accent:#ec4899">
+  <span class="topic-icon">🪞</span>
+  <div class="topic-name">Recursion</div>
+  <div class="topic-desc">Base cases, recursive calls, number recursion, string recursion, and recursive pattern printing.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-recursion"></div></div>
+  <div class="completed-text" id="done-recursion">0/50</div>
+ </a>
+ <a href="topic_arrays.html" class="topic-card" style="--accent:#f59e0b">
+  <span class="topic-icon">📦</span>
+  <div class="topic-name">Arrays</div>
+  <div class="topic-desc">Traversal, searching, counting, manipulation, two-pointer basics, frequency arrays, and merging.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-arrays"></div></div>
+  <div class="completed-text" id="done-arrays">0/50</div>
+ </a>
+ <a href="topic_strings.html" class="topic-card" style="--accent:#ef4444">
+  <span class="topic-icon">🔤</span>
+  <div class="topic-name">Strings</div>
+  <div class="topic-desc">Character manipulation, counting, reversing, palindromes, word-level operations, and case conversion.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-strings"></div></div>
+  <div class="completed-text" id="done-strings">0/50</div>
+ </a>
+ <a href="topic_math.html" class="topic-card" style="--accent:#06b6d4">
+  <span class="topic-icon">🔢</span>
+  <div class="topic-name">Basic Math</div>
+  <div class="topic-desc">Digit extraction, divisibility, primes, GCD/LCM, factorials, series, and number properties.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Easy</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-math"></div></div>
+  <div class="completed-text" id="done-math">0/50</div>
+ </a>
+ <a href="topic_mixed.html" class="topic-card" style="--accent:#a855f7">
+  <span class="topic-icon">🧩</span>
+  <div class="topic-name">Mixed Logic Problems</div>
+  <div class="topic-desc">Combining arrays+loops, strings+conditions, number+recursion — real applied reasoning challenges.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Easy → Moderate</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-mixed"></div></div>
+  <div class="completed-text" id="done-mixed">0/50</div>
+ </a>
+</div>
+
+<div class="footer">
+ 🧠 Logic Building Hub — 400 Problems for Absolute Beginners &bull; Built with ❤️ for DSA preparation
+</div>
+</div>
+
+<script>
+const topics = ['conditionals','loops','patterns','recursion','arrays','strings','math','mixed'];
+let totalDone = 0;
+topics.forEach(t => {
+ try {
+  const d = JSON.parse(localStorage.getItem('logic50_' + t) || '{}');
+  const count = Object.values(d).filter(v => v === true).length;
+  totalDone += count;
+  const pct = Math.round((count / 50) * 100);
+  const bar = document.getElementById('prog-' + t);
+  if(bar) bar.style.width = pct + '%';
+  const txt = document.getElementById('done-' + t);
+  if(txt) txt.textContent = count + '/50';
+ } catch(e) {}
+});
+document.getElementById('totalDone').textContent = totalDone;
+document.getElementById('totalPct').textContent = Math.round((totalDone / 400) * 100) + '%';
+</script>
+</body>
+</html>

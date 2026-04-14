@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧩 Mixed Logic — 50 Beginner Problems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="topic_styles.css">
+<style>:root{--accent:#a855f7;--accent2:#9333ea;--glow1:rgba(168,85,247,.08);--glow2:rgba(147,51,234,.06)}</style>
+</head>
+<body>
+<div class="bg-glow"></div><div class="bg-glow2"></div>
+<div class="container">
+<nav>
+ <a href="logic_hub.html">📚 Hub</a><a href="topic_conditionals.html">🔀 Conditionals</a><a href="topic_loops.html">🔄 Loops</a>
+ <a href="topic_patterns.html">🔷 Patterns</a><a href="topic_recursion.html">🪞 Recursion</a><a href="topic_arrays.html">📦 Arrays</a>
+ <a href="topic_strings.html">🔤 Strings</a><a href="topic_math.html">🔢 Math</a><a href="topic_mixed.html" class="active">🧩 Mixed</a>
+</nav>
+<header><h1>🧩 Mixed Logic</h1><p class="subtitle">50 Problems — Arrays+Loops, Strings+Conditions, Math+Recursion — Applied Reasoning</p></header>
+<div class="stats-row">
+ <div class="stat-card"><div class="num" id="totalCount">50</div><div class="lbl">Total</div></div>
+ <div class="stat-card"><div class="num" id="doneCount">0</div><div class="lbl">Done</div></div>
+ <div class="stat-card"><div class="num" id="pctCount">0%</div><div class="lbl">Progress</div></div>
+</div>
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..."></div>
+<div class="toolbar"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="done">✅ Done</button><button class="filter-btn" data-filter="todo">📝 To-Do</button></div>
+<div id="questionsContainer"></div>
+<div class="supp-section"><div class="supp-title must-do">🏆 Top 10 Must-Do Questions</div><div id="mustDoList"></div></div>
+<div class="supp-section"><div class="supp-title mistakes">❌ Common Mistakes Beginners Make</div><div id="mistakesList"></div></div>
+<div class="supp-section"><div class="supp-title patterns-title">🔑 Key Patterns & Logic Used</div><div id="patternsList"></div></div>
+<div class="footer">🧩 Mixed Logic — 50 Problems • Logic Building Hub</div>
+</div>
+<script>
+const TOPIC_KEY = 'mixed';
+const QUESTIONS = [
+{title:"FizzBuzz 1 to N",difficulty:"Easy",problem:"Print numbers 1 to N. For multiples of 3 print 'Fizz', of 5 print 'Buzz', of both print 'FizzBuzz'.",inputEx:"N = 15",outputEx:"1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz",constraints:"1 ≤ N ≤ 1000",hint:"Check divisible by 15 first (both), then 3, then 5, else number. ORDER MATTERS.",approach:"Loop 1 to N: if %15==0 → FizzBuzz, elif %3==0 → Fizz, elif %5==0 → Buzz, else number."},
+{title:"Sum Digits Until Even",difficulty:"Easy",problem:"Given a number, find its digit sum. If odd, compute digit sum again. Repeat until even.",inputEx:"N = 777",outputEx:"3 (7+7+7=21, 2+1=3... wait, 3 is odd, 3 is single digit = 3, odd, so answer is 3) — just return digit sum",constraints:"1 ≤ N ≤ 10⁹",hint:"Compute digit sum. Check if even. If not and still multi-digit, repeat.",approach:"While digit sum is multi-digit and odd: replace N with its digit sum. Return final digit sum."},
+{title:"Palindrome Numbers in Range",difficulty:"Easy",problem:"Print all palindrome numbers between 1 and N.",inputEx:"N = 200",outputEx:"1..9, 11, 22, 33, ..., 99, 101, 111, 121, 131, ..., 191",constraints:"1 ≤ N ≤ 10000",hint:"For each number in range, reverse it. If reversed == original, it's a palindrome.",approach:"Loop 1 to N. For each number, reverse its digits. If equal → palindrome, print."},
+{title:"Count Even-Digit-Sum Numbers",difficulty:"Easy",problem:"Count numbers between 1 and N whose digit sum is even.",inputEx:"N = 20",outputEx:"10",constraints:"1 ≤ N ≤ 10000",hint:"For each number, compute digit sum. If digitSum % 2 == 0, count it.",approach:"Loop 1 to N. For each: extract digits, sum them, check if sum is even."},
+{title:"Mark Passing Students",difficulty:"Easy",problem:"Given marks of N students, print how many passed (marks ≥ 40) and failed.",inputEx:"marks = [85, 30, 55, 20, 90]",outputEx:"Passed=3, Failed=2",constraints:"1 ≤ N ≤ 1000; 0 ≤ marks ≤ 100",hint:"Loop through marks. If mark >= 40 → passed++, else failed++.",approach:"Two counters: passed and failed. Traverse array, categorize each mark."},
+{title:"Age Category Counter",difficulty:"Easy",problem:"Given ages of N people, count minors (<18), adults (18-59), and seniors (60+).",inputEx:"ages = [15, 25, 65, 10, 45, 70]",outputEx:"Minors=2, Adults=2, Seniors=2",constraints:"1 ≤ N ≤ 1000; 0 ≤ age ≤ 150",hint:"Three counters. Use if-else for ranges: <18, 18-59, ≥60.",approach:"Loop through ages. Classify each into one of three categories."},
+{title:"Simple Calculator (Switch-Case)",difficulty:"Easy",problem:"Take two numbers and an operator (+, -, *, /). Perform the operation.",inputEx:"a=10, b=3, op='/'",outputEx:"3.33",constraints:"Standard arithmetic; b ≠ 0 for division",hint:"Use switch-case on the operator character.",approach:"switch(op): case '+' → a+b, case '-' → a-b, case '*' → a*b, case '/' → a/b (check b≠0)."},
+{title:"Digit Frequency in a Number",difficulty:"Easy",problem:"Given a number, print the frequency of each digit (0-9) that appears.",inputEx:"N = 112233",outputEx:"1→2, 2→2, 3→2",constraints:"1 ≤ N ≤ 10⁹",hint:"Use freq array of size 10. Extract each digit and increment freq[digit].",approach:"int freq[10]={0}. While N>0: freq[N%10]++, N/=10. Print non-zero entries."},
+{title:"Max Digit Sum Number in Range",difficulty:"Easy",problem:"Find the number between 1 and N that has the maximum digit sum. Print it with its digit sum.",inputEx:"N = 50",outputEx:"49 (digit sum = 13)",constraints:"1 ≤ N ≤ 10000",hint:"Loop 1 to N. Compute digit sum of each. Track the maximum.",approach:"maxSum=0, maxNum=0. For each i: compute digitSum(i). If > maxSum, update both."},
+{title:"Divisible by 7 but Not 5",difficulty:"Easy",problem:"Count numbers between 1 and N divisible by 7 but NOT by 5.",inputEx:"N = 100",outputEx:"Count = 11",constraints:"1 ≤ N ≤ 10⁶",hint:"Check: N%7==0 AND N%5!=0.",approach:"Loop 1 to N. If i%7==0 && i%5!=0 → count++."},
+{title:"Check Anagram",difficulty:"Easy",problem:"Check if two strings are anagrams (contain same characters in any order).",inputEx:"s1='listen', s2='silent'",outputEx:"Anagrams",constraints:"1 ≤ length ≤ 1000",hint:"Count frequency of each character in both strings. If all frequencies match → anagram.",approach:"Create freq array for both strings. Compare all 256 entries. All equal → anagram."},
+{title:"Vowels per Word in Sentence",difficulty:"Easy",problem:"Print the vowel count for each word in a sentence.",inputEx:"s = 'coding is fun'",outputEx:"coding→2, is→1, fun→1",constraints:"1 ≤ length ≤ 1000",hint:"Track vowel count per word. Reset when you hit a space.",approach:"countVowels for current word. When space or end: print word and count, reset."},
+{title:"Reverse Even-Length Words",difficulty:"Easy",problem:"In a sentence, reverse only the words that have even length.",inputEx:"s = 'hi world is good'",outputEx:"ih world si doog",constraints:"1 ≤ length ≤ 1000",hint:"Identify each word. Check length. If even → reverse that word.",approach:"Split into words. For words with even length: reverse them. Rejoin."},
+{title:"Replace Vowels with Position",difficulty:"Easy",problem:"Replace each vowel with its position number: a=1, e=2, i=3, o=4, u=5.",inputEx:"s = 'apple'",outputEx:"1ppl2",constraints:"1 ≤ length ≤ 1000; lowercase only",hint:"Map: a→1, e→2, i→3, o→4, u→5. Check each char.",approach:"Loop chars: if vowel, output its mapped number. Else output char."},
+{title:"Characters Appearing More Than Once",difficulty:"Easy",problem:"Print characters that appear more than once in a string (without using map).",inputEx:"s = 'programming'",outputEx:"r, g, m",constraints:"1 ≤ length ≤ 1000",hint:"Use frequency array. Print chars where freq > 1.",approach:"Count freq of each char. Loop freq array: if freq[ch] > 1, print ch. Use flag to avoid reprinting."},
+{title:"Words Starting and Ending Same Letter",difficulty:"Easy",problem:"Count words in a sentence where first and last letter are the same.",inputEx:"s = 'level test wow data ok'",outputEx:"3 (level, wow, data)",constraints:"1 ≤ length ≤ 1000",hint:"For each word, compare first and last character (case-insensitive).",approach:"Split into words. For each: if word[0] == word[last] → count++."},
+{title:"Toggle Case Alternate Words",difficulty:"Moderate",problem:"For odd-position words → uppercase, for even-position words → lowercase.",inputEx:"s = 'Hello Beautiful World Today'",outputEx:"HELLO beautiful WORLD today",constraints:"1 ≤ length ≤ 1000",hint:"Track word index. If odd → toUpper all chars, if even → toLower all chars.",approach:"Split into words. Alternate: uppercase (words 1,3,5...) and lowercase (words 2,4,6...)."},
+{title:"Check String Rotation",difficulty:"Moderate",problem:"Check if string B is a rotation of string A (e.g., 'waterbottle' is rotation of 'erbottlewat').",inputEx:"A='abcde', B='cdeab'",outputEx:"Rotation",constraints:"1 ≤ length ≤ 1000",hint:"If lengths are equal and B is a substring of A+A, then B is a rotation of A.",approach:"If len(A)==len(B) and (A+A).contains(B) → rotation. Concatenation trick!"},
+{title:"Word with Maximum Vowels",difficulty:"Easy",problem:"Find the word in a sentence that has the most vowels.",inputEx:"s = 'beautiful day outside'",outputEx:"beautiful (4 vowels)",constraints:"1 ≤ length ≤ 1000",hint:"For each word, count vowels. Track the max.",approach:"Split into words. Count vowels per word. Track maxVowels and the word."},
+{title:"Remove Duplicate Words",difficulty:"Moderate",problem:"Remove duplicate words from a sentence (keep first occurrence).",inputEx:"s = 'apple banana apple cherry banana'",outputEx:"apple banana cherry",constraints:"1 ≤ length ≤ 1000",hint:"Track which words have been seen. Skip if already seen.",approach:"Split into words. For each: check if seen before (linear search in result). If not, add it."},
+{title:"Max and Min in Array",difficulty:"Easy",problem:"Find both the maximum and minimum elements of an array in a single traversal.",inputEx:"arr = [5, 2, 8, 1, 9, 3]",outputEx:"Max=9, Min=1",constraints:"1 ≤ N ≤ 10⁴",hint:"Initialize max and min with first element. Update both in one loop.",approach:"max=min=arr[0]. Loop: if arr[i]>max update max, if arr[i]<min update min."},
+{title:"Shift Zeros to End",difficulty:"Easy",problem:"Move all zeros to the end while keeping relative order of non-zero elements.",inputEx:"arr = [0, 1, 0, 3, 12]",outputEx:"[1, 3, 12, 0, 0]",constraints:"1 ≤ N ≤ 10⁴",hint:"Use a write pointer for non-zero elements. Fill rest with zeros.",approach:"pos=0. Loop: if arr[i]!=0, arr[pos++]=arr[i]. Fill remaining positions with 0."},
+{title:"Print Unique Array Elements",difficulty:"Easy",problem:"Print elements that occur exactly once in the array.",inputEx:"arr = [1,2,2,3,4,4,5]",outputEx:"1 3 5",constraints:"1 ≤ N ≤ 1000",hint:"For each element, count its occurrences. Print if count is exactly 1.",approach:"Nested loop: count each element. If count==1, print it."},
+{title:"Reverse Array In-Place",difficulty:"Easy",problem:"Reverse the array without using an extra array.",inputEx:"arr = [1,2,3,4,5]",outputEx:"[5,4,3,2,1]",constraints:"1 ≤ N ≤ 10⁴",hint:"Two pointers: left and right. Swap and move inward.",approach:"left=0, right=N-1. While left<right: swap(arr[left], arr[right]), left++, right--."},
+{title:"Even at Even Index",difficulty:"Easy",problem:"Count elements that are even AND are at an even index (0,2,4,...).",inputEx:"arr = [2, 3, 4, 5, 6, 7]",outputEx:"3 (arr[0]=2, arr[2]=4, arr[4]=6)",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop with step 2 (even indices). Check if value is also even.",approach:"for(i=0; i<N; i+=2) if arr[i]%2==0 count++."},
+{title:"Merge Two Sorted Arrays",difficulty:"Moderate",problem:"Given two sorted arrays, merge them into a single sorted array.",inputEx:"A=[1,3,5], B=[2,4,6]",outputEx:"C=[1,2,3,4,5,6]",constraints:"1 ≤ N, M ≤ 10⁴",hint:"Two pointers: i for A, j for B. Compare and pick smaller.",approach:"i=j=k=0. While both have elements: if A[i]<B[j], C[k++]=A[i++], else C[k++]=B[j++]. Copy remaining."},
+{title:"Second Largest in Array",difficulty:"Easy",problem:"Find the second largest element in the array.",inputEx:"arr = [5, 2, 8, 1, 9]",outputEx:"Second largest = 8",constraints:"N ≥ 2; at least 2 distinct values",hint:"Track first and second largest. Update carefully when new max found.",approach:"max1=max2=-∞. If arr[i]>max1: max2=max1, max1=arr[i]. Elif arr[i]>max2 and !=max1: update."},
+{title:"Right Rotate Array by One",difficulty:"Easy",problem:"Rotate all elements one position to the right. Last comes to first.",inputEx:"arr = [1,2,3,4,5]",outputEx:"[5,1,2,3,4]",constraints:"1 ≤ N ≤ 10⁴",hint:"Save last element. Shift everything right by 1. Place saved at index 0.",approach:"temp=arr[N-1]. Loop i=N-1 downto 1: arr[i]=arr[i-1]. arr[0]=temp."},
+{title:"Sum at Odd Indices",difficulty:"Easy",problem:"Find the sum of elements at odd indices (1, 3, 5, ...).",inputEx:"arr = [10, 20, 30, 40, 50]",outputEx:"60 (20+40)",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop starting from index 1 with step 2.",approach:"sum=0. for(i=1; i<N; i+=2) sum += arr[i]."},
+{title:"Multiplication Table Grid (10×10)",difficulty:"Easy",problem:"Print a formatted 10×10 multiplication table grid.",inputEx:"(no input)",outputEx:"1  2  3  ... 10\n2  4  6  ... 20\n...\n10 20 30 ... 100",constraints:"Always 10×10",hint:"Two nested loops from 1 to 10. Print i*j with proper formatting.",approach:"Outer i=1 to 10, inner j=1 to 10: print i*j formatted. Newline after each row."},
+{title:"Pairs with Given Sum",difficulty:"Easy",problem:"Print all pairs (i,j) in array where arr[i] + arr[j] = target, i < j.",inputEx:"arr=[1,2,3,4,5], target=6",outputEx:"(1,5) (2,4)",constraints:"1 ≤ N ≤ 1000",hint:"Nested loops: for each pair, check if sum equals target.",approach:"Outer i=0 to N-2. Inner j=i+1 to N-1. If arr[i]+arr[j]==target, print pair."},
+{title:"Check Array Sorted",difficulty:"Easy",problem:"Check if array is sorted in ascending, descending, or neither.",inputEx:"arr = [1, 3, 5, 7, 9]",outputEx:"Ascending",constraints:"1 ≤ N ≤ 10⁴",hint:"Check all consecutive pairs. If all arr[i]<=arr[i+1] → ascending. If all arr[i]>=arr[i+1] → descending.",approach:"Set two flags: isAsc=true, isDesc=true. Loop: if arr[i]>arr[i+1] → isAsc=false. If arr[i]<arr[i+1] → isDesc=false."},
+{title:"Consecutive Element Count",difficulty:"Easy",problem:"Count how many times a number appears consecutively in an array.",inputEx:"arr = [1,1,1,2,2,3,3,3,3]",outputEx:"1→3, 2→2, 3→4",constraints:"1 ≤ N ≤ 10⁴; array sorted",hint:"Track current element and count. When element changes, print and reset.",approach:"current=arr[0], count=1. Loop i=1: if arr[i]==current count++, else print and reset."},
+{title:"All Pairs of Same Characters",difficulty:"Moderate",problem:"Find all pairs of indices (i,j) in a string where s[i] == s[j] and i < j.",inputEx:"s = 'aba'",outputEx:"(0,2) — both 'a'",constraints:"1 ≤ length ≤ 100",hint:"Nested loop: for each pair, check if characters match.",approach:"for i=0 to len-2, j=i+1 to len-1: if s[i]==s[j] print pair."},
+{title:"Increasing Character Pattern",difficulty:"Easy",problem:"Print pattern: A, AB, ABC, ABCD, ... up to N rows.",inputEx:"N = 5",outputEx:"A\nAB\nABC\nABCD\nABCDE",constraints:"1 ≤ N ≤ 26",hint:"Row i: print characters 'A' to 'A'+i-1.",approach:"Outer i=1 to N. Inner j=0 to i-1: print (char)('A'+j). Newline after each row."},
+{title:"Pascal's Triangle up to N",difficulty:"Moderate",problem:"Print Pascal's triangle with N rows.",inputEx:"N = 5",outputEx:"1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1",constraints:"1 ≤ N ≤ 15",hint:"Each row starts and ends with 1. Middle: element = element_above_left + element_above.",approach:"Row starts with 1. Next element: val = val * (row-col) / col. Or use 2D array from previous row."},
+{title:"Fibonacci with Recursion",difficulty:"Easy",problem:"Generate first N Fibonacci numbers using a recursive function.",inputEx:"N = 8",outputEx:"0 1 1 2 3 5 8 13",constraints:"1 ≤ N ≤ 30",hint:"fib(n) = fib(n-1) + fib(n-2). Base: fib(0)=0, fib(1)=1. Call fib(i) for i=0 to N-1.",approach:"Loop i=0 to N-1: print fib(i) using recursive function."},
+{title:"Password Validator",difficulty:"Moderate",problem:"Check if password has: length≥8, at least 1 uppercase, 1 lowercase, 1 digit, 1 special char.",inputEx:"pw = 'Hello@123'",outputEx:"Valid",constraints:"1 ≤ length ≤ 100",hint:"Four boolean flags. Loop through password setting each flag when condition met.",approach:"hasUpper=hasLower=hasDigit=hasSpecial=false, lenOk = len>=8. Scan chars, set flags. All true → valid."},
+{title:"Frequency of Digits in Array Numbers",difficulty:"Moderate",problem:"Given an array of numbers, find the overall frequency of each digit (0-9) across all numbers.",inputEx:"arr = [123, 456, 121]",outputEx:"1→3, 2→2, 3→1, 4→1, 5→1, 6→1",constraints:"1 ≤ N ≤ 100; 0 ≤ arr[i] ≤ 10⁶",hint:"For each number in array, extract its digits. Accumulate in a global freq[10] array.",approach:"freq[10]={0}. For each number in array: extract digits, freq[digit]++. Print."},
+{title:"Common Characters in Two Strings",difficulty:"Easy",problem:"Find characters that are present in both strings.",inputEx:"s1='apple', s2='pear'",outputEx:"Common: p, e, a",constraints:"1 ≤ length ≤ 1000",hint:"Create freq arrays for both. If freq1[ch]>0 and freq2[ch]>0, ch is common.",approach:"Build boolean/freq for each string. Intersection = chars present in both."},
+{title:"Primes in Array",difficulty:"Easy",problem:"Count how many elements in an array are prime numbers.",inputEx:"arr = [4, 7, 10, 11, 15, 2, 1]",outputEx:"3 (7, 11, 2)",constraints:"1 ≤ N ≤ 1000; 1 ≤ arr[i] ≤ 10⁶",hint:"For each element, run the prime check (loop 2 to √element).",approach:"Loop array. For each element: isPrime check. If prime, count++."},
+{title:"Palindromic Words in Sentence",difficulty:"Easy",problem:"Print all words in a sentence that are palindromes.",inputEx:"s = 'madam went to level the kayak'",outputEx:"madam, level, kayak",constraints:"1 ≤ length ≤ 1000",hint:"Split into words. For each word, check if it's a palindrome.",approach:"Extract each word. Reverse it. If original == reversed → palindrome."},
+{title:"Sum of Diagonal Elements",difficulty:"Moderate",problem:"Given an N×N matrix (2D array), find the sum of the primary diagonal elements.",inputEx:"matrix = [[1,2,3],[4,5,6],[7,8,9]]",outputEx:"Sum = 15 (1+5+9)",constraints:"1 ≤ N ≤ 100",hint:"Primary diagonal: elements where row index equals column index → matrix[i][i].",approach:"sum=0. Loop i=0 to N-1: sum += matrix[i][i]."},
+{title:"Transpose a Matrix",difficulty:"Moderate",problem:"Given an N×N matrix, swap rows and columns (transpose it).",inputEx:"[[1,2],[3,4]]",outputEx:"[[1,3],[2,4]]",constraints:"1 ≤ N ≤ 100",hint:"Swap matrix[i][j] with matrix[j][i] for all i < j.",approach:"Two nested loops: for i=0 to N-1, j=i+1 to N-1: swap(matrix[i][j], matrix[j][i])."},
+{title:"Check Magic Square",difficulty:"Moderate",problem:"Check if a 3×3 matrix is a magic square (all rows, columns, diagonals have same sum).",inputEx:"[[2,7,6],[9,5,1],[4,3,8]]",outputEx:"Magic Square (sum=15)",constraints:"3×3 matrix with distinct values 1-9",hint:"Compute row sums, column sums, and both diagonal sums. All must be equal.",approach:"Calculate all 3 row sums, 3 column sums, 2 diagonal sums. If all 8 are equal → magic."},
+{title:"Print Subarrays of Array",difficulty:"Moderate",problem:"Print all contiguous subarrays of the given array.",inputEx:"arr = [1,2,3]",outputEx:"[1] [1,2] [1,2,3] [2] [2,3] [3]",constraints:"1 ≤ N ≤ 20",hint:"Three nested loops: start (i), end (j), and print (k from i to j).",approach:"Outer i=0 to N-1 (start). Middle j=i to N-1 (end). Inner k=i to j (print elements)."},
+{title:"Caesar Cipher Encryption",difficulty:"Moderate",problem:"Shift each letter by K positions. 'a'+3='d', 'z'+1='a' (wrap around).",inputEx:"text='hello', K=3",outputEx:"khoor",constraints:"1 ≤ length ≤ 1000; 1 ≤ K ≤ 25",hint:"For each letter: newChar = (ch - 'a' + K) % 26 + 'a'. Handle uppercase separately.",approach:"Loop chars: if letter, shift by K with modulo wrap. Non-letters stay unchanged."},
+{title:"Run-Length Encoding",difficulty:"Moderate",problem:"Compress a string by replacing consecutive duplicates with count + character.",inputEx:"s = 'aaabbbccdd'",outputEx:"3a3b2c2d",constraints:"1 ≤ length ≤ 1000",hint:"Track current character and its count. When character changes, output count+char.",approach:"current=s[0], count=1. Loop i=1: if same, count++. Else output count+current, reset."},
+{title:"Matrix Row and Column Sum",difficulty:"Moderate",problem:"Given an M×N matrix, print the sum of each row and each column.",inputEx:"matrix = [[1,2,3],[4,5,6]]",outputEx:"Row sums: 6, 15\nCol sums: 5, 7, 9",constraints:"1 ≤ M, N ≤ 100",hint:"Two separate traversals: one row-wise, one column-wise, accumulating sums.",approach:"Row sums: for each row, sum all columns. Col sums: for each column, sum all rows."},
+];
+
+const MUST_DO = [
+"FizzBuzz 1 to N — the classic interview warm-up, tests condition ordering",
+"Check Anagram — frequency counting across two strings",
+"Merge Two Sorted Arrays — two-pointer merge, foundation for merge sort",
+"Password Validator — multi-rule validation, common in real coding",
+"Shift Zeros to End — write-pointer technique, very popular interview question",
+"Check String Rotation — elegant concatenation trick, tests creative thinking",
+"Print Subarrays — triple nested loop, understanding contiguous subsequences",
+"Caesar Cipher — modular arithmetic on characters, classic crypto problem",
+"Pascal's Triangle — combining loops, math, and pattern logic",
+"Run-Length Encoding — consecutive tracking pattern, real-world compression"
+];
+
+const MISTAKES = [
+"Mixing up multiple concepts — when combining arrays+strings+math, forgetting which tool to use for what",
+"Not breaking complex problems into smaller sub-problems before coding",
+"Forgetting to reset counters/flags when processing multiple items (words, numbers) in sequence",
+"Hardcoding instead of parameterizing — works for one test case but fails for others",
+"Not handling edge cases: empty arrays, single-element arrays, strings with only spaces",
+"Wrong variable scope: declaring loop variable inside inner loop when it should be outside",
+"Array index confusion in merged/combined operations — losing track of which pointer goes where",
+"Not testing with boundary values: N=0, N=1, empty string, single character",
+"Trying to solve the whole problem at once instead of implementing and testing incrementally",
+"Confusing pass-by-value vs pass-by-reference when functions modify arrays or strings"
+];
+
+const KEY_PATTERNS = [
+"<strong>Condition Ordering:</strong> Check specific conditions before general (FizzBuzz: %15 before %3 and %5)",
+"<strong>Frequency Table:</strong> int freq[26] or freq[256] — count character/digit occurrences for comparison",
+"<strong>Two-Pointer Merge:</strong> Two sorted inputs → one sorted output using comparison at each step",
+"<strong>Multi-Rule Validation:</strong> Multiple boolean flags, all must be true — password, date validation",
+"<strong>Write-Pointer:</strong> pos tracks where to write next valid element — filter, compress, rearrange",
+"<strong>Concatenation Trick:</strong> A+A contains all rotations of A — check if B is substring of A+A",
+"<strong>All-Subarrays Pattern:</strong> Three loops (start, end, process) — generate every contiguous slice",
+"<strong>Modular Wrap-Around:</strong> (value + shift) % range — Caesar cipher, circular arrays",
+"<strong>Run-Length / Consecutive Tracking:</strong> Track current + count, output on change — compression",
+"<strong>Decompose & Conquer:</strong> Break mixed problems into known sub-problems from individual topics"
+];
+</script>
+<script src="topic_template.js"></script>
+</body>
+</html>

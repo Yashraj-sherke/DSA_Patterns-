@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔄 Loops — 50 Beginner Problems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="topic_styles.css">
+<style>:root{--accent:#3b82f6;--accent2:#2563eb;--glow1:rgba(59,130,246,.08);--glow2:rgba(37,99,235,.06)}</style>
+</head>
+<body>
+<div class="bg-glow"></div><div class="bg-glow2"></div>
+<div class="container">
+<nav>
+ <a href="logic_hub.html">📚 Hub</a>
+ <a href="topic_conditionals.html">🔀 Conditionals</a>
+ <a href="topic_loops.html" class="active">🔄 Loops</a>
+ <a href="topic_patterns.html">🔷 Patterns</a>
+ <a href="topic_recursion.html">🪞 Recursion</a>
+ <a href="topic_arrays.html">📦 Arrays</a>
+ <a href="topic_strings.html">🔤 Strings</a>
+ <a href="topic_math.html">🔢 Math</a>
+ <a href="topic_mixed.html">🧩 Mixed</a>
+</nav>
+<header>
+ <h1>🔄 Loops</h1>
+ <p class="subtitle">50 Beginner Problems — While, For, Do-While, Nested Loops, Break & Continue</p>
+</header>
+<div class="stats-row">
+ <div class="stat-card"><div class="num" id="totalCount">50</div><div class="lbl">Total</div></div>
+ <div class="stat-card"><div class="num" id="doneCount">0</div><div class="lbl">Done</div></div>
+ <div class="stat-card"><div class="num" id="pctCount">0%</div><div class="lbl">Progress</div></div>
+</div>
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..."></div>
+<div class="toolbar">
+ <button class="filter-btn active" data-filter="all">All</button>
+ <button class="filter-btn" data-filter="done">✅ Done</button>
+ <button class="filter-btn" data-filter="todo">📝 To-Do</button>
+</div>
+<div id="questionsContainer"></div>
+<div class="supp-section"><div class="supp-title must-do">🏆 Top 10 Must-Do Questions</div><div id="mustDoList"></div></div>
+<div class="supp-section"><div class="supp-title mistakes">❌ Common Mistakes Beginners Make</div><div id="mistakesList"></div></div>
+<div class="supp-section"><div class="supp-title patterns-title">🔑 Key Patterns & Logic Used</div><div id="patternsList"></div></div>
+<div class="footer">🔄 Loops — 50 Problems • Logic Building Hub</div>
+</div>
+<script>
+const TOPIC_KEY = 'loops';
+const QUESTIONS = [
+{title:"Print 1 to N",difficulty:"Very Easy",problem:"Given N, print all numbers from 1 to N, each on a new line.",inputEx:"N = 5",outputEx:"1\n2\n3\n4\n5",constraints:"1 ≤ N ≤ 1000",hint:"Use a for loop: for(i=1; i<=N; i++). Print i in each iteration.",approach:"Initialize counter at 1, loop until N, increment by 1 each time, print counter."},
+{title:"Print N to 1 (Reverse)",difficulty:"Very Easy",problem:"Given N, print numbers from N down to 1.",inputEx:"N = 5",outputEx:"5\n4\n3\n2\n1",constraints:"1 ≤ N ≤ 1000",hint:"Start from N and decrement: for(i=N; i>=1; i--).",approach:"Initialize counter at N, loop while ≥1, decrement by 1 each time."},
+{title:"Print All Even Numbers 1 to N",difficulty:"Very Easy",problem:"Given N, print all even numbers from 1 to N.",inputEx:"N = 10",outputEx:"2 4 6 8 10",constraints:"1 ≤ N ≤ 1000",hint:"Either start from 2 and increment by 2, or check i%2==0 inside loop.",approach:"Two approaches: (1) for(i=2; i<=N; i+=2) or (2) loop 1 to N, print only if i%2==0."},
+{title:"Print All Odd Numbers 1 to N",difficulty:"Very Easy",problem:"Given N, print all odd numbers from 1 to N.",inputEx:"N = 10",outputEx:"1 3 5 7 9",constraints:"1 ≤ N ≤ 1000",hint:"Start from 1 and increment by 2, or check i%2!=0.",approach:"for(i=1; i<=N; i+=2) prints only odd numbers directly."},
+{title:"Sum of First N Natural Numbers",difficulty:"Very Easy",problem:"Given N, find the sum of numbers from 1 to N.",inputEx:"N = 5",outputEx:"Sum = 15",constraints:"1 ≤ N ≤ 10⁶",hint:"Use accumulator pattern: sum = 0, then sum += i in each iteration. Formula: N*(N+1)/2.",approach:"Initialize sum=0. Loop i=1 to N, add i to sum each time. Print sum."},
+{title:"Multiplication Table",difficulty:"Very Easy",problem:"Given N, print its multiplication table from N×1 to N×10.",inputEx:"N = 7",outputEx:"7 x 1 = 7\n7 x 2 = 14\n...\n7 x 10 = 70",constraints:"1 ≤ N ≤ 100",hint:"Loop from 1 to 10, print N × i = N*i each time.",approach:"for(i=1; i<=10; i++) print N, '×', i, '=', N*i."},
+{title:"Factorial of N",difficulty:"Very Easy",problem:"Given N, calculate N! (N factorial = 1 × 2 × 3 × ... × N).",inputEx:"N = 5",outputEx:"120",constraints:"0 ≤ N ≤ 20",hint:"Use accumulator: fact = 1, then fact *= i. Remember 0! = 1.",approach:"Initialize fact=1. Loop i=1 to N, multiply fact by i each time."},
+{title:"Sum of Digits",difficulty:"Very Easy",problem:"Given a number N, find the sum of its digits.",inputEx:"N = 1234",outputEx:"Sum = 10",constraints:"1 ≤ N ≤ 10⁹",hint:"Extract last digit with %10, remove it with /10. Repeat until N becomes 0.",approach:"sum=0. While N>0: sum += N%10, N = N/10. This peels off digits from the right."},
+{title:"Count Digits",difficulty:"Very Easy",problem:"Given a number N, count how many digits it has.",inputEx:"N = 54321",outputEx:"5 digits",constraints:"1 ≤ N ≤ 10⁹",hint:"Keep dividing by 10 and count iterations until N becomes 0.",approach:"count=0. While N>0: count++, N=N/10. Each division removes one digit."},
+{title:"Reverse a Number",difficulty:"Very Easy",problem:"Given a number N, print its reverse.",inputEx:"N = 1234",outputEx:"4321",constraints:"1 ≤ N ≤ 10⁹",hint:"Build reversed number: rev = rev*10 + N%10, then N = N/10.",approach:"rev=0. While N>0: rev = rev*10 + lastDigit, remove lastDigit. Print rev."},
+{title:"Print Sum of Even Numbers 1 to N",difficulty:"Easy",problem:"Given N, find the sum of all even numbers from 1 to N.",inputEx:"N = 10",outputEx:"Sum = 30",constraints:"1 ≤ N ≤ 10⁶",hint:"Either loop even numbers only (i=2, i+=2) or check i%2==0 before adding.",approach:"sum=0. Loop and add only even numbers. Or use formula: k*(k+1) where k = N/2."},
+{title:"Print Sum of Odd Numbers 1 to N",difficulty:"Easy",problem:"Given N, find the sum of all odd numbers from 1 to N.",inputEx:"N = 10",outputEx:"Sum = 25",constraints:"1 ≤ N ≤ 10⁶",hint:"Loop odd numbers: i=1, i+=2. Or check i%2!=0 before adding.",approach:"sum=0. Add only odd numbers in the loop. Sum of first k odd numbers = k²."},
+{title:"Product of Digits",difficulty:"Easy",problem:"Given a number N, find the product of its digits.",inputEx:"N = 234",outputEx:"Product = 24",constraints:"1 ≤ N ≤ 10⁹",hint:"Same digit extraction loop, but multiply instead of add. product *= N%10.",approach:"prod=1. While N>0: prod *= N%10, N=N/10. Handle edge: if any digit is 0, product is 0."},
+{title:"Check Palindrome Number",difficulty:"Easy",problem:"Given a number N, check if it reads the same forwards and backwards.",inputEx:"N = 121",outputEx:"Palindrome",constraints:"1 ≤ N ≤ 10⁹",hint:"Reverse the number. If reversed == original, it's a palindrome. Save original first!",approach:"Store original. Reverse the number using the digit-reversal loop. Compare reversed with original."},
+{title:"Check Prime Number",difficulty:"Easy",problem:"Given N, check if it is a prime number (divisible only by 1 and itself).",inputEx:"N = 17",outputEx:"Prime",constraints:"2 ≤ N ≤ 10⁶",hint:"Loop from 2 to √N. If any number divides N evenly, it's not prime.",approach:"If N<2 → not prime. Loop i=2 to √N: if N%i==0 → not prime. If no divisor found → prime."},
+{title:"Print All Factors of N",difficulty:"Easy",problem:"Given N, print all numbers that divide N evenly.",inputEx:"N = 12",outputEx:"1 2 3 4 6 12",constraints:"1 ≤ N ≤ 10⁶",hint:"Loop from 1 to N. If N%i==0, then i is a factor.",approach:"for(i=1; i<=N; i++) if(N%i==0) print i. Optimization: loop only to √N."},
+{title:"Fibonacci Series up to N terms",difficulty:"Easy",problem:"Given N, print the first N Fibonacci numbers (starting 0, 1, 1, 2, 3, 5, ...).",inputEx:"N = 7",outputEx:"0 1 1 2 3 5 8",constraints:"1 ≤ N ≤ 50",hint:"Keep two variables: a=0, b=1. Next = a+b. Then shift: a=b, b=next.",approach:"Print a, then compute next=a+b, shift a=b, b=next. Repeat N times."},
+{title:"Print Squares 1 to N",difficulty:"Easy",problem:"Print the square of each number from 1 to N.",inputEx:"N = 5",outputEx:"1 4 9 16 25",constraints:"1 ≤ N ≤ 1000",hint:"In each iteration, print i*i.",approach:"Loop i=1 to N. Print i*i each time. Simple computation inside loop."},
+{title:"Print Cubes 1 to N",difficulty:"Easy",problem:"Print the cube of each number from 1 to N.",inputEx:"N = 4",outputEx:"1 8 27 64",constraints:"1 ≤ N ≤ 100",hint:"In each iteration, print i*i*i.",approach:"Loop i=1 to N. Print i*i*i each time."},
+{title:"Numbers Divisible by 7 in Range",difficulty:"Easy",problem:"Given two numbers A and B, print all numbers between A and B that are divisible by 7.",inputEx:"A = 10, B = 50",outputEx:"14 21 28 35 42 49",constraints:"1 ≤ A < B ≤ 10⁶",hint:"Loop from A to B. Check i%7==0. Or find the first multiple of 7 ≥ A and step by 7.",approach:"Loop i=A to B, print if i%7==0. Optimization: start from ceil(A/7)*7 and step by 7."},
+{title:"Sum of Factors of N",difficulty:"Easy",problem:"Given N, find the sum of all factors of N.",inputEx:"N = 12",outputEx:"Sum = 28",constraints:"1 ≤ N ≤ 10⁶",hint:"Loop 1 to N, if N%i==0 then add i to sum.",approach:"sum=0. For each i from 1 to N: if N%i==0, sum+=i. Print sum."},
+{title:"Find Smallest Digit in a Number",difficulty:"Easy",problem:"Given a number N, find the smallest (minimum) digit.",inputEx:"N = 5839",outputEx:"Smallest digit: 3",constraints:"1 ≤ N ≤ 10⁹",hint:"Initialize min=9. Extract each digit, update min if digit is smaller.",approach:"min=9. While N>0: digit=N%10, if digit<min then min=digit, N=N/10. Print min."},
+{title:"Find Largest Digit in a Number",difficulty:"Easy",problem:"Given a number N, find the largest (maximum) digit.",inputEx:"N = 5839",outputEx:"Largest digit: 9",constraints:"1 ≤ N ≤ 10⁹",hint:"Initialize max=0. Extract each digit, update max if digit is larger.",approach:"max=0. While N>0: digit=N%10, if digit>max then max=digit, N=N/10. Print max."},
+{title:"HCF/GCD of Two Numbers",difficulty:"Easy",problem:"Given two numbers A and B, find their GCD (Greatest Common Divisor).",inputEx:"A = 12, B = 8",outputEx:"GCD = 4",constraints:"1 ≤ A, B ≤ 10⁶",hint:"Euclid's algorithm: while(B!=0) { temp=B; B=A%B; A=temp; }. A is GCD.",approach:"Repeatedly replace (A,B) with (B, A%B) until B becomes 0. A is the GCD."},
+{title:"LCM of Two Numbers",difficulty:"Easy",problem:"Given two numbers A and B, find their LCM (Least Common Multiple).",inputEx:"A = 4, B = 6",outputEx:"LCM = 12",constraints:"1 ≤ A, B ≤ 10⁶",hint:"LCM = (A × B) / GCD(A, B). Find GCD first using Euclid's algorithm.",approach:"First find GCD. Then LCM = A*B / GCD. This avoids overflow better than brute force."},
+{title:"Check Armstrong Number",difficulty:"Easy",problem:"Given N, check if it's an Armstrong number (sum of digits^numDigits equals N). Example: 153 = 1³+5³+3³.",inputEx:"N = 153",outputEx:"Armstrong Number",constraints:"1 ≤ N ≤ 10⁶",hint:"First count digits (k). Then sum up each digit raised to power k. Compare with original.",approach:"Count digits first. Then extract each digit, raise to power k, accumulate sum. Compare sum with original N."},
+{title:"Check Perfect Number",difficulty:"Easy",problem:"A perfect number equals the sum of its proper divisors (excluding itself). Check if N is perfect.",inputEx:"N = 6",outputEx:"Perfect (1+2+3=6)",constraints:"1 ≤ N ≤ 10⁶",hint:"Find all factors except N itself. Sum them up. If sum equals N, it's perfect.",approach:"sum=0. Loop i=1 to N/2: if N%i==0, sum+=i. If sum==N → perfect."},
+{title:"Print Primes from 1 to N",difficulty:"Easy",problem:"Given N, print all prime numbers between 1 and N.",inputEx:"N = 20",outputEx:"2 3 5 7 11 13 17 19",constraints:"2 ≤ N ≤ 10⁴",hint:"For each number 2 to N, check if it's prime (no divisor from 2 to √num).",approach:"Outer loop 2 to N. Inner loop checks divisibility. Use a flag to track if prime."},
+{title:"Sum of Fibonacci Series",difficulty:"Easy",problem:"Given N, find the sum of the first N Fibonacci numbers.",inputEx:"N = 6",outputEx:"Sum = 12 (0+1+1+2+3+5)",constraints:"1 ≤ N ≤ 50",hint:"Generate Fibonacci terms and keep a running sum.",approach:"Same as Fibonacci generation, but also accumulate each term into a sum variable."},
+{title:"Do-While: Sum Until Zero",difficulty:"Easy",problem:"Keep taking numbers from user until 0 is entered. Print the sum of all entered numbers.",inputEx:"5, 3, 8, 0",outputEx:"Sum = 16",constraints:"−10⁶ ≤ each number ≤ 10⁶",hint:"Use do-while: execute at least once, check condition (!=0) at the end.",approach:"do { read num; if(num!=0) sum+=num; } while(num != 0);"},
+{title:"Do-While: Find Largest Input",difficulty:"Easy",problem:"Keep taking numbers from user until 0 is entered. Print the largest number entered.",inputEx:"3, 7, 2, 9, 0",outputEx:"Largest = 9",constraints:"Numbers can be negative too",hint:"Track max value. Update whenever current input > max.",approach:"max = first input. Do-while: read next, if > max update max. Stop when 0 entered."},
+{title:"Do-While: Count Positive Inputs",difficulty:"Easy",problem:"Keep taking numbers until a negative is entered. Count how many positive numbers were entered.",inputEx:"5, 3, 0, 8, -1",outputEx:"Count = 3",constraints:"Numbers between −10⁶ and 10⁶",hint:"Increment counter only for positive inputs (> 0). 0 is neither positive nor negative.",approach:"do { read num; if num>0 count++; } while(num >= 0);"},
+{title:"Do-While: Menu-Driven Program",difficulty:"Easy",problem:"Create a menu: 1=Add, 2=Subtract, 3=Multiply, 4=Exit. Keep showing menu until user picks 4.",inputEx:"Choice=1, a=5,b=3 → 8\nChoice=4",outputEx:"8\nExiting...",constraints:"Valid menu choices only",hint:"Use do-while with a switch inside. Loop continues while choice != 4.",approach:"do { show menu; read choice; switch(choice) perform operation; } while(choice != 4);"},
+{title:"Separate Sum of Even and Odd Digits",difficulty:"Easy",problem:"Given a number, find the sum of its even digits and sum of its odd digits separately.",inputEx:"N = 24537",outputEx:"Even sum=6, Odd sum=15",constraints:"1 ≤ N ≤ 10⁹",hint:"Extract each digit, check if even/odd, add to respective sum.",approach:"Loop: digit=N%10. If digit%2==0 add to evenSum, else add to oddSum. N=N/10."},
+{title:"Factorial of Each Number 1 to N",difficulty:"Easy",problem:"Print the factorial of every number from 1 to N.",inputEx:"N = 5",outputEx:"1!=1, 2!=2, 3!=6, 4!=24, 5!=120",constraints:"1 ≤ N ≤ 12",hint:"You can either recompute each factorial or carry forward: fact *= i.",approach:"Running factorial: fact=1. For i=1 to N: fact*=i, print i and fact."},
+{title:"Break: Stop at First Multiple of 17",difficulty:"Easy",problem:"Print numbers from 1 to 100. Stop as soon as you find a number divisible by 17.",inputEx:"(no input)",outputEx:"1 2 3 ... 17 (stops)",constraints:"Fixed range 1-100",hint:"Use break statement when i%17==0.",approach:"Loop 1 to 100. Print i. If i%17==0, break out of loop immediately."},
+{title:"Continue: Skip Multiples of 5",difficulty:"Easy",problem:"Print numbers 1 to 30, but skip all numbers divisible by 5.",inputEx:"(no input)",outputEx:"1 2 3 4 6 7 8 9 11...",constraints:"Fixed range 1-30",hint:"Use continue when i%5==0 to skip that iteration.",approach:"Loop 1 to 30. If i%5==0, use continue (skip print). Else print i."},
+{title:"Skip Zeros, Sum the Rest",difficulty:"Easy",problem:"Take 5 numbers as input. Skip any zeros using continue. Print the sum of the rest.",inputEx:"3, 0, 7, 0, 5",outputEx:"Sum = 15",constraints:"Each number: −10⁶ to 10⁶",hint:"In the loop, if input is 0, use continue to skip adding it.",approach:"Loop 5 times. Read num. If num==0, continue. Else sum+=num. Print sum."},
+{title:"Sum Until Exceeds 100",difficulty:"Easy",problem:"Keep adding numbers 1, 2, 3, ... in a loop. Stop when sum exceeds 100. Print the stopping number and sum.",inputEx:"(no input)",outputEx:"Stopped at 14, sum=105",constraints:"Sum starts at 0",hint:"Use a while loop with condition sum <= 100. Track i and sum.",approach:"i=0, sum=0. While sum<=100: i++, sum+=i. When loop ends, print i and sum."},
+{title:"Search for a Number",difficulty:"Easy",problem:"Take N numbers as input. Search for a target value X. Print 'Found at position P' or 'Not Found'.",inputEx:"arr = [4,7,2,9,1], X = 9",outputEx:"Found at position 4",constraints:"1 ≤ N ≤ 100",hint:"Loop through inputs. If current == X, print position and break.",approach:"Loop i=1 to N: if input[i]==X, print position, set found=true, break. After loop check found flag."},
+{title:"Print Only Even Numbers, Skip Odd",difficulty:"Easy",problem:"Print numbers 1 to 50 but skip all odd numbers using continue.",inputEx:"(no input)",outputEx:"2 4 6 8 10 ... 50",constraints:"Range 1-50",hint:"If i%2!=0, continue. Otherwise print.",approach:"Loop 1 to 50. Skip odd using continue. This is same as printing even, but practices continue."},
+{title:"AP Series Generator",difficulty:"Moderate",problem:"Given first term A, common difference D, and N terms, print the AP series.",inputEx:"A=3, D=5, N=6",outputEx:"3 8 13 18 23 28",constraints:"−100 ≤ A, D ≤ 100; 1 ≤ N ≤ 100",hint:"Each term = A + (i-1)*D. Or start with A and keep adding D.",approach:"term=A. Loop N times: print term, term += D."},
+{title:"GP Series Generator",difficulty:"Moderate",problem:"Given first term A, common ratio R, and N terms, print the GP series.",inputEx:"A=2, R=3, N=5",outputEx:"2 6 18 54 162",constraints:"1 ≤ A ≤ 100; 1 ≤ R ≤ 10; 1 ≤ N ≤ 15",hint:"Each term = previous term × R. Or term = A × R^(i-1).",approach:"term=A. Loop N times: print term, term *= R."},
+{title:"Sum of Squares Series",difficulty:"Moderate",problem:"Calculate 1² + 2² + 3² + ... + N².",inputEx:"N = 4",outputEx:"Sum = 30",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop and add i*i each time. Formula: N*(N+1)*(2N+1)/6.",approach:"sum=0. Loop i=1 to N: sum += i*i. Print sum."},
+{title:"Sum of Cubes Series",difficulty:"Moderate",problem:"Calculate 1³ + 2³ + 3³ + ... + N³.",inputEx:"N = 3",outputEx:"Sum = 36",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop and add i*i*i. Fun fact: sum of cubes = (sum of first N)².",approach:"sum=0. Loop i=1 to N: sum += i*i*i. Print sum."},
+{title:"Harmonic Series Sum",difficulty:"Moderate",problem:"Calculate 1 + 1/2 + 1/3 + ... + 1/N.",inputEx:"N = 5",outputEx:"Sum = 2.2833...",constraints:"1 ≤ N ≤ 10⁴",hint:"Use floating-point variable. sum += 1.0/i in each iteration.",approach:"sum=0.0. Loop i=1 to N: sum += 1.0/i. Use float/double for precision."},
+{title:"Powers of 2 Series",difficulty:"Moderate",problem:"Print 1, 2, 4, 8, 16, ..., 2^N and find their sum.",inputEx:"N = 5",outputEx:"1 2 4 8 16 32\nSum = 63",constraints:"0 ≤ N ≤ 20",hint:"Each term = previous × 2. Or use bit shift: 1 << i. Sum = 2^(N+1) − 1.",approach:"term=1. Loop 0 to N: print term, sum+=term, term*=2."},
+{title:"Sum of Factorials Series",difficulty:"Moderate",problem:"Calculate 1! + 2! + 3! + ... + N!.",inputEx:"N = 4",outputEx:"Sum = 33 (1+2+6+24)",constraints:"1 ≤ N ≤ 15",hint:"Keep a running factorial. Each next factorial = previous × i. Add to sum.",approach:"fact=1, sum=0. Loop i=1 to N: fact*=i, sum+=fact. Running accumulator pattern."},
+{title:"Strong Number Check",difficulty:"Moderate",problem:"A Strong number is one where the sum of factorial of digits equals the number. Check if N is Strong.",inputEx:"N = 145",outputEx:"Strong (1!+4!+5! = 1+24+120 = 145)",constraints:"1 ≤ N ≤ 10⁶",hint:"Extract each digit. Find its factorial. Sum all factorials. Compare with original.",approach:"Save original. Loop: extract digit, compute its factorial (inner loop), add to sum. Compare sum with original."},
+];
+
+const MUST_DO = [
+"Print 1 to N — the absolute first loop you should master",
+"Sum of First N Natural Numbers — introduces the accumulator pattern",
+"Factorial of N — multiplying accumulator, essential for math problems",
+"Reverse a Number — digit extraction loop, used in 10+ other problems",
+"Check Palindrome Number — combines reversal with comparison",
+"Check Prime Number — nested condition inside loop, divisibility logic",
+"Fibonacci Series — two-variable state tracking in a loop",
+"HCF/GCD of Two Numbers — Euclid's algorithm, foundation for number theory",
+"Break: Stop at First Multiple of 17 — teaches loop control flow",
+"Strong Number Check — combines multiple concepts: digit extraction + factorial + comparison"
+];
+
+const MISTAKES = [
+"Off-by-one errors: using < instead of <= (or vice versa) causing loops to run one too few or too many times",
+"Infinite loops: forgetting to update the loop variable (increment/decrement) inside while loops",
+"Not saving the original value before modifying it (e.g., reversing destroys the original number)",
+"Integer overflow: factorial values grow very fast — 13! exceeds int range",
+"Using integer division when float is needed (1/2 = 0 in integer arithmetic, use 1.0/2)",
+"Forgetting that while(0) is false — initial condition matters",
+"Not initializing the accumulator correctly: sum should start at 0, product should start at 1",
+"Confusing break (exit loop entirely) with continue (skip to next iteration)",
+"Wrong loop variable in nested loops — using outer variable i inside inner loop instead of j",
+"Forgetting to handle edge cases: N=0 for factorial, N=1 for prime check"
+];
+
+const KEY_PATTERNS = [
+"<strong>Counter Pattern:</strong> for(i=1; i<=N; i++) — the fundamental loop structure",
+"<strong>Accumulator Pattern:</strong> sum=0, then sum+=value — used in summing, counting",
+"<strong>Digit Extraction Loop:</strong> while(N>0) { digit = N%10; N = N/10; } — for digit-based problems",
+"<strong>Flag Pattern:</strong> Set isPrime=true, loop to find counterexample, flip flag if found",
+"<strong>Two-Variable State:</strong> Track a and b (like Fibonacci) — previous and current values",
+"<strong>Euclid's Algorithm:</strong> while(b!=0) { t=b; b=a%b; a=t; } — for GCD problems",
+"<strong>Running Product:</strong> fact=1, fact*=i — accumulator but with multiplication",
+"<strong>Break & Continue:</strong> break exits loop, continue skips current iteration",
+"<strong>Sentinel Loop:</strong> while(input != sentinel_value) — loop until special value entered",
+"<strong>Do-While:</strong> Execute at least once, check condition at end — menu-driven programs"
+];
+</script>
+<script src="topic_template.js"></script>
+</body>
+</html>

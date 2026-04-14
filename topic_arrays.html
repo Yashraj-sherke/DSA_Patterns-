@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📦 Arrays — 50 Beginner Problems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="topic_styles.css">
+<style>:root{--accent:#f59e0b;--accent2:#d97706;--glow1:rgba(245,158,11,.08);--glow2:rgba(217,119,6,.06)}</style>
+</head>
+<body>
+<div class="bg-glow"></div><div class="bg-glow2"></div>
+<div class="container">
+<nav>
+ <a href="logic_hub.html">📚 Hub</a><a href="topic_conditionals.html">🔀 Conditionals</a><a href="topic_loops.html">🔄 Loops</a>
+ <a href="topic_patterns.html">🔷 Patterns</a><a href="topic_recursion.html">🪞 Recursion</a><a href="topic_arrays.html" class="active">📦 Arrays</a>
+ <a href="topic_strings.html">🔤 Strings</a><a href="topic_math.html">🔢 Math</a><a href="topic_mixed.html">🧩 Mixed</a>
+</nav>
+<header><h1>📦 Arrays</h1><p class="subtitle">50 Beginner Problems — Traversal, Search, Manipulation, Frequency & Multi-Array Logic</p></header>
+<div class="stats-row">
+ <div class="stat-card"><div class="num" id="totalCount">50</div><div class="lbl">Total</div></div>
+ <div class="stat-card"><div class="num" id="doneCount">0</div><div class="lbl">Done</div></div>
+ <div class="stat-card"><div class="num" id="pctCount">0%</div><div class="lbl">Progress</div></div>
+</div>
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..."></div>
+<div class="toolbar"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="done">✅ Done</button><button class="filter-btn" data-filter="todo">📝 To-Do</button></div>
+<div id="questionsContainer"></div>
+<div class="supp-section"><div class="supp-title must-do">🏆 Top 10 Must-Do Questions</div><div id="mustDoList"></div></div>
+<div class="supp-section"><div class="supp-title mistakes">❌ Common Mistakes Beginners Make</div><div id="mistakesList"></div></div>
+<div class="supp-section"><div class="supp-title patterns-title">🔑 Key Patterns & Logic Used</div><div id="patternsList"></div></div>
+<div class="footer">📦 Arrays — 50 Problems • Logic Building Hub</div>
+</div>
+<script>
+const TOPIC_KEY = 'arrays';
+const QUESTIONS = [
+{title:"Input & Print Array",difficulty:"Very Easy",problem:"Take N integers as input, store them in an array, and print all elements.",inputEx:"N=5, arr=[3,1,4,1,5]",outputEx:"3 1 4 1 5",constraints:"1 ≤ N ≤ 100",hint:"Use a loop to read inputs into array[i], then another loop to print.",approach:"Two loops: one for input (arr[i] = read), one for output (print arr[i])."},
+{title:"Sum of Array Elements",difficulty:"Very Easy",problem:"Find and print the sum of all elements in an array.",inputEx:"arr = [2, 4, 6, 8]",outputEx:"Sum = 20",constraints:"1 ≤ N ≤ 10⁴",hint:"Initialize sum=0, traverse array adding each element.",approach:"sum=0. Loop i=0 to N-1: sum += arr[i]. Print sum."},
+{title:"Average of Array",difficulty:"Very Easy",problem:"Find the average of all elements in the array.",inputEx:"arr = [10, 20, 30, 40, 50]",outputEx:"Average = 30.0",constraints:"1 ≤ N ≤ 10⁴",hint:"Sum all elements, divide by N. Use float for the result.",approach:"Compute sum, then average = sum / N. Cast to float to avoid integer division."},
+{title:"Find Maximum Element",difficulty:"Very Easy",problem:"Find and print the maximum (largest) element in the array.",inputEx:"arr = [3, 9, 1, 7, 5]",outputEx:"Max = 9",constraints:"1 ≤ N ≤ 10⁴",hint:"Assume first element is max. Compare each element, update if larger.",approach:"max = arr[0]. Loop i=1 to N-1: if arr[i] > max, update max."},
+{title:"Find Minimum Element",difficulty:"Very Easy",problem:"Find and print the minimum (smallest) element in the array.",inputEx:"arr = [3, 9, 1, 7, 5]",outputEx:"Min = 1",constraints:"1 ≤ N ≤ 10⁴",hint:"Same as max but update when smaller.",approach:"min = arr[0]. Loop: if arr[i] < min, update min."},
+{title:"Count Positives, Negatives, Zeros",difficulty:"Very Easy",problem:"Count how many elements are positive, negative, and zero.",inputEx:"arr = [3, -1, 0, 7, -2, 0]",outputEx:"Positive=2, Negative=2, Zero=2",constraints:"1 ≤ N ≤ 10⁴",hint:"Three counters. Check each element: >0, <0, or ==0.",approach:"Initialize pos=neg=zero=0. For each element, increment the right counter."},
+{title:"Count Even and Odd Elements",difficulty:"Very Easy",problem:"Count how many elements are even and how many are odd.",inputEx:"arr = [1, 2, 3, 4, 5, 6]",outputEx:"Even=3, Odd=3",constraints:"1 ≤ N ≤ 10⁴",hint:"Check arr[i] % 2 == 0 for even, else odd.",approach:"Two counters: even and odd. Traverse, check modulo, increment."},
+{title:"Index of Maximum Element",difficulty:"Very Easy",problem:"Find and print the INDEX of the maximum element (0-indexed).",inputEx:"arr = [3, 9, 1, 7]",outputEx:"Index of max = 1",constraints:"1 ≤ N ≤ 10⁴",hint:"Track both the max value and its index.",approach:"maxIdx=0. If arr[i] > arr[maxIdx], set maxIdx = i."},
+{title:"Index of Minimum Element",difficulty:"Very Easy",problem:"Find and print the INDEX of the minimum element.",inputEx:"arr = [3, 9, 1, 7]",outputEx:"Index of min = 2",constraints:"1 ≤ N ≤ 10⁴",hint:"Same approach as max index but use < comparison.",approach:"minIdx=0. If arr[i] < arr[minIdx], set minIdx = i."},
+{title:"Print Elements Greater than K",difficulty:"Very Easy",problem:"Given array and value K, print all elements greater than K.",inputEx:"arr = [3, 9, 1, 7, 5], K=4",outputEx:"9 7 5",constraints:"1 ≤ N ≤ 10⁴",hint:"Simple filter: if arr[i] > K, print it.",approach:"Loop through array. Print each element that satisfies arr[i] > K."},
+{title:"Linear Search",difficulty:"Easy",problem:"Search for element X in the array. Print its index or 'Not Found'.",inputEx:"arr = [4, 7, 2, 9], X=2",outputEx:"Found at index 2",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop through array. If arr[i] == X, print index and stop.",approach:"Traverse left to right. On match, print index and break. If loop ends without match, print not found."},
+{title:"Count Occurrences of X",difficulty:"Easy",problem:"Count how many times element X appears in the array.",inputEx:"arr = [1, 3, 2, 3, 4, 3], X=3",outputEx:"Count = 3",constraints:"1 ≤ N ≤ 10⁴",hint:"Initialize count=0. If arr[i]==X, increment count.",approach:"Traverse, compare each element with X, count matches."},
+{title:"First Occurrence of X",difficulty:"Easy",problem:"Find the first (leftmost) index where X appears. Return -1 if not found.",inputEx:"arr = [5, 3, 7, 3, 9], X=3",outputEx:"First at index 1",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop from left. Return the first match. Use break after finding.",approach:"Loop i=0 to N-1: if arr[i]==X, return i. If all checked, return -1."},
+{title:"Last Occurrence of X",difficulty:"Easy",problem:"Find the last (rightmost) index where X appears.",inputEx:"arr = [5, 3, 7, 3, 9], X=3",outputEx:"Last at index 3",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop from right to left. Or loop left to right and keep updating lastIdx.",approach:"Loop from end: i=N-1 downto 0, if arr[i]==X return i. Or keep updating lastIdx."},
+{title:"Check All Elements Unique",difficulty:"Easy",problem:"Check if all elements in the array are distinct (no duplicates).",inputEx:"arr = [1, 3, 5, 7, 2]",outputEx:"All unique",constraints:"1 ≤ N ≤ 1000",hint:"Compare every pair using nested loops: if arr[i]==arr[j] for i≠j, not unique.",approach:"Nested loop: for each i, check j=i+1 to N-1 if arr[i]==arr[j]. O(N²) brute force."},
+{title:"Sum of Even Elements Only",difficulty:"Easy",problem:"Find the sum of all even-valued elements in the array.",inputEx:"arr = [1, 2, 3, 4, 5, 6]",outputEx:"Sum = 12",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop. If arr[i]%2==0, add to sum.",approach:"Conditional accumulator: only add to sum when element is even."},
+{title:"Sum of Odd Elements Only",difficulty:"Easy",problem:"Find the sum of all odd-valued elements in the array.",inputEx:"arr = [1, 2, 3, 4, 5, 6]",outputEx:"Sum = 9",constraints:"1 ≤ N ≤ 10⁴",hint:"Same as even sum but check arr[i]%2!=0.",approach:"Loop, add to sum only if element is odd."},
+{title:"Count Primes in Array",difficulty:"Easy",problem:"Count how many elements in the array are prime numbers.",inputEx:"arr = [4, 7, 10, 11, 15, 2]",outputEx:"Count = 3",constraints:"1 ≤ N ≤ 1000; 1 ≤ arr[i] ≤ 10⁶",hint:"For each element, check if it's prime (no divisor from 2 to √element).",approach:"For each arr[i], run prime check (inner loop 2 to √arr[i]). Count primes."},
+{title:"Count Perfect Squares in Array",difficulty:"Easy",problem:"Count how many elements are perfect squares.",inputEx:"arr = [4, 7, 9, 16, 20, 25]",outputEx:"Count = 4",constraints:"1 ≤ N ≤ 10⁴",hint:"For each element, check if √element is an integer: (int)√x * (int)√x == x.",approach:"For arr[i]: compute s = (int)sqrt(arr[i]). If s*s == arr[i], it's a perfect square."},
+{title:"Create Array of Squares",difficulty:"Easy",problem:"Create a new array where each element is the square of the original.",inputEx:"arr = [1, 2, 3, 4]",outputEx:"result = [1, 4, 9, 16]",constraints:"1 ≤ N ≤ 10⁴",hint:"result[i] = arr[i] * arr[i].",approach:"Create new array. Loop: result[i] = arr[i] * arr[i]."},
+{title:"Filter Even Elements into New Array",difficulty:"Easy",problem:"Create a new array containing only the even elements from the original.",inputEx:"arr = [1, 2, 3, 4, 5, 6]",outputEx:"result = [2, 4, 6]",constraints:"1 ≤ N ≤ 10⁴",hint:"Use a separate index for the new array. Only add when element is even.",approach:"newIdx=0. If arr[i] is even, result[newIdx++] = arr[i]. Result has variable length."},
+{title:"Replace Negatives with Zero",difficulty:"Easy",problem:"Replace every negative number in the array with 0.",inputEx:"arr = [3, -1, 4, -5, 2]",outputEx:"[3, 0, 4, 0, 2]",constraints:"1 ≤ N ≤ 10⁴",hint:"If arr[i] < 0, set arr[i] = 0.",approach:"In-place modification: traverse, replace negative values with 0."},
+{title:"Swap First and Last Elements",difficulty:"Easy",problem:"Swap the first and last elements of the array.",inputEx:"arr = [1, 2, 3, 4, 5]",outputEx:"[5, 2, 3, 4, 1]",constraints:"N ≥ 2",hint:"temp = arr[0]; arr[0] = arr[N-1]; arr[N-1] = temp.",approach:"Classic three-variable swap using a temporary variable."},
+{title:"Reverse an Array",difficulty:"Easy",problem:"Reverse the array in-place (without using a new array).",inputEx:"arr = [1, 2, 3, 4, 5]",outputEx:"[5, 4, 3, 2, 1]",constraints:"1 ≤ N ≤ 10⁴",hint:"Use two pointers: left=0, right=N-1. Swap and move inward.",approach:"While left < right: swap arr[left] and arr[right], left++, right--. Meet in middle."},
+{title:"Left Rotate Array by One",difficulty:"Easy",problem:"Rotate the array one position to the left.",inputEx:"arr = [1, 2, 3, 4, 5]",outputEx:"[2, 3, 4, 5, 1]",constraints:"1 ≤ N ≤ 10⁴",hint:"Save first element. Shift everything left by one. Place saved at end.",approach:"temp = arr[0]. Loop i=0 to N-2: arr[i] = arr[i+1]. arr[N-1] = temp."},
+{title:"Right Rotate Array by One",difficulty:"Easy",problem:"Rotate the array one position to the right.",inputEx:"arr = [1, 2, 3, 4, 5]",outputEx:"[5, 1, 2, 3, 4]",constraints:"1 ≤ N ≤ 10⁴",hint:"Save last element. Shift everything right by one. Place saved at beginning.",approach:"temp = arr[N-1]. Loop i=N-1 downto 1: arr[i] = arr[i-1]. arr[0] = temp."},
+{title:"Swap Alternate Elements",difficulty:"Easy",problem:"Swap elements pairwise: (0↔1), (2↔3), (4↔5), etc.",inputEx:"arr = [1, 2, 3, 4, 5, 6]",outputEx:"[2, 1, 4, 3, 6, 5]",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop i=0, step 2. Swap arr[i] and arr[i+1]. Handle odd length (skip last).",approach:"for(i=0; i<N-1; i+=2) swap(arr[i], arr[i+1]). If N is odd, last element stays."},
+{title:"Copy Array to Another",difficulty:"Easy",problem:"Copy all elements from array A to a new array B manually.",inputEx:"A = [3, 1, 4, 1, 5]",outputEx:"B = [3, 1, 4, 1, 5]",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop: B[i] = A[i] for each i.",approach:"Create B of same size. Loop i=0 to N-1: B[i] = A[i]."},
+{title:"Replace Even with 1, Odd with 0",difficulty:"Easy",problem:"Replace all even numbers with 1 and all odd numbers with 0 in the array.",inputEx:"arr = [3, 4, 7, 2, 9]",outputEx:"[0, 1, 0, 1, 0]",constraints:"1 ≤ N ≤ 10⁴",hint:"If arr[i]%2==0, set 1, else set 0.",approach:"Traverse: arr[i] = (arr[i] % 2 == 0) ? 1 : 0."},
+{title:"Check Two Arrays are Equal",difficulty:"Easy",problem:"Check if two arrays have the same elements in the same order.",inputEx:"A = [1,2,3], B = [1,2,3]",outputEx:"Equal",constraints:"Both arrays have same length N ≤ 1000",hint:"Compare element by element. If any mismatch, not equal.",approach:"First check lengths. Then loop: if A[i] != B[i] at any point, not equal. All match → equal."},
+{title:"Merge Two Arrays",difficulty:"Easy",problem:"Merge array A and array B into a third array C.",inputEx:"A=[1,3,5], B=[2,4,6]",outputEx:"C = [1,3,5,2,4,6]",constraints:"1 ≤ N, M ≤ 10⁴",hint:"Copy all of A first, then all of B into C.",approach:"Index k=0. Loop through A: C[k++]=A[i]. Then loop through B: C[k++]=B[j]."},
+{title:"Common Elements of Two Arrays",difficulty:"Easy",problem:"Find and print elements that appear in both arrays.",inputEx:"A=[1,2,3,4], B=[3,4,5,6]",outputEx:"Common: 3, 4",constraints:"1 ≤ N, M ≤ 1000",hint:"For each element in A, check if it exists in B (nested loop).",approach:"For each A[i], loop through B: if A[i]==B[j], it's common. Use flag to avoid duplicates."},
+{title:"Elements in A but Not in B",difficulty:"Easy",problem:"Find elements present in array A but not in array B.",inputEx:"A=[1,2,3,4], B=[3,4,5,6]",outputEx:"Only in A: 1, 2",constraints:"1 ≤ N, M ≤ 1000",hint:"For each A[i], check all of B. If not found in B, it's unique to A.",approach:"For each A[i]: set found=false, loop B, if match set found=true. If !found, print A[i]."},
+{title:"Element-wise Sum of Two Arrays",difficulty:"Easy",problem:"Given two arrays of same length, create a third array with element-wise sum.",inputEx:"A=[1,2,3], B=[4,5,6]",outputEx:"C = [5,7,9]",constraints:"Same length N ≤ 10⁴",hint:"C[i] = A[i] + B[i].",approach:"Simple loop: C[i] = A[i] + B[i] for each i."},
+{title:"Frequency of Each Element",difficulty:"Moderate",problem:"Print the frequency (count) of each distinct element in the array.",inputEx:"arr = [1,2,2,3,3,3]",outputEx:"1→1, 2→2, 3→3",constraints:"1 ≤ N ≤ 1000",hint:"For each element, count its occurrences. Use a visited flag to skip already counted.",approach:"Use a boolean visited array. For each unvisited element, count its occurrences using inner loop."},
+{title:"Find Duplicate Elements",difficulty:"Moderate",problem:"Print all elements that appear more than once.",inputEx:"arr = [1,3,2,4,3,2,5]",outputEx:"Duplicates: 3, 2",constraints:"1 ≤ N ≤ 1000",hint:"Count each element. If count > 1 and not already printed, print it.",approach:"For each element, count occurrences with nested loop. Print if count>1 and is first occurrence of that count."},
+{title:"Check if Array is Sorted (Ascending)",difficulty:"Easy",problem:"Determine if the array is sorted in non-decreasing order.",inputEx:"arr = [1, 3, 5, 7, 9]",outputEx:"Sorted",constraints:"1 ≤ N ≤ 10⁴",hint:"Check if arr[i] <= arr[i+1] for all consecutive pairs.",approach:"Loop i=0 to N-2: if arr[i] > arr[i+1], not sorted. If loop completes, sorted."},
+{title:"Second Largest Element",difficulty:"Moderate",problem:"Find the second largest element in the array.",inputEx:"arr = [5, 2, 8, 1, 9, 3]",outputEx:"Second largest = 8",constraints:"N ≥ 2; at least 2 distinct values",hint:"Track both max and secondMax. Update carefully.",approach:"max=secondMax=-∞. If arr[i]>max: secondMax=max, max=arr[i]. Elif arr[i]>secondMax and arr[i]!=max: secondMax=arr[i]."},
+{title:"Second Smallest Element",difficulty:"Moderate",problem:"Find the second smallest element in the array.",inputEx:"arr = [5, 2, 8, 1, 9, 3]",outputEx:"Second smallest = 2",constraints:"N ≥ 2; at least 2 distinct values",hint:"Track min and secondMin. Update similarly to second largest.",approach:"min=secondMin=∞. If arr[i]<min: secondMin=min, min=arr[i]. Elif arr[i]<secondMin and arr[i]!=min: update."},
+{title:"Range of Array (Max - Min)",difficulty:"Easy",problem:"Find the difference between the largest and smallest elements.",inputEx:"arr = [5, 2, 8, 1, 9]",outputEx:"Range = 9 - 1 = 8",constraints:"1 ≤ N ≤ 10⁴",hint:"Find max and min separately, then compute max - min.",approach:"Two variables: max and min. Single pass. Range = max - min."},
+{title:"Sum Excluding Max and Min",difficulty:"Moderate",problem:"Find the sum of all elements except the largest and smallest.",inputEx:"arr = [5, 2, 8, 1, 9]",outputEx:"Sum = 15 (5+2+8)",constraints:"N ≥ 3",hint:"Find total sum, max, and min. Result = totalSum - max - min.",approach:"One pass for sum, max, min. Answer = sum - max - min. Handle duplicates of max/min if needed."},
+{title:"Pairs with Sum Equal to K",difficulty:"Moderate",problem:"Count how many pairs (i, j) where i < j have arr[i] + arr[j] = K.",inputEx:"arr = [1,2,3,4,5], K=5",outputEx:"2 pairs: (1,4), (2,3)",constraints:"1 ≤ N ≤ 1000",hint:"Nested loop: for each pair (i,j) with i<j, check if sum equals K.",approach:"Two nested loops: i from 0 to N-2, j from i+1 to N-1. If arr[i]+arr[j]==K, count++."},
+{title:"Elements Greater than Average",difficulty:"Moderate",problem:"Count elements that are strictly greater than the array's average.",inputEx:"arr = [1, 2, 3, 4, 5]",outputEx:"2 (elements 4 and 5, avg=3.0)",constraints:"1 ≤ N ≤ 10⁴",hint:"First calculate the average. Then loop again to count elements > avg.",approach:"Two passes: first find sum and average, then count elements exceeding average."},
+{title:"Print Unique Elements",difficulty:"Moderate",problem:"Print elements that appear exactly once in the array.",inputEx:"arr = [1,2,2,3,4,4,5]",outputEx:"Unique: 1, 3, 5",constraints:"1 ≤ N ≤ 1000",hint:"For each element, count its occurrences using an inner loop. Print if count is exactly 1.",approach:"Nested loop: count each element's appearances. If count==1, it's unique, print it."},
+{title:"Move Zeros to End",difficulty:"Moderate",problem:"Move all zeros in the array to the end while maintaining the relative order of non-zero elements.",inputEx:"arr = [0, 1, 0, 3, 12]",outputEx:"[1, 3, 12, 0, 0]",constraints:"1 ≤ N ≤ 10⁴",hint:"Use a write pointer. Copy non-zeros to front, fill rest with zeros.",approach:"pos=0. Loop: if arr[i]!=0, arr[pos++]=arr[i]. After loop, fill remaining with 0."},
+{title:"Count Elements at Even Index that are Even",difficulty:"Moderate",problem:"Count how many elements at even indices (0, 2, 4, ...) are themselves even numbers.",inputEx:"arr = [2, 3, 4, 5, 6]",outputEx:"Count = 3 (arr[0]=2, arr[2]=4, arr[4]=6)",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop with step 2: i=0, i+=2. Check if arr[i] is even.",approach:"for(i=0; i<N; i+=2) if arr[i]%2==0 count++. Check index AND value."},
+{title:"Sum of Elements at Odd Indices",difficulty:"Easy",problem:"Find the sum of all elements at odd indices (1, 3, 5, ...).",inputEx:"arr = [10, 20, 30, 40, 50]",outputEx:"Sum = 60 (20+40)",constraints:"1 ≤ N ≤ 10⁴",hint:"Loop starting at i=1, step 2.",approach:"sum=0. for(i=1; i<N; i+=2) sum += arr[i]."},
+{title:"Element-wise Product of Two Arrays",difficulty:"Easy",problem:"Create array C where C[i] = A[i] × B[i].",inputEx:"A=[2,3,4], B=[5,6,7]",outputEx:"C = [10,18,28]",constraints:"Same length N ≤ 10⁴",hint:"C[i] = A[i] * B[i] for each index.",approach:"Simple loop: C[i] = A[i] * B[i]."},
+{title:"Count Common Elements Between Two Arrays",difficulty:"Easy",problem:"Count how many elements are common between arrays A and B.",inputEx:"A=[1,2,3,4], B=[3,4,5,6]",outputEx:"2 common elements",constraints:"1 ≤ N, M ≤ 1000",hint:"For each element in A, check if it exists in B. Count matches.",approach:"Nested loops. Count when A[i] matches any B[j]. Handle duplicates with visited flags."},
+];
+
+const MUST_DO = [
+"Find Maximum Element — the fundamental traversal and tracking pattern",
+"Linear Search — the most basic searching technique, foundation for all search",
+"Reverse an Array — teaches the two-pointer approach in-place",
+"Check if Array is Sorted — simple but important verification logic",
+"Second Largest Element — two-variable tracking, tricky edge cases",
+"Frequency of Each Element — introduces the concept of counting patterns",
+"Pairs with Sum Equal to K — nested loop pair-checking, foundation for two-sum",
+"Move Zeros to End — in-place manipulation with write pointer technique",
+"Merge Two Arrays — basic array construction, builds toward merge sort",
+"Common Elements of Two Arrays — nested comparison, set intersection concept"
+];
+
+const MISTAKES = [
+"Array index out of bounds: accessing arr[N] when valid indices are 0 to N-1",
+"Off-by-one in loop: using i<=N instead of i<N (0-indexed) or i<=N-1",
+"Not handling empty arrays: what if N=0? Check before accessing arr[0]",
+"Modifying array while iterating: deleting elements during traversal shifts indices unpredictably",
+"Using == to compare arrays: this compares references, not contents. Must loop and compare element by element",
+"Forgetting to initialize counters/sums before the loop (sum must start at 0, not undefined)",
+"Not handling duplicates in frequency/unique problems — printing a duplicate count multiple times",
+"Swapping without temp variable: arr[i]=arr[j]; arr[j]=arr[i]; — this loses the original arr[i]!",
+"Assuming arrays are sorted when they aren't — many solutions only work on sorted arrays",
+"Integer overflow when multiplying large array elements or computing sum of very large arrays"
+];
+
+const KEY_PATTERNS = [
+"<strong>Traversal:</strong> Visit every element once — the foundation of all array operations",
+"<strong>Accumulator:</strong> sum=0, sum+=arr[i] — counting, summing, products all use this",
+"<strong>Max/Min Tracking:</strong> Initialize with first element, update if better found",
+"<strong>Two-Variable Tracking:</strong> Track both best and second-best (second largest/smallest)",
+"<strong>Two-Pointer:</strong> left and right pointers moving toward center (reverse, palindrome check)",
+"<strong>Write-Pointer:</strong> Track where to write next valid element (move zeros, filter)",
+"<strong>Nested Comparison:</strong> Compare all pairs with two loops — O(N²) brute force",
+"<strong>Frequency Count:</strong> Count appearances using inner loop + visited flag (or frequency array)",
+"<strong>In-place Modification:</strong> Modify array without extra space — swaps, shifts, rotations",
+"<strong>Flag/Sentinel:</strong> Boolean flag to indicate whether something was found or a condition holds"
+];
+</script>
+<script src="topic_template.js"></script>
+</body>
+</html>

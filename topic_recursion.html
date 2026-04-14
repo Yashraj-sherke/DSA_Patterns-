@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🪞 Recursion — 50 Beginner Problems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="topic_styles.css">
+<style>:root{--accent:#ec4899;--accent2:#db2777;--glow1:rgba(236,72,153,.08);--glow2:rgba(219,39,119,.06)}</style>
+</head>
+<body>
+<div class="bg-glow"></div><div class="bg-glow2"></div>
+<div class="container">
+<nav>
+ <a href="logic_hub.html">📚 Hub</a><a href="topic_conditionals.html">🔀 Conditionals</a><a href="topic_loops.html">🔄 Loops</a>
+ <a href="topic_patterns.html">🔷 Patterns</a><a href="topic_recursion.html" class="active">🪞 Recursion</a><a href="topic_arrays.html">📦 Arrays</a>
+ <a href="topic_strings.html">🔤 Strings</a><a href="topic_math.html">🔢 Math</a><a href="topic_mixed.html">🧩 Mixed</a>
+</nav>
+<header><h1>🪞 Recursion</h1><p class="subtitle">50 Beginner Problems — Base Cases, Number Recursion, String Recursion & Recursive Patterns</p></header>
+<div class="stats-row">
+ <div class="stat-card"><div class="num" id="totalCount">50</div><div class="lbl">Total</div></div>
+ <div class="stat-card"><div class="num" id="doneCount">0</div><div class="lbl">Done</div></div>
+ <div class="stat-card"><div class="num" id="pctCount">0%</div><div class="lbl">Progress</div></div>
+</div>
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..."></div>
+<div class="toolbar"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="done">✅ Done</button><button class="filter-btn" data-filter="todo">📝 To-Do</button></div>
+<div id="questionsContainer"></div>
+<div class="supp-section"><div class="supp-title must-do">🏆 Top 10 Must-Do Questions</div><div id="mustDoList"></div></div>
+<div class="supp-section"><div class="supp-title mistakes">❌ Common Mistakes Beginners Make</div><div id="mistakesList"></div></div>
+<div class="supp-section"><div class="supp-title patterns-title">🔑 Key Patterns & Logic Used</div><div id="patternsList"></div></div>
+<div class="footer">🪞 Recursion — 50 Problems • Logic Building Hub</div>
+</div>
+<script>
+const TOPIC_KEY = 'recursion';
+const QUESTIONS = [
+{title:"Print 1 to N Recursively",difficulty:"Very Easy",problem:"Print all numbers from 1 to N using recursion (no loops allowed).",inputEx:"N = 5",outputEx:"1 2 3 4 5",constraints:"1 ≤ N ≤ 1000",hint:"Call print(N-1) first, THEN print N. This ensures smaller numbers print first.",approach:"Base: if N==0 return. Recursive: call f(N-1), then print N. The call happens before the print."},
+{title:"Print N to 1 Recursively",difficulty:"Very Easy",problem:"Print numbers from N down to 1 using recursion.",inputEx:"N = 5",outputEx:"5 4 3 2 1",constraints:"1 ≤ N ≤ 1000",hint:"Print N first, THEN call print(N-1). This prints current before going deeper.",approach:"Base: if N==0 return. Recursive: print N, then call f(N-1). Print happens before the recursive call."},
+{title:"Sum of 1 to N Recursively",difficulty:"Very Easy",problem:"Find the sum of first N natural numbers using recursion.",inputEx:"N = 5",outputEx:"15",constraints:"1 ≤ N ≤ 10⁴",hint:"sum(N) = N + sum(N-1). Base case: sum(0) = 0.",approach:"Each call adds N to the sum of remaining. Base returns 0. Unwind adds: 1+2+3+4+5."},
+{title:"Factorial Recursively",difficulty:"Very Easy",problem:"Calculate N! (N factorial) using recursion.",inputEx:"N = 5",outputEx:"120",constraints:"0 ≤ N ≤ 20",hint:"fact(N) = N × fact(N-1). Base case: fact(0) = 1.",approach:"Multiply N by the result of factorial(N-1). Base: 0! = 1! = 1."},
+{title:"Nth Fibonacci Number",difficulty:"Very Easy",problem:"Find the Nth Fibonacci number recursively. F(0)=0, F(1)=1, F(N)=F(N-1)+F(N-2).",inputEx:"N = 6",outputEx:"8",constraints:"0 ≤ N ≤ 30",hint:"fib(N) = fib(N-1) + fib(N-2). Two base cases: fib(0)=0, fib(1)=1.",approach:"Two base cases. Each call branches into two sub-calls. Tree recursion."},
+{title:"Power of a Number (x^n)",difficulty:"Very Easy",problem:"Calculate x raised to the power n using recursion.",inputEx:"x = 2, n = 5",outputEx:"32",constraints:"1 ≤ x ≤ 100; 0 ≤ n ≤ 20",hint:"power(x,n) = x × power(x, n-1). Base: power(x, 0) = 1.",approach:"Multiply x by power(x, n-1). Base case: anything to the power 0 is 1."},
+{title:"Sum of Digits Recursively",difficulty:"Very Easy",problem:"Find the sum of digits of a number using recursion.",inputEx:"N = 1234",outputEx:"10",constraints:"1 ≤ N ≤ 10⁹",hint:"sumDigits(N) = N%10 + sumDigits(N/10). Base: sumDigits(0) = 0.",approach:"Extract last digit (N%10), add to sum of remaining digits (N/10). Base when N is 0."},
+{title:"Print Even Numbers 1 to N Recursively",difficulty:"Very Easy",problem:"Print only even numbers from 1 to N using recursion.",inputEx:"N = 10",outputEx:"2 4 6 8 10",constraints:"1 ≤ N ≤ 1000",hint:"Approach 1: Recurse f(N-1) first, then print N if N is even. Approach 2: Start from 2, step by 2.",approach:"Call f(N-1), then if N%2==0 print N. Or: f(2), print 2, f(4), print 4, ..."},
+{title:"Print Odd Numbers 1 to N Recursively",difficulty:"Very Easy",problem:"Print only odd numbers from 1 to N using recursion.",inputEx:"N = 10",outputEx:"1 3 5 7 9",constraints:"1 ≤ N ≤ 1000",hint:"Same approach as even numbers but check N%2!=0.",approach:"Recurse f(N-1), then print N if it's odd. Base: N < 1."},
+{title:"Print Fibonacci Series Recursively",difficulty:"Very Easy",problem:"Print the first N Fibonacci numbers using a recursive helper.",inputEx:"N = 7",outputEx:"0 1 1 2 3 5 8",constraints:"1 ≤ N ≤ 30",hint:"Use a helper that calls fib(i) for i=0 to N-1. Or use a wrapper that recurses.",approach:"Either: loop + recursive fib(i), or recursive print that carries a, b and counts down N."},
+{title:"Count Digits Recursively",difficulty:"Easy",problem:"Count the number of digits in a number using recursion.",inputEx:"N = 54321",outputEx:"5",constraints:"1 ≤ N ≤ 10⁹",hint:"countDigits(N) = 1 + countDigits(N/10). Base: N < 10 returns 1.",approach:"Each call contributes 1 for the current digit and recurses on remaining digits."},
+{title:"Reverse a Number Recursively",difficulty:"Easy",problem:"Reverse a number using recursion.",inputEx:"N = 1234",outputEx:"4321",constraints:"1 ≤ N ≤ 10⁹",hint:"Pass the reversed number as a parameter: rev = rev*10 + N%10, recurse with N/10.",approach:"Use helper with extra param: reverse(N, rev). Each call moves last digit of N to rev."},
+{title:"Check Palindrome Number Recursively",difficulty:"Easy",problem:"Check if a number reads the same forwards and backwards using recursion.",inputEx:"N = 12321",outputEx:"Palindrome",constraints:"1 ≤ N ≤ 10⁹",hint:"Reverse the number recursively, then compare with original.",approach:"Use recursive reverse, compare result with original stored in separate variable."},
+{title:"Product of Digits Recursively",difficulty:"Easy",problem:"Find the product of all digits of a number using recursion.",inputEx:"N = 234",outputEx:"24",constraints:"1 ≤ N ≤ 10⁹",hint:"prodDigits(N) = (N%10) × prodDigits(N/10). Base: prodDigits of single digit = that digit.",approach:"Multiply last digit by product of remaining. Base: if N < 10, return N."},
+{title:"GCD Using Euclid's Algorithm Recursively",difficulty:"Easy",problem:"Find GCD of two numbers using recursive Euclid's algorithm.",inputEx:"A = 12, B = 8",outputEx:"4",constraints:"1 ≤ A, B ≤ 10⁶",hint:"gcd(A, B) = gcd(B, A%B). Base: gcd(A, 0) = A.",approach:"Swap and reduce: gcd(a,b) calls gcd(b, a%b). When b is 0, a is the GCD."},
+{title:"Sum of First N Even Numbers Recursively",difficulty:"Easy",problem:"Find the sum of first N even numbers (2+4+6+...+2N) using recursion.",inputEx:"N = 5",outputEx:"30",constraints:"1 ≤ N ≤ 10⁴",hint:"sumEven(N) = 2*N + sumEven(N-1). Base: sumEven(0) = 0.",approach:"The Nth even number is 2*N. Add it to sum of first N-1 even numbers."},
+{title:"Sum of First N Odd Numbers Recursively",difficulty:"Easy",problem:"Find the sum of first N odd numbers (1+3+5+...+(2N-1)) using recursion.",inputEx:"N = 5",outputEx:"25",constraints:"1 ≤ N ≤ 10⁴",hint:"sumOdd(N) = (2*N-1) + sumOdd(N-1). Base: sumOdd(0) = 0. Fun fact: answer is always N².",approach:"Nth odd = 2N-1. Add to recursive sum. Base case returns 0."},
+{title:"Convert Number to Binary Recursively",difficulty:"Easy",problem:"Convert a decimal number to its binary representation using recursion.",inputEx:"N = 13",outputEx:"1101",constraints:"0 ≤ N ≤ 10⁶",hint:"Print binary(N/2) first, then print N%2. Base: N==0 return.",approach:"Recurse with N/2 first (so higher bits print first), then print N%2."},
+{title:"Print N Stars Recursively",difficulty:"Easy",problem:"Print a line of N stars using recursion (no loops).",inputEx:"N = 5",outputEx:"* * * * *",constraints:"1 ≤ N ≤ 50",hint:"Print one star, then call printStars(N-1). Base: N==0 return.",approach:"Each call prints one star and recurses for N-1 more. Base case stops."},
+{title:"Multiplication Table Recursively",difficulty:"Easy",problem:"Print the multiplication table of N (N×1 to N×10) using recursion.",inputEx:"N = 7",outputEx:"7x1=7\n7x2=14\n...\n7x10=70",constraints:"1 ≤ N ≤ 100",hint:"Use a helper with counter i. Print N×i, then recurse with i+1. Base: i>10.",approach:"table(N, i): print N*i, call table(N, i+1). Base: i > 10. Start with i=1."},
+{title:"nCr Using Pascal's Relation",difficulty:"Easy",problem:"Calculate nCr (combination) using recursion: C(n,r) = C(n-1,r-1) + C(n-1,r).",inputEx:"n = 5, r = 2",outputEx:"10",constraints:"0 ≤ r ≤ n ≤ 20",hint:"Base cases: C(n,0) = 1, C(n,n) = 1. Recurse: C(n,r) = C(n-1,r-1) + C(n-1,r).",approach:"Two base cases (r==0 or r==n → 1). Otherwise split into two smaller sub-problems."},
+{title:"Print Digits in Words Recursively",difficulty:"Easy",problem:"Given a number, print each digit as a word: 123 → 'one two three'.",inputEx:"N = 405",outputEx:"four zero five",constraints:"0 ≤ N ≤ 10⁹",hint:"Recurse with N/10 first, then convert N%10 to word. Base: N==0.",approach:"Call recursively for N/10 first (to print higher digits first), then map N%10 to word."},
+{title:"Reverse a String Recursively",difficulty:"Easy",problem:"Reverse a string using recursion.",inputEx:"s = 'hello'",outputEx:"olleh",constraints:"1 ≤ length ≤ 1000",hint:"reverse(s) = reverse(s[1:]) + s[0]. Or swap first and last, recurse on middle.",approach:"Base: length ≤ 1. Recursive: reverse everything after first char, append first char at end."},
+{title:"Check String Palindrome Recursively",difficulty:"Easy",problem:"Check if a string is a palindrome using recursion.",inputEx:"s = 'racecar'",outputEx:"Palindrome",constraints:"1 ≤ length ≤ 1000",hint:"Compare first and last characters. If equal, recurse on substring without them.",approach:"isPalin(s, left, right): if s[left]!=s[right] return false. If left>=right return true. Recurse."},
+{title:"Count Vowels in String Recursively",difficulty:"Easy",problem:"Count the number of vowels in a string using recursion.",inputEx:"s = 'programming'",outputEx:"3",constraints:"1 ≤ length ≤ 1000",hint:"Check first char — if vowel, return 1 + count(rest). Else return count(rest).",approach:"Base: empty string returns 0. Check first char, add 1 if vowel, recurse on remaining."},
+{title:"Remove Spaces from String Recursively",difficulty:"Easy",problem:"Remove all spaces from a string using recursion.",inputEx:"s = 'h e l l o'",outputEx:"hello",constraints:"1 ≤ length ≤ 1000",hint:"If first char is space, skip it. Else keep it. Recurse on rest.",approach:"Base: empty string. If first char is space, return recurse(rest). Else first + recurse(rest)."},
+{title:"Replace Character Recursively",difficulty:"Easy",problem:"Replace all occurrences of character 'a' with 'x' in a string recursively.",inputEx:"s = 'banana', old='a', new='x'",outputEx:"bxnxnx",constraints:"1 ≤ length ≤ 1000",hint:"Check first char — if it matches, replace it. Always recurse on rest.",approach:"If s[0]==old, use new + recurse(rest). Else s[0] + recurse(rest). Base: empty string."},
+{title:"Remove All Occurrences of a Character",difficulty:"Easy",problem:"Remove every occurrence of character 'a' from a string using recursion.",inputEx:"s = 'banana', ch='a'",outputEx:"bnn",constraints:"1 ≤ length ≤ 1000",hint:"If first char matches, skip (don't include). Recurse on rest.",approach:"If s[0]==ch, return recurse(rest). Else return s[0] + recurse(rest). Base: empty."},
+{title:"Print Each Character Recursively",difficulty:"Easy",problem:"Print each character of a string on a new line using recursion.",inputEx:"s = 'hello'",outputEx:"h\ne\nl\nl\no",constraints:"1 ≤ length ≤ 1000",hint:"Print first character, then recurse on remaining substring.",approach:"Print s[0], call f(s[1:]). Base: empty string returns."},
+{title:"Convert String to Uppercase Recursively",difficulty:"Easy",problem:"Convert all lowercase letters to uppercase in a string, recursively.",inputEx:"s = 'Hello World'",outputEx:"HELLO WORLD",constraints:"1 ≤ length ≤ 1000",hint:"If char is lowercase (a-z), subtract 32 from its ASCII or use toUpper. Recurse on rest.",approach:"Convert first char if needed, concatenate with recursive result of rest. Base: empty string."},
+{title:"Count Consonants Recursively",difficulty:"Easy",problem:"Count consonants in a string using recursion.",inputEx:"s = 'hello world'",outputEx:"7",constraints:"1 ≤ length ≤ 1000",hint:"A consonant is a letter that is NOT a vowel. Check if it's a letter first.",approach:"If first char is a letter and not a vowel → 1 + recurse(rest). Else recurse(rest)."},
+{title:"Recursive Triangle Pattern (Top-Down)",difficulty:"Easy",problem:"Print a star triangle where row 1 has N stars, row 2 has N-1, ..., using recursion.",inputEx:"N = 4",outputEx:"* * * *\n* * *\n* *\n*",constraints:"1 ≤ N ≤ 15",hint:"Print N stars, newline, then call f(N-1). Base: N==0.",approach:"Print a line of N stars (using helper), then recurse with N-1. Base case: N is 0."},
+{title:"Recursive Triangle Pattern (Bottom-Up)",difficulty:"Easy",problem:"Print a star triangle where row 1 has 1 star, row 2 has 2, ..., up to N, using recursion.",inputEx:"N = 4",outputEx:"*\n* *\n* * *\n* * * *",constraints:"1 ≤ N ≤ 15",hint:"Call f(N-1) FIRST, then print N stars. This builds from bottom up.",approach:"Recurse first: f(N-1), then print N stars after recursion returns. Base: N==0."},
+{title:"Print Up-Down Sequence",difficulty:"Easy",problem:"Print 1 to N (ascending) then N to 1 (descending) in same function call.",inputEx:"N = 4",outputEx:"1 2 3 4 4 3 2 1",constraints:"1 ≤ N ≤ 20",hint:"Print i before recursive call AND after recursive call. The print-after runs during unwinding.",approach:"printUpDown(i, N): print i, if i<N recurse(i+1, N), print i again. This creates the mirror."},
+{title:"Sum of Array Recursively",difficulty:"Easy",problem:"Find the sum of all elements in an array using recursion.",inputEx:"arr = [3, 1, 4, 1, 5]",outputEx:"14",constraints:"1 ≤ N ≤ 1000",hint:"sum(arr, n) = arr[n-1] + sum(arr, n-1). Base: sum(arr, 0) = 0.",approach:"Add last element to sum of everything before it. Base: empty array returns 0."},
+{title:"Find Max in Array Recursively",difficulty:"Easy",problem:"Find the maximum element in an array using recursion.",inputEx:"arr = [3, 7, 2, 9, 5]",outputEx:"9",constraints:"1 ≤ N ≤ 1000",hint:"max(arr, n) = max(arr[n-1], max(arr, n-1)). Base: single element returns itself.",approach:"Compare last element with max of rest. Base: one element → return it."},
+{title:"Linear Search Recursively",difficulty:"Easy",problem:"Search for a target element in an array using recursion. Return index or -1.",inputEx:"arr = [4,7,2,9], target=2",outputEx:"Found at index 2",constraints:"1 ≤ N ≤ 1000",hint:"Check arr[0]. If match, return 0. Else search rest and add 1 to result.",approach:"If arr[current]==target, return current. Else recurse with current+1. Base: exceeded length → -1."},
+{title:"Check Array Sorted Recursively",difficulty:"Easy",problem:"Check if an array is sorted in ascending order using recursion.",inputEx:"arr = [1, 3, 5, 7, 9]",outputEx:"Sorted",constraints:"1 ≤ N ≤ 1000",hint:"Check arr[i] <= arr[i+1]. If not, return false. Else check rest.",approach:"If arr[0] > arr[1], not sorted. Else recurse on array from index 1. Base: size ≤ 1 → sorted."},
+{title:"String Length Recursively",difficulty:"Easy",problem:"Find the length of a string using recursion (don't use built-in length).",inputEx:"s = 'hello'",outputEx:"5",constraints:"0 ≤ length ≤ 1000",hint:"length(s) = 1 + length(s[1:]). Base: empty string returns 0.",approach:"Each character contributes 1. Recurse on rest of string. Empty string is base case."},
+{title:"Tower of Hanoi",difficulty:"Moderate",problem:"Solve Tower of Hanoi for N disks: move from source to destination using auxiliary peg.",inputEx:"N = 3",outputEx:"Move 1: A→C\nMove 2: A→B\nMove 3: C→B\n...",constraints:"1 ≤ N ≤ 15",hint:"Move N-1 disks from src to aux, move Nth disk from src to dest, move N-1 from aux to dest.",approach:"hanoi(N, src, dest, aux): hanoi(N-1, src, aux, dest); move disk N; hanoi(N-1, aux, dest, src)."},
+{title:"Power (Efficient) — x^n in O(log n)",difficulty:"Moderate",problem:"Calculate x^n efficiently: if n is even, x^n = (x^(n/2))². If odd, x × x^(n-1).",inputEx:"x = 2, n = 10",outputEx:"1024",constraints:"1 ≤ x ≤ 100; 0 ≤ n ≤ 30",hint:"Even: power(x, n/2) squared. Odd: x × power(x, n-1). Base: n==0 → 1.",approach:"Halving n each time makes it O(log n) instead of O(n). Much faster for large n."},
+{title:"Sum of Series 1/1 + 1/2 + ... + 1/N",difficulty:"Moderate",problem:"Calculate the harmonic sum 1 + 1/2 + 1/3 + ... + 1/N using recursion.",inputEx:"N = 5",outputEx:"2.2833...",constraints:"1 ≤ N ≤ 10⁴",hint:"harmonic(N) = 1.0/N + harmonic(N-1). Base: harmonic(1) = 1.0.",approach:"Add 1/N to recursive result. Use floating point. Base case: N=1 returns 1.0."},
+{title:"Print Binary Strings of Length N",difficulty:"Moderate",problem:"Print all binary strings (0s and 1s) of length N.",inputEx:"N = 3",outputEx:"000 001 010 011 100 101 110 111",constraints:"1 ≤ N ≤ 10",hint:"At each position, choose 0 or 1. Recurse for remaining positions.",approach:"generate(current, remaining): if remaining==0, print current. Else try appending '0' and '1'."},
+{title:"Print All Subsequences of '123'",difficulty:"Moderate",problem:"Print all subsequences of a short string like '123' (include empty).",inputEx:"s = '123'",outputEx:"'', 1, 2, 3, 12, 13, 23, 123",constraints:"1 ≤ length ≤ 10",hint:"For each character, you either include it or exclude it. Two recursive branches.",approach:"subseq(i, current): if i==len, print current. Else: recurse including s[i] and excluding s[i]."},
+{title:"Check if Array Elements are Equal",difficulty:"Moderate",problem:"Check if all elements in an array are equal, using recursion.",inputEx:"arr = [5, 5, 5, 5]",outputEx:"All Equal",constraints:"1 ≤ N ≤ 1000",hint:"If arr[0] != arr[1], return false. Else recurse on array from index 1.",approach:"Compare first two. If different → false. If same, check rest recursively. Base: size ≤ 1 → true."},
+{title:"Recursive Power Set Size",difficulty:"Moderate",problem:"Given N elements, calculate the total number of subsets (2^N) using recursion.",inputEx:"N = 4",outputEx:"16",constraints:"0 ≤ N ≤ 20",hint:"powerSetSize(N) = 2 × powerSetSize(N-1). Base: powerSetSize(0) = 1.",approach:"Each element doubles the subsets. Recurse: 2 * f(N-1). Base: f(0) = 1."},
+{title:"Recursive Staircase (Climb 1 or 2 Steps)",difficulty:"Moderate",problem:"Count the number of ways to climb N stairs if you can take 1 or 2 steps at a time.",inputEx:"N = 4",outputEx:"5 ways",constraints:"1 ≤ N ≤ 30",hint:"ways(N) = ways(N-1) + ways(N-2). Same as Fibonacci! Base: ways(0)=1, ways(1)=1.",approach:"From step N, you could have come from N-1 (1 step) or N-2 (2 steps). Add both possibilities."},
+{title:"First Uppercase Letter in String",difficulty:"Easy",problem:"Find and return the first uppercase letter in a string using recursion. Return '0' if none.",inputEx:"s = 'helloWorld'",outputEx:"W",constraints:"1 ≤ length ≤ 1000",hint:"Check first char. If uppercase, return it. Else recurse on rest.",approach:"If s[0] is between A-Z, return it. Else recurse(s[1:]). Base: empty → '0'."},
+{title:"Sum of Natural Numbers Using Tail Recursion",difficulty:"Easy",problem:"Find sum of 1 to N using tail recursion (result passed as parameter).",inputEx:"N = 5",outputEx:"15",constraints:"1 ≤ N ≤ 10⁶",hint:"sumTail(N, acc) = sumTail(N-1, acc+N). Base: N==0, return acc.",approach:"The running total is carried as a parameter. No work done after recursive call. Compiler-optimizable."},
+];
+
+const MUST_DO = [
+"Print 1 to N Recursively — understands the order of recursive call vs action",
+"Sum of 1 to N — the classic accumulator recursion pattern",
+"Factorial — multiplication-based recursion, foundation for combinatorics",
+"Nth Fibonacci — introduces tree recursion (two branches)",
+"GCD Euclid's Algorithm — elegant recursive algorithm used everywhere",
+"Reverse a String — string recursion fundamental",
+"Check String Palindrome — two-pointer recursion technique",
+"Tower of Hanoi — the quintessential recursion problem, develops recursive thinking",
+"Binary Strings of Length N — introduces decision-tree recursion",
+"Staircase Problem — dynamic programming foundation, Fibonacci-like"
+];
+
+const MISTAKES = [
+"Missing or wrong base case — causes infinite recursion and stack overflow",
+"Wrong placement of recursive call: call BEFORE print for ascending, AFTER for descending",
+"Not returning a value — the recursive function returns void but should return a result",
+"Not decreasing the problem size — each recursive call must move closer to the base case",
+"Stack overflow for large N — recursion has memory limits (~10K depth). Use tail recursion if possible",
+"Modifying shared state without realizing — e.g., changing a global array across recursive calls",
+"Confusing 'print during recursion' with 'return result' — these are different approaches",
+"Redundant computation in tree recursion (e.g., Fibonacci) — same sub-problems solved repeatedly",
+"Forgetting to handle both base cases in two-parameter recursion (like GCD)",
+"Not trusting the recursive leap of faith — trying to trace every call instead of trusting the pattern"
+];
+
+const KEY_PATTERNS = [
+"<strong>Base + Recursive Case:</strong> Every recursion needs: when to stop (base) and how to reduce (recursive)",
+"<strong>Print Before vs After Call:</strong> Print before = descending order. Print after (during unwinding) = ascending order",
+"<strong>Head vs Tail Recursion:</strong> Head = work done after call, Tail = work done before call (result in parameter)",
+"<strong>Accumulator Pattern:</strong> Pass running total as parameter: f(N, sum) → f(N-1, sum+N)",
+"<strong>Tree Recursion:</strong> Two (or more) recursive calls per function — Fibonacci, binary strings, subsets",
+"<strong>Divide & Conquer:</strong> Split into halves — efficient power, merge sort concept",
+"<strong>String Recursion:</strong> Process first char + recurse on rest. Build result during return",
+"<strong>Array Recursion:</strong> Process last/first element + recurse on rest. Use index parameter",
+"<strong>Include/Exclude Pattern:</strong> For subsets — either take current element or skip it",
+"<strong>Leap of Faith:</strong> Trust that f(smaller) works correctly, define how current builds on it"
+];
+</script>
+<script src="topic_template.js"></script>
+</body>
+</html>
