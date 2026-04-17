@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="DSA Logic Building Hub — 400 beginner problems across 8 topics with hints, approaches, and progress tracking.">
-<title>🧠 Logic Building Hub — 50 Problems × 8 Topics</title>
+<title>🧠 Logic Building Hub — 510 Problems × 10 Topics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -73,12 +73,12 @@ h1{font-size:2.6rem;font-weight:900;background:linear-gradient(135deg,#f59e0b,#e
 </nav>
 <header>
  <h1>Logic Building Hub</h1>
- <p class="tagline">🎯 <strong>400 Beginner Problems</strong> across 8 core topics — each with hints, approaches & examples.<br>Built for absolute beginners who want to master coding logic step by step.</p>
+ <p class="tagline">🎯 <strong>510 Problems</strong> across 10 topics — from beginner fundamentals to interview-level patterns.<br>Built for absolute beginners who want to master coding logic step by step.</p>
 </header>
 
 <div class="overall-stats">
- <div class="os-card"><div class="num">400</div><div class="lbl">Total Problems</div></div>
- <div class="os-card"><div class="num">8</div><div class="lbl">Topics</div></div>
+ <div class="os-card"><div class="num">510</div><div class="lbl">Total Problems</div></div>
+ <div class="os-card"><div class="num">10</div><div class="lbl">Topics</div></div>
  <div class="os-card"><div class="num" id="totalDone">0</div><div class="lbl">Completed</div></div>
  <div class="os-card"><div class="num" id="totalPct">0%</div><div class="lbl">Progress</div></div>
 </div>
@@ -148,30 +148,58 @@ h1{font-size:2.6rem;font-weight:900;background:linear-gradient(135deg,#f59e0b,#e
   <div class="progress-mini"><div class="fill" id="prog-mixed"></div></div>
   <div class="completed-text" id="done-mixed">0/50</div>
  </a>
+ <a href="topic_array_patterns.html" class="topic-card" style="--accent:#6366f1">
+  <span class="topic-icon">⚡</span>
+  <div class="topic-name">Array Patterns (Advanced)</div>
+  <div class="topic-desc">Two Pointer, Sliding Window, Prefix Sum, Kadane's Algorithm, Binary Search — 13 sub-patterns for interviews.</div>
+  <div class="topic-meta"><span class="tm"><strong>72</strong> Problems</span><span class="tm">Easy → Hard</span><span class="tm" style="background:rgba(99,102,241,.15);color:#a5b4fc">🔥 Interview</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-array_patterns"></div></div>
+  <div class="completed-text" id="done-array_patterns">0/72</div>
+ </a>
+ <a href="topic_string_patterns.html" class="topic-card" style="--accent:#ec4899">
+  <span class="topic-icon">🧵</span>
+  <div class="topic-name">String Patterns (Advanced)</div>
+  <div class="topic-desc">Sliding Window, Anagram, Palindrome, Compression, KMP, Rabin-Karp, Z-Algorithm — 9 sub-patterns for interviews.</div>
+  <div class="topic-meta"><span class="tm"><strong>38</strong> Problems</span><span class="tm">Easy → Hard</span><span class="tm" style="background:rgba(236,72,153,.15);color:#f9a8d4">🔥 Interview</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-string_patterns"></div></div>
+  <div class="completed-text" id="done-string_patterns">0/38</div>
+ </a>
 </div>
 
 <div class="footer">
- 🧠 Logic Building Hub — 400 Problems for Absolute Beginners &bull; Built with ❤️ for DSA preparation
+ 🧠 Logic Building Hub — 510 Problems for DSA Mastery &bull; Built with ❤️ for interview preparation
 </div>
 </div>
 
 <script>
-const topics = ['conditionals','loops','patterns','recursion','arrays','strings','math','mixed'];
+const topics = [
+ {key:'conditionals', total:50},
+ {key:'loops', total:50},
+ {key:'patterns', total:50},
+ {key:'recursion', total:50},
+ {key:'arrays', total:50},
+ {key:'strings', total:50},
+ {key:'math', total:50},
+ {key:'mixed', total:50},
+ {key:'array_patterns', total:72},
+ {key:'string_patterns', total:38}
+];
 let totalDone = 0;
-topics.forEach(t => {
+const grandTotal = 510;
+topics.forEach(({key:t, total:tot}) => {
  try {
   const d = JSON.parse(localStorage.getItem('logic50_' + t) || '{}');
   const count = Object.values(d).filter(v => v === true).length;
   totalDone += count;
-  const pct = Math.round((count / 50) * 100);
+  const pct = Math.round((count / tot) * 100);
   const bar = document.getElementById('prog-' + t);
   if(bar) bar.style.width = pct + '%';
   const txt = document.getElementById('done-' + t);
-  if(txt) txt.textContent = count + '/50';
+  if(txt) txt.textContent = count + '/' + tot;
  } catch(e) {}
 });
 document.getElementById('totalDone').textContent = totalDone;
-document.getElementById('totalPct').textContent = Math.round((totalDone / 400) * 100) + '%';
+document.getElementById('totalPct').textContent = Math.round((totalDone / grandTotal) * 100) + '%';
 </script>
 </body>
 </html>

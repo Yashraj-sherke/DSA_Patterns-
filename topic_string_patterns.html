@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="38 Advanced String Pattern Problems — Sliding Window, Anagram, Palindrome, Compression, KMP, Rabin-Karp, Z-Algorithm. Interview-ready.">
+<title>🧵 String Patterns — 38 Interview Problems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="topic_styles.css">
+<style>
+:root{--accent:#ec4899;--accent2:#db2777;--glow1:rgba(236,72,153,.08);--glow2:rgba(219,39,119,.06)}
+.category-divider{display:flex;align-items:center;gap:14px;padding:18px 20px;margin:20px 0 10px;background:linear-gradient(135deg,rgba(236,72,153,.08),rgba(219,39,119,.04));border:1px solid rgba(236,72,153,.2);border-radius:14px;animation:fadeIn .4s ease}
+.cat-icon{font-size:1.6rem;flex-shrink:0}
+.cat-info{flex:1}
+.cat-name{font-size:1rem;font-weight:800;color:#f9a8d4;letter-spacing:-.3px}
+.cat-desc{font-size:.72rem;color:#888;margin-top:3px;line-height:1.4}
+.diff.hard{background:#7f1d1d;color:#fca5a5}
+.diff.medium,.diff.moderate{background:#713f12;color:#fbbf24}
+.lc-badge{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-size:.55rem;font-weight:800;padding:2px 7px;border-radius:8px;text-decoration:none;letter-spacing:.5px;transition:transform .2s}
+.lc-badge:hover{transform:scale(1.1)}
+.pattern-tag{color:#f9a8d4;background:rgba(236,72,153,.08);padding:4px 12px;border-radius:8px;border-left:3px solid #ec4899;font-size:.75rem;display:inline-block}
+.badge-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.badge{background:rgba(236,72,153,.06);border:1px solid rgba(236,72,153,.15);padding:5px 14px;border-radius:12px;font-size:.7rem;color:#f9a8d4;display:flex;align-items:center;gap:5px}
+.badge strong{color:#fbcfe8}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div><div class="bg-glow2"></div>
+<div class="container">
+<nav>
+ <a href="logic_hub.html">📚 Hub</a><a href="topic_arrays.html">📦 Arrays (Basic)</a><a href="topic_strings.html">🔤 Strings (Basic)</a>
+ <a href="topic_array_patterns.html">⚡ Array Patterns</a><a href="topic_string_patterns.html" class="active">🧵 String Patterns</a>
+</nav>
+<header>
+ <h1>🧵 String Patterns</h1>
+ <p class="subtitle">38 Interview-Level Problems — Sliding Window, Anagram, Palindrome, Compression, KMP, Rabin-Karp, Z-Algorithm</p>
+</header>
+<div class="badge-row">
+ <div class="badge">🎯 <strong>9</strong> Sub-Patterns</div>
+ <div class="badge">📊 <strong>38</strong> Problems</div>
+ <div class="badge">🏆 Interview Ready</div>
+</div>
+<div class="stats-row">
+ <div class="stat-card"><div class="num" id="totalCount">38</div><div class="lbl">Total</div></div>
+ <div class="stat-card"><div class="num" id="doneCount">0</div><div class="lbl">Done</div></div>
+ <div class="stat-card"><div class="num" id="pctCount">0%</div><div class="lbl">Progress</div></div>
+</div>
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems or patterns..."></div>
+<div class="toolbar">
+ <button class="filter-btn active" data-filter="all">All</button>
+ <button class="filter-btn" data-filter="done">✅ Done</button>
+ <button class="filter-btn" data-filter="todo">📝 To-Do</button>
+</div>
+<div id="questionsContainer"></div>
+<div class="supp-section"><div class="supp-title must-do">🏆 Top 10 Must-Do Questions</div><div id="mustDoList"></div></div>
+<div class="supp-section"><div class="supp-title mistakes">❌ Common Mistakes</div><div id="mistakesList"></div></div>
+<div class="supp-section"><div class="supp-title patterns-title">🔑 Key Patterns & Techniques</div><div id="patternsList"></div></div>
+<div class="footer">🧵 String Patterns — 38 Problems • Logic Building Hub • CodeWithNishchal Sheet</div>
+</div>
+<script>
+const TOPIC_KEY = 'string_patterns';
+const QUESTIONS = [
+// ═══════════════════════════════════════════════════════
+// 1) Sliding Window — Longest Substring Problems (5)
+// ═══════════════════════════════════════════════════════
+{title:"Longest Substring Without Repeating Characters",difficulty:"Medium",category:"Sliding Window — Longest Substring",catIcon:"🪟",catDesc:"Variable-size window that expands right and shrinks left to find the longest valid substring.",problem:"Given a string s, find the length of the longest substring without repeating characters.",inputEx:"s = 'abcabcbb'",outputEx:"3 ('abc')",constraints:"0 ≤ s.length ≤ 5×10⁴",hint:"Use HashSet to track characters in window. When duplicate found, shrink from left until it's removed.",approach:"HashSet + two pointers. Expand right: if s[right] in set, remove s[left] from set, left++. Add s[right]. Track maxLen = right-left+1. O(N)."},
+{title:"Longest Substring with At Most Two Distinct Characters",difficulty:"Medium",category:"Sliding Window — Longest Substring",problem:"Find the length of the longest substring that contains at most 2 distinct characters.",inputEx:"s = 'eceba'",outputEx:"3 ('ece')",constraints:"1 ≤ s.length ≤ 5×10⁴",hint:"Use HashMap to track character frequencies. When more than 2 distinct, shrink from left.",approach:"HashMap {char→count}. Expand right, add to map. While map.size>2: decrement freq of s[left], remove if 0, left++. Track maxLen. O(N)."},
+{title:"Longest Substring with At Most K Distinct Characters",difficulty:"Medium",category:"Sliding Window — Longest Substring",problem:"Find the length of the longest substring that contains at most k distinct characters.",inputEx:"s = 'araaci', k = 2",outputEx:"4 ('araa')",constraints:"1 ≤ s.length ≤ 5×10⁴; 0 ≤ k ≤ 50",hint:"Generalized version of At Most 2 Distinct. Use HashMap with size check against k.",approach:"Same as 2-distinct but check map.size > k. Expand right, shrink left when too many distinct. Track maxLen. O(N)."},
+{title:"Longest Repeating Character Replacement",difficulty:"Medium",category:"Sliding Window — Longest Substring",problem:"Given string s and integer k, find the length of the longest substring where you can replace at most k characters to make all characters the same.",inputEx:"s = 'AABABBA', k = 1",outputEx:"4",constraints:"1 ≤ s.length ≤ 10⁵; 0 ≤ k ≤ s.length",hint:"Window is valid when windowLength - maxFrequencyInWindow ≤ k. Expand right, shrink left if invalid.",approach:"Track freq of each char in window. maxFreq = max count of any single char. If windowLen - maxFreq > k, shrink left. Track maxLen. O(N). Key insight: we only need maxFreq to increase."},
+{title:"Max Consecutive Ones III",difficulty:"Medium",category:"Sliding Window — Longest Substring",problem:"Given binary array nums and integer k, return the maximum number of consecutive 1's if you can flip at most k 0's.",inputEx:"nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2",outputEx:"6",constraints:"1 ≤ nums.length ≤ 10⁵; 0 ≤ k ≤ nums.length",hint:"Sliding window on binary array. Window is valid when count of 0s in window ≤ k.",approach:"Expand right. Count zeros in window. When zeros > k, shrink left until zeros ≤ k. Track maxLen. O(N). Same as 'Longest Substring' pattern on 0/1 array."},
+
+// ═══════════════════════════════════════════════════════
+// 2) Sliding Window — Minimum Window Substring (3)
+// ═══════════════════════════════════════════════════════
+{title:"Minimum Window Substring",difficulty:"Hard",category:"Sliding Window — Minimum Window",catIcon:"🎯",catDesc:"Expand to satisfy condition, then shrink to find minimum valid window.",problem:"Given strings s and t, find the minimum window substring of s that contains all characters of t (including duplicates).",inputEx:"s = 'ADOBECODEBANC', t = 'ABC'",outputEx:"'BANC'",constraints:"1 ≤ s.length, t.length ≤ 10⁵",hint:"Expand right to include all characters of t. Track 'formed' count. Once all formed, shrink left to minimize window size.",approach:"Freq map for t. Track 'have' (chars with sufficient count) vs 'need' (distinct chars in t). Expand right. When have==need, shrink left while maintaining validity. Update minLen. O(S+T)."},
+{title:"Minimum Window with All Characters of Pattern",difficulty:"Hard",category:"Sliding Window — Minimum Window",problem:"Find the smallest window in string s that contains all characters of pattern p. If multiple windows of same size, return the one that appears first.",inputEx:"s = 'timetopractice', p = 'toc'",outputEx:"'toprac'",constraints:"1 ≤ |s|, |p| ≤ 10⁵",hint:"Same as Minimum Window Substring. Build freq map of pattern, expand and contract window.",approach:"Identical approach to Minimum Window Substring. Freq map of pattern. Expand right, contract left when all characters satisfied. Track minimum window. O(N)."},
+{title:"Smallest Range Covering Elements from K Lists",difficulty:"Hard",category:"Sliding Window — Minimum Window",problem:"Given k sorted lists, find the smallest range [a,b] that includes at least one number from each list.",inputEx:"lists = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]",outputEx:"[20,24]",constraints:"1 ≤ k ≤ 3500; 1 ≤ list size ≤ 50",hint:"Merge all elements with their list index. Sort. Sliding window to find smallest range covering all k lists.",approach:"Merge all numbers with list-id. Sort by value. Sliding window: expand right until all k lists covered. Shrink left. Track minimum range. O(N log N) where N = total elements."},
+
+// ═══════════════════════════════════════════════════════
+// 3) Anagram / Permutation in String (5)
+// ═══════════════════════════════════════════════════════
+{title:"Permutation in String",difficulty:"Medium",category:"Anagram / Permutation",catIcon:"🔀",catDesc:"Check if one string is a permutation/anagram of another using frequency matching with sliding windows.",problem:"Given two strings s1 and s2, return true if s2 contains a permutation of s1 as a substring.",inputEx:"s1 = 'ab', s2 = 'eidbaooo'",outputEx:"true ('ba' is a permutation of 'ab')",constraints:"1 ≤ s1.length, s2.length ≤ 10⁴",hint:"Fixed-size sliding window of len(s1) over s2. Compare character frequencies.",approach:"Build freq array for s1. Slide window of size len(s1) over s2. Maintain window freq. If window freq matches s1 freq → true. O(N) with O(26) comparison."},
+{title:"Find All Anagrams in a String",difficulty:"Medium",category:"Anagram / Permutation",problem:"Given strings s and p, find all start indices of p's anagrams in s.",inputEx:"s = 'cbaebabacd', p = 'abc'",outputEx:"[0, 6]",constraints:"1 ≤ s.length, p.length ≤ 3×10⁴",hint:"Same as Permutation in String but collect all matching start indices instead of returning true/false.",approach:"Fixed sliding window of size len(p). Maintain freq arrays for pattern and window. When they match, add start index. O(N). Optimization: track 'matches' count of matching character frequencies."},
+{title:"Group Anagrams",difficulty:"Medium",category:"Anagram / Permutation",problem:"Given an array of strings, group the anagrams together. Order doesn't matter.",inputEx:"strs = ['eat','tea','tan','ate','nat','bat']",outputEx:"[['eat','tea','ate'],['tan','nat'],['bat']]",constraints:"1 ≤ strs.length ≤ 10⁴; 0 ≤ strs[i].length ≤ 100",hint:"Anagrams have the same sorted form. Use sorted string as HashMap key.",approach:"For each string: sort it to get key. HashMap {sortedKey → list of strings}. Return map values. O(N × K log K) where K = max string length. Alt: use char count array as key for O(N×K)."},
+{title:"Valid Anagram",difficulty:"Easy",category:"Anagram / Permutation",problem:"Given two strings s and t, return true if t is an anagram of s (same characters, same frequencies).",inputEx:"s = 'anagram', t = 'nagaram'",outputEx:"true",constraints:"1 ≤ s.length, t.length ≤ 5×10⁴",hint:"Count character frequencies of both strings. Compare the frequency arrays.",approach:"If lengths differ → false. Freq array of size 26. Increment for s[i], decrement for t[i]. If all zeros → anagram. O(N) time, O(1) space."},
+{title:"Check if Two Strings are K-Anagrams",difficulty:"Medium",category:"Anagram / Permutation",problem:"Two strings are K-anagrams if they can be made anagrams by changing at most K characters. Given two strings and K, determine if they are K-anagrams.",inputEx:"s1 = 'anagram', s2 = 'grammar', k = 2",outputEx:"true (change 'n' to 'r' and 'a' to 'm')",constraints:"1 ≤ |s1|, |s2| ≤ 10⁵; lengths must be equal",hint:"Count frequency difference between the two strings. If total excess characters / 2 ≤ k → K-anagrams.",approach:"If lengths differ → false. Freq arrays for both. Count differences: diff = sum of max(0, freq1[c]-freq2[c]) for each char. If diff ≤ k → true. O(N)."},
+
+// ═══════════════════════════════════════════════════════
+// 4) Two Pointers — Palindrome Check (5)
+// ═══════════════════════════════════════════════════════
+{title:"Valid Palindrome",difficulty:"Easy",category:"Two Pointers — Palindrome",catIcon:"🪞",catDesc:"Two pointers from both ends checking character equality. Handle edge cases like non-alphanumeric characters.",problem:"Check if a string is a palindrome, considering only alphanumeric characters and ignoring cases.",inputEx:"s = 'A man, a plan, a canal: Panama'",outputEx:"true",constraints:"1 ≤ s.length ≤ 2×10⁵",hint:"Two pointers from both ends. Skip non-alphanumeric. Compare lowercase versions.",approach:"left=0, right=len-1. Skip non-alnum from both sides. If toLower(s[left]) != toLower(s[right]) → false. left++, right--. O(N)."},
+{title:"Valid Palindrome II",difficulty:"Easy",category:"Two Pointers — Palindrome",problem:"Given a string, determine if it can be a palindrome by removing at most one character.",inputEx:"s = 'abca'",outputEx:"true (remove 'c' → 'aba')",constraints:"1 ≤ s.length ≤ 10⁵",hint:"When mismatch found, try skipping left character OR right character. Check if either results in a palindrome.",approach:"Two pointers. On mismatch: check isPalindrome(left+1, right) OR isPalindrome(left, right-1). If either is true → can become palindrome. O(N)."},
+{title:"Longest Palindromic Substring",difficulty:"Medium",category:"Two Pointers — Palindrome",problem:"Given string s, find the longest palindromic substring.",inputEx:"s = 'babad'",outputEx:"'bab' or 'aba'",constraints:"1 ≤ s.length ≤ 1000",hint:"Expand around center for each position. Try both odd-length (single center) and even-length (two centers) palindromes.",approach:"For each index i: expand(i,i) for odd palindromes, expand(i,i+1) for even. Expand while s[left]==s[right]. Track longest. O(N²) time, O(1) space."},
+{title:"Palindromic Substrings",difficulty:"Medium",category:"Two Pointers — Palindrome",problem:"Count the number of palindromic substrings in a given string.",inputEx:"s = 'aaa'",outputEx:"6 ('a','a','a','aa','aa','aaa')",constraints:"1 ≤ s.length ≤ 1000",hint:"Same expand-around-center approach. Count each successful expansion as a palindrome.",approach:"For each center: expand outward while palindrome. Each valid expansion = one more palindromic substring. Sum all counts. O(N²)."},
+{title:"Shortest Palindrome",difficulty:"Hard",category:"Two Pointers — Palindrome",problem:"Find the shortest palindrome you can make by adding characters only at the beginning of the string.",inputEx:"s = 'aacecaaa'",outputEx:"'aaacecaaa'",constraints:"0 ≤ s.length ≤ 5×10⁴",hint:"Find the longest palindromic prefix. Reverse the remaining suffix and prepend it.",approach:"Find longest palindrome starting at index 0. Reverse remaining suffix, prepend to s. Use KMP failure function on s + '#' + reverse(s) for O(N) solution."},
+
+// ═══════════════════════════════════════════════════════
+// 5) Two Pointers — Reverse Words / Characters (5)
+// ═══════════════════════════════════════════════════════
+{title:"Reverse String",difficulty:"Easy",category:"Two Pointers — Reverse",catIcon:"🔄",catDesc:"Use two pointers to reverse strings, words, or characters in-place with O(1) extra space.",problem:"Write a function that reverses a string. The input is an array of characters. Modify in-place with O(1) extra memory.",inputEx:"s = ['h','e','l','l','o']",outputEx:"['o','l','l','e','h']",constraints:"1 ≤ s.length ≤ 10⁵",hint:"Two pointers: swap s[left] and s[right], move inward.",approach:"left=0, right=len-1. While left<right: swap(s[left], s[right]). left++, right--. O(N) time, O(1) space."},
+{title:"Reverse String II",difficulty:"Easy",category:"Two Pointers — Reverse",problem:"Given string s and integer k, for every 2k characters, reverse the first k characters. If fewer than k remain, reverse all.",inputEx:"s = 'abcdefg', k = 2",outputEx:"'bacdfeg'",constraints:"1 ≤ s.length ≤ 10⁴; 1 ≤ k ≤ 10⁴",hint:"Process string in chunks of 2k. Reverse the first k characters of each chunk.",approach:"For i=0 to len, step 2k: reverse substring from i to min(i+k-1, len-1). Leave next k characters as is. O(N)."},
+{title:"Reverse Words in a String",difficulty:"Medium",category:"Two Pointers — Reverse",problem:"Given a string s, reverse the order of words. Words are separated by spaces. Remove extra spaces.",inputEx:"s = '  the sky  is blue  '",outputEx:"'blue is sky the'",constraints:"1 ≤ s.length ≤ 10⁴",hint:"Split by spaces, filter empty strings, reverse the word array, join with single spaces.",approach:"Method 1: Split, reverse, join. Method 2: Reverse entire string, then reverse each word individually, clean spaces. O(N)."},
+{title:"Reverse Words in a String III",difficulty:"Easy",category:"Two Pointers — Reverse",problem:"Reverse each word in a sentence while preserving the word order and spaces.",inputEx:"s = 'Let's take LeetCode contest'",outputEx:"'s'teL ekat edoCteeL tsetnoc'",constraints:"1 ≤ s.length ≤ 5×10⁴",hint:"Find start and end of each word. Reverse characters within each word.",approach:"For each word (delimited by spaces): reverse its characters in-place. Keep spaces untouched. O(N) time, O(1) extra space if modifying in-place."},
+{title:"Rotate String",difficulty:"Easy",category:"Two Pointers — Reverse",problem:"Given two strings s and goal, return true if s can become goal after some number of left rotations.",inputEx:"s = 'abcde', goal = 'cdeab'",outputEx:"true (rotate left by 2)",constraints:"1 ≤ s.length ≤ 100",hint:"All rotations of s are substrings of s+s. Check if goal is a substring of s+s.",approach:"If lengths differ → false. Check if goal is a substring of s+s. If yes → true. O(N) with efficient string matching, O(N²) with naive contains check."},
+
+// ═══════════════════════════════════════════════════════
+// 6) String Compression (4)
+// ═══════════════════════════════════════════════════════
+{title:"String Compression",difficulty:"Medium",category:"String Compression",catIcon:"📦",catDesc:"Compress strings by counting consecutive runs. Use read/write pointers for in-place compression.",problem:"Compress the array by grouping consecutive repeating characters. For groups with length > 1, append the count. Modify in-place with O(1) extra space.",inputEx:"chars = ['a','a','b','b','c','c','c']",outputEx:"['a','2','b','2','c','3'], return 6",constraints:"1 ≤ chars.length ≤ 2000",hint:"Use a write pointer. For each group, write the character then its count (if > 1) as individual digits.",approach:"read pointer scans groups. write pointer writes compressed form. For each group: write char, if count>1 write count digits. Return write position. O(N)."},
+{title:"Count and Say",difficulty:"Medium",category:"String Compression",problem:"The count-and-say sequence: 1 → '1' → 'one 1' → '11' → 'two 1s' → '21' → 'one 2, one 1' → '1211'... Generate the nth term.",inputEx:"n = 4",outputEx:"'1211'",constraints:"1 ≤ n ≤ 30",hint:"Start with '1'. For each step, read the current string and describe it (count consecutive same chars).",approach:"Iterative: start with s='1'. For each step: scan s, count consecutive same chars, build new string with 'count + char'. Repeat n-1 times. O(N × 2ⁿ) roughly."},
+{title:"Run Length Encoding",difficulty:"Easy",category:"String Compression",problem:"Encode a string by replacing consecutive duplicate characters with character followed by count.",inputEx:"s = 'aaabbcdddd'",outputEx:"'a3b2c1d4'",constraints:"1 ≤ s.length ≤ 10⁵",hint:"Traverse string, count consecutive same characters. Append char + count to result.",approach:"current = s[0], count = 1. For i=1: if s[i]==current, count++. Else: result += current + count, reset. Don't forget last group. O(N)."},
+{title:"Encode and Decode Strings",difficulty:"Medium",category:"String Compression",problem:"Design an algorithm to encode a list of strings to a single string and decode it back. Must handle any characters including delimiters.",inputEx:"input = ['hello','world']",outputEx:"encode: '5#hello5#world', decode: ['hello','world']",constraints:"0 ≤ strs.length ≤ 200; 0 ≤ strs[i].length ≤ 200",hint:"Use length-prefixed encoding: each string preceded by its length and a delimiter character.",approach:"Encode: for each s, append len(s) + '#' + s. Decode: read number until '#', extract that many characters as the string. Handles any content. O(N)."},
+
+// ═══════════════════════════════════════════════════════
+// 7) Pattern Matching — KMP (4)
+// ═══════════════════════════════════════════════════════
+{title:"Find the Index of First Occurrence in a String",difficulty:"Easy",category:"Pattern Matching — KMP",catIcon:"🔎",catDesc:"KMP algorithm builds a failure function (LPS array) for efficient pattern matching in O(N+M) time.",problem:"Given two strings haystack and needle, return the index of the first occurrence of needle in haystack, or -1 if not found.",inputEx:"haystack = 'sadbutsad', needle = 'sad'",outputEx:"0",constraints:"1 ≤ haystack.length, needle.length ≤ 10⁴",hint:"Build LPS (Longest Prefix Suffix) array for needle. Use it to avoid re-scanning matched characters.",approach:"Build LPS array for pattern. Two pointers: i for text, j for pattern. On match: advance both. On mismatch: j = lps[j-1]. When j reaches pattern length → found. O(N+M)."},
+{title:"Repeated Substring Pattern",difficulty:"Easy",category:"Pattern Matching — KMP",problem:"Given a string s, check if it can be constructed by repeating a substring multiple times.",inputEx:"s = 'abcabcabc'",outputEx:"true ('abc' repeated 3 times)",constraints:"1 ≤ s.length ≤ 10⁴",hint:"Method 1: s+s contains s at a non-trivial position. Method 2: KMP LPS array — if len % (len - lps[len-1]) == 0 and lps[len-1] > 0.",approach:"Build LPS. patLen = len - lps[len-1]. If len % patLen == 0 and patLen != len → true. Or: check if s is in (s+s)[1:-1]. O(N)."},
+{title:"Shortest Palindrome (KMP)",difficulty:"Hard",category:"Pattern Matching — KMP",problem:"Find the shortest palindrome by adding characters at the beginning. Use KMP for efficient solution.",inputEx:"s = 'aacecaaa'",outputEx:"'aaacecaaa'",constraints:"0 ≤ s.length ≤ 5×10⁴",hint:"Create string: s + '#' + reverse(s). Build LPS array. lps[last] gives the length of the longest palindromic prefix.",approach:"Let rev = reverse(s). Build LPS for s + '#' + rev. The last LPS value = length of longest palindromic prefix of s. Prepend rev[0..n-1-lps[last]] to s. O(N)."},
+{title:"String Matching in an Array",difficulty:"Easy",category:"Pattern Matching — KMP",problem:"Given an array of strings, return all strings that are substrings of another string in the array.",inputEx:"words = ['mass','as','hero','superhero']",outputEx:"['as','hero']",constraints:"1 ≤ words.length ≤ 100; 1 ≤ words[i].length ≤ 30",hint:"For each word, check if it's a substring of any other word. Use KMP for efficient matching.",approach:"For each word w: for each other word v: if len(w)<len(v) and w is substring of v → add w to result. Use built-in contains or KMP. O(N² × L)."},
+
+// ═══════════════════════════════════════════════════════
+// 8) Pattern Matching — Rabin-Karp (4)
+// ═══════════════════════════════════════════════════════
+{title:"Repeated DNA Sequences",difficulty:"Medium",category:"Pattern Matching — Rabin-Karp",catIcon:"🧬",catDesc:"Rolling hash for efficient substring matching. Hash the window and compare, verify on match. O(N) average.",problem:"Find all 10-letter-long sequences (substrings) that occur more than once in a DNA string.",inputEx:"s = 'AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT'",outputEx:"['AAAAACCCCC','CCCCCAAAAA']",constraints:"1 ≤ s.length ≤ 10⁵; s consists of A, C, G, T",hint:"Sliding window of size 10. Use rolling hash or bit encoding to efficiently track seen substrings.",approach:"Encode A=0,C=1,G=2,T=3. Use rolling bit hash (2 bits per char, 20 bits total). HashSet for seen, HashSet for result. Slide window, update hash. O(N)."},
+{title:"Longest Duplicate Substring",difficulty:"Hard",category:"Pattern Matching — Rabin-Karp",problem:"Find the longest substring that occurs at least twice. Return any one such substring. If none, return empty string.",inputEx:"s = 'banana'",outputEx:"'ana'",constraints:"2 ≤ s.length ≤ 3×10⁴",hint:"Binary search on length. For each length, use Rabin-Karp rolling hash to check if any duplicate substring exists.",approach:"Binary search on answer length L. For each L: compute rolling hash for all substrings of length L. If hash collision → verify strings match. O(N log N) average."},
+{title:"Rabin-Karp Pattern Search",difficulty:"Medium",category:"Pattern Matching — Rabin-Karp",problem:"Implement Rabin-Karp algorithm to find all occurrences of a pattern in a text string.",inputEx:"text = 'AABAACAADAABAABA', pattern = 'AABA'",outputEx:"[0, 9, 12]",constraints:"1 ≤ pattern.length ≤ text.length ≤ 10⁵",hint:"Compute hash of pattern. Use rolling hash for text windows. On hash match, verify character by character.",approach:"Hash pattern. Slide window: hash = (hash - s[i]*base^(m-1)) * base + s[i+m]. On match: verify substring. O(N+M) average, O(NM) worst case."},
+{title:"Find All Good Strings",difficulty:"Hard",category:"Pattern Matching — Rabin-Karp",problem:"Count strings of length n that are lexicographically between s1 and s2 (inclusive) and do NOT contain evil as a substring.",inputEx:"n = 2, s1 = 'aa', s2 = 'da', evil = 'b'",outputEx:"51",constraints:"1 ≤ n ≤ 500",hint:"Digit DP + KMP failure function. Count valid strings digit by digit, tracking KMP state to avoid 'evil'.",approach:"Digit DP with KMP automaton. States: position, KMP match state, tight bounds for s1 and s2. dp[pos][kmpState][tight1][tight2]. Subtract strings containing evil. Advanced problem."},
+
+// ═══════════════════════════════════════════════════════
+// 9) Pattern Matching — Z Algorithm (3)
+// ═══════════════════════════════════════════════════════
+{title:"Pattern Searching using Z-Algorithm",difficulty:"Medium",category:"Pattern Matching — Z Algorithm",catIcon:"📏",catDesc:"Z-array: Z[i] = length of longest substring starting at i that matches a prefix. O(N) pattern matching.",problem:"Given a text and pattern, find all occurrences of pattern in text using the Z-Algorithm.",inputEx:"text = 'aaabcxyzaaaab', pattern = 'aab'",outputEx:"Occurrences at: [1, 10]",constraints:"1 ≤ pattern.length ≤ text.length ≤ 10⁵",hint:"Concatenate: pattern + '$' + text. Build Z-array. Where Z[i] = len(pattern), pattern starts at i - len(pattern) - 1 in text.",approach:"Build string S = pattern + '$' + text. Compute Z-array. For i where Z[i]==len(pattern): position in text = i - len(pattern) - 1. O(N+M)."},
+{title:"Minimum Characters to Add for Palindrome",difficulty:"Hard",category:"Pattern Matching — Z Algorithm",problem:"Find the minimum number of characters to add at the front of a string to make it a palindrome.",inputEx:"s = 'abc'",outputEx:"2 (add 'cb' → 'cbabc')",constraints:"1 ≤ s.length ≤ 10⁵",hint:"Find the longest palindromic prefix. Answer = len - longestPalindromicPrefix. Use Z-algorithm on reverse(s) + '$' + s.",approach:"Let rev = reverse(s). Build Z-array for rev + '$' + s. Find rightmost Z[i] that reaches end of s portion AND corresponds to a prefix match. Answer = len - longestPalindromicPrefix. O(N)."},
+{title:"Number of Occurrences of Pattern in Text",difficulty:"Medium",category:"Pattern Matching — Z Algorithm",problem:"Count the total number of times pattern appears in text (including overlapping occurrences).",inputEx:"text = 'aaaa', pattern = 'aa'",outputEx:"3 (positions 0,1,2)",constraints:"1 ≤ pattern.length ≤ text.length ≤ 10⁵",hint:"Build Z-array for pattern + '$' + text. Count positions where Z[i] ≥ len(pattern).",approach:"S = pattern + '$' + text. Build Z-array. Count indices i (in text region) where Z[i] >= len(pattern). Each such position is an occurrence. O(N+M)."},
+];
+
+const MUST_DO = [
+"Longest Substring Without Repeating Characters — the foundational variable sliding window problem",
+"Minimum Window Substring — hardest sliding window, combines expand + shrink + frequency tracking",
+"Valid Anagram — basic frequency comparison, building block for all anagram problems",
+"Find All Anagrams in a String — fixed window + frequency, most common interview question",
+"Longest Palindromic Substring — expand around center, the core palindrome algorithm",
+"Reverse Words in a String — word-level manipulation with space handling edge cases",
+"String Compression — read-write pointer pattern, in-place transformation",
+"Find Index of First Occurrence (KMP) — the fundamental efficient pattern matching algorithm",
+"Rabin-Karp Pattern Search — rolling hash concept, essential for substring search problems",
+"Group Anagrams — HashMap with sorted key, combines hashing and string manipulation"
+];
+
+const MISTAKES = [
+"Sliding window: forgetting to shrink window from left when constraint is violated",
+"Anagram comparisons: using sorting (O(K log K)) when frequency array (O(K)) would be faster",
+"Palindrome check: not handling even vs odd length palindromes separately in expand-around-center",
+"KMP LPS array: off-by-one errors in building the failure function",
+"Rabin-Karp: not handling hash collisions — always verify matched substrings character by character",
+"Rolling hash: integer overflow in hash computation — use modular arithmetic",
+"Reverse words: not handling multiple spaces, leading spaces, and trailing spaces",
+"String immutability: trying to modify strings in-place in Java/Python (use char array or StringBuilder)",
+"Z-algorithm: wrong initialization of Z-box boundaries [L, R], forgetting to extend beyond R",
+"Pattern matching: not counting overlapping occurrences when the problem requires them"
+];
+
+const KEY_PATTERNS = [
+"<strong>Variable Sliding Window:</strong> Expand right pointer, shrink left when invalid. Track best valid window size",
+"<strong>Fixed Sliding Window:</strong> Window of size K moves right. Add new char, remove old. Check condition each step",
+"<strong>Minimum Window:</strong> Expand to satisfy, shrink to minimize. Track formation count vs requirement",
+"<strong>Frequency Array:</strong> int[26] or int[256] for O(1) character count comparison. Core of anagram problems",
+"<strong>Expand Around Center:</strong> For each position, expand outward while palindrome. Handle odd and even lengths",
+"<strong>KMP (Failure Function):</strong> LPS array avoids re-scanning. Key formula: on mismatch, j = lps[j-1]. O(N+M)",
+"<strong>Rabin-Karp (Rolling Hash):</strong> hash = (hash - old*base^k) * base + new. Verify on collision. O(N) average",
+"<strong>Z-Algorithm:</strong> Z[i] = longest prefix match starting at i. Maintained with Z-box [L,R]. O(N)",
+"<strong>Sort-as-Key:</strong> For grouping anagrams — sorted string is a canonical form. HashMap {sorted → list}",
+"<strong>Length-Prefix Encoding:</strong> Encode: len + '#' + data. Robust against any character content"
+];
+</script>
+<script src="topic_template_advanced.js"></script>
+</body>
+</html>
