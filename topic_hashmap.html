@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="HashMap / unordered_map — 50 Beginner Practice Questions in C++. Creation, insertion, access, iteration, update, delete, nested maps and hashing concepts.">
+<title>🗺️ HashMap — 50 Beginner Problems (C++)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="topic_styles.css">
+<style>:root{--accent:#14b8a6;--accent2:#0d9488;--glow1:rgba(20,184,166,.08);--glow2:rgba(13,148,136,.06)}
+
+/* Hashing concept cards */
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:16px}
+.concept-card{background:linear-gradient(145deg,#12121f,#181830);border:1px solid #2a2a4a;border-radius:14px;padding:18px;transition:all .3s}
+.concept-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(20,184,166,.1)}
+.concept-card .cc-title{font-size:.85rem;font-weight:700;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.concept-card .cc-body{font-size:.75rem;color:#bbb;line-height:1.6}
+.concept-card .cc-code{background:#0d0d18;border:1px solid #1e1e30;border-radius:8px;padding:6px 10px;font-family:'Courier New',monospace;font-size:.7rem;color:#6ee7b7;margin-top:8px;overflow-x:auto;white-space:pre}
+.concept-card table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.7rem}
+.concept-card th{text-align:left;color:var(--accent);padding:4px 8px;border-bottom:1px solid #2a2a4a}
+.concept-card td{padding:4px 8px;color:#bbb;border-bottom:1px solid #1a1a2e}
+
+.syntax-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.72rem}
+.syntax-table th{text-align:left;color:var(--accent);padding:6px 10px;border-bottom:1px solid #2a2a4a;background:rgba(20,184,166,.06)}
+.syntax-table td{padding:6px 10px;color:#bbb;border-bottom:1px solid #1a1a2e;font-family:'Courier New',monospace;font-size:.68rem}
+.syntax-table tr:hover{background:rgba(20,184,166,.04)}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div><div class="bg-glow2"></div>
+<div class="container">
+<nav>
+ <a href="logic_hub.html">📚 Hub</a><a href="topic_conditionals.html">🔀 Conditionals</a><a href="topic_loops.html">🔄 Loops</a>
+ <a href="topic_patterns.html">🔷 Patterns</a><a href="topic_recursion.html">🪞 Recursion</a><a href="topic_arrays.html">📦 Arrays</a>
+ <a href="topic_strings.html">🔤 Strings</a><a href="topic_math.html">🔢 Math</a><a href="topic_mixed.html">🧩 Mixed</a>
+ <a href="topic_hashmap.html" class="active">🗺️ HashMap</a>
+</nav>
+<header><h1>🗺️ HashMap / unordered_map</h1><p class="subtitle">50 Beginner Problems in C++ — Creation, Access, Iteration, Update, Delete, Nested Maps & Hashing</p></header>
+<div class="stats-row">
+ <div class="stat-card"><div class="num" id="totalCount">50</div><div class="lbl">Total</div></div>
+ <div class="stat-card"><div class="num" id="doneCount">0</div><div class="lbl">Done</div></div>
+ <div class="stat-card"><div class="num" id="pctCount">0%</div><div class="lbl">Progress</div></div>
+</div>
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..."></div>
+<div class="toolbar"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="done">✅ Done</button><button class="filter-btn" data-filter="todo">📝 To-Do</button></div>
+
+<!-- Hashing Concepts Section -->
+<div class="supp-section" style="margin-bottom:20px">
+ <div class="supp-title" style="color:#14b8a6">📚 Hashing Concepts — Quick Reference</div>
+ <div class="concept-grid">
+  <div class="concept-card">
+   <div class="cc-title">🔑 What is Hashing?</div>
+   <div class="cc-body">
+    Hashing maps data (keys) to fixed-size values (hash codes) using a <strong style="color:#6ee7b7">hash function</strong>. This enables <strong style="color:#fbbf24">O(1) average-time</strong> access.
+    <div class="cc-code">Key → hash_function → index → bucket</div>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">🏗️ Internal Structure</div>
+   <div class="cc-body">
+    <code style="color:#6ee7b7">unordered_map</code> uses a hash table with buckets (chaining).<br>
+    <code style="color:#fbbf24">map</code> uses a Red-Black Tree (sorted keys).
+    <div class="cc-code">Bucket[0] → {"apple",120}
+Bucket[2] → {"banana",40} → {"cherry",80}  ← collision!
+Bucket[3] → {"mango",90}</div>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">⚡ Hash Function (C++)</div>
+   <div class="cc-body">
+    C++ uses <code style="color:#6ee7b7">std::hash&lt;T&gt;</code> for built-in types. Custom types need a custom hash functor.
+    <div class="cc-code">std::hash&lt;string&gt; hasher;
+size_t h = hasher("hello");
+// index = h % bucket_count</div>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">💥 Collision Handling</div>
+   <div class="cc-body">
+    <table>
+     <tr><th>Method</th><th>How</th></tr>
+     <tr><td style="color:#6ee7b7">Chaining</td><td>Linked list per bucket (C++ default)</td></tr>
+     <tr><td style="color:#6ee7b7">Linear Probing</td><td>Check index+1, index+2, ...</td></tr>
+     <tr><td style="color:#6ee7b7">Quadratic</td><td>Check index+1², index+2², ...</td></tr>
+     <tr><td style="color:#6ee7b7">Double Hash</td><td>2nd hash function for step</td></tr>
+    </table>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">⏱️ Time Complexity</div>
+   <div class="cc-body">
+    <table>
+     <tr><th>Operation</th><th>unordered_map</th><th>map</th></tr>
+     <tr><td>Insert</td><td style="color:#6ee7b7">O(1) avg</td><td style="color:#fbbf24">O(log n)</td></tr>
+     <tr><td>Access</td><td style="color:#6ee7b7">O(1) avg</td><td style="color:#fbbf24">O(log n)</td></tr>
+     <tr><td>Delete</td><td style="color:#6ee7b7">O(1) avg</td><td style="color:#fbbf24">O(log n)</td></tr>
+     <tr><td>Worst</td><td style="color:#ef4444">O(n)</td><td style="color:#fbbf24">O(log n)</td></tr>
+    </table>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">📊 Load Factor & Rehashing</div>
+   <div class="cc-body">
+    Load Factor = size / bucket_count.<br>
+    Default max = <strong style="color:#fbbf24">1.0</strong>. Exceeding it triggers <strong style="color:#ef4444">rehashing</strong> (array doubles, all entries re-indexed).
+    <div class="cc-code">mp.load_factor();      // current
+mp.max_load_factor();  // default 1.0
+mp.bucket_count();     // num buckets
+mp.reserve(100);       // pre-allocate</div>
+   </div>
+  </div>
+ </div>
+
+ <!-- Quick Syntax Table -->
+ <div style="margin-top:16px">
+  <div style="font-size:.85rem;font-weight:700;color:#14b8a6;margin-bottom:10px">⌨️ C++ Syntax Quick Reference</div>
+  <table class="syntax-table">
+   <tr><th style="width:30%">Operation</th><th>C++ Code</th></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Create</td><td>unordered_map&lt;string, int&gt; mp;</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Insert ([])</td><td>mp["key"] = value;</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Insert (safe)</td><td>mp.insert({"key", value});</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Access</td><td>mp["key"]  or  mp.at("key")</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Safe check</td><td>mp.find("key") != mp.end()</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Check key</td><td>mp.count("key")</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Delete</td><td>mp.erase("key");</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Size</td><td>mp.size()</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Empty?</td><td>mp.empty()</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Clear</td><td>mp.clear();</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Iterate (C++17)</td><td>for (auto& [k, v] : mp)</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Iterate (C++11)</td><td>for (auto& p : mp) → p.first, p.second</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Merge</td><td>mp.insert(m2.begin(), m2.end());</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Sorted map</td><td>std::map&lt;K,V&gt; (Red-Black Tree)</td></tr>
+  </table>
+ </div>
+</div>
+
+<div id="questionsContainer"></div>
+
+<div class="supp-section"><div class="supp-title must-do">🏆 Top 10 Must-Do Questions</div><div id="mustDoList"></div></div>
+<div class="supp-section"><div class="supp-title mistakes">❌ Common Mistakes Beginners Make</div><div id="mistakesList"></div></div>
+<div class="supp-section"><div class="supp-title patterns-title">🔑 Key Patterns & Logic Used</div><div id="patternsList"></div></div>
+<div class="footer">🗺️ HashMap — 50 Problems • Logic Building Hub</div>
+</div>
+<script>
+const TOPIC_KEY = 'hashmap';
+const QUESTIONS = [
+// ===== Section 1: Very Basic — Creation, Insertion & Access (Q1–Q20) =====
+{title:"Create an Empty unordered_map",difficulty:"Very Easy",problem:"Create an empty <code>unordered_map</code> that stores student names (string) as keys and marks (int) as values. Print whether the map is empty using <code>empty()</code>.",inputEx:"(no input needed)",outputEx:"true",constraints:"Use #include <unordered_map>",hint:"Use mp.empty() which returns true if the map has zero entries.",approach:"Declare unordered_map<string, int> marks; then cout << boolalpha << marks.empty();"},
+{title:"Add a Single Entry",difficulty:"Very Easy",problem:"Create an <code>unordered_map</code> and add one entry: <code>\"Rahul\" → 85</code>. Print the key-value pair.",inputEx:"(no input needed)",outputEx:"Rahul → 85",constraints:"Use [] operator to insert",hint:"Use mp[\"Rahul\"] = 85; to insert, then iterate to print.",approach:"mp[key] = value inserts or overwrites. Use a range-based for loop with structured bindings to print."},
+{title:"Add Multiple Entries",difficulty:"Very Easy",problem:"Create an <code>unordered_map</code> for product prices. Add: Pen→10, Notebook→50, Eraser→5. Print all entries.",inputEx:"(no input needed)",outputEx:"Pen → 10\nNotebook → 50\nEraser → 5",constraints:"Order may differ (unordered)",hint:"Use [] operator three times to add each entry.",approach:"mp[\"Pen\"]=10; mp[\"Notebook\"]=50; mp[\"Eraser\"]=5; Iterate with for(auto& [k,v] : mp)."},
+{title:"Access a Value by Key",difficulty:"Very Easy",problem:"Create a map of word meanings: <code>\"ephemeral\" → \"lasting for a short time\"</code>, <code>\"resilient\" → \"able to recover quickly\"</code>. Access and print the meaning of \"resilient\".",inputEx:"(no input needed)",outputEx:"able to recover quickly",constraints:"Use string as both key and value type",hint:"Use mp[\"resilient\"] to access the value directly.",approach:"cout << mp[\"resilient\"]; — the [] operator returns the value for the given key."},
+{title:"Access a Non-Existent Key with []",difficulty:"Very Easy",problem:"Create a map with <code>\"Milk\" → 60</code>. Access key <code>\"Bread\"</code> using []. Print the result and the map size. <strong>Observe the side effect!</strong>",inputEx:"(no input needed)",outputEx:"0\n2",constraints:"Understand the [] side effect",hint:"Using [] with a missing key INSERTS it with default value (0 for int). The size becomes 2!",approach:"mp[\"Bread\"] auto-inserts {\"Bread\", 0}. Use find() or count() to avoid this side effect."},
+{title:"Safe Access with find()",difficulty:"Very Easy",problem:"Create a marks map: <code>\"Amit\" → 72</code>. Safely check if <code>\"Sumit\"</code> exists using <code>find()</code>. Print value if found, else print \"Not found\".",inputEx:"(no input needed)",outputEx:"Not found",constraints:"Do NOT use [] to check — it creates the key!",hint:"find() returns an iterator. Compare it with mp.end() to check if key was found.",approach:"auto it = mp.find(\"Sumit\"); if(it != mp.end()) print it->second; else print \"Not found\"."},
+{title:"Phone Directory — 3 Contacts",difficulty:"Very Easy",problem:"Create a phone directory with 3 contacts: Mom→\"9876543210\", Dad→\"9123456780\", Friend→\"9988776655\". Print Mom's number.",inputEx:"(no input needed)",outputEx:"9876543210",constraints:"Use string for both key and value",hint:"Access using mp[\"Mom\"] to get the phone number.",approach:"unordered_map<string,string> dir; insert 3 entries; cout << dir[\"Mom\"];"},
+{title:"Check the Size",difficulty:"Very Easy",problem:"Create an <code>unordered_map</code> with 4 fruit prices: Apple→150, Banana→40, Mango→200, Grapes→80. Print the total number of entries using <code>size()</code>.",inputEx:"(no input needed)",outputEx:"4",constraints:"Use initializer list syntax: { {k1,v1}, {k2,v2}, ... }",hint:"mp.size() returns the number of key-value pairs.",approach:"unordered_map<string,int> mp = {{\"Apple\",150},{\"Banana\",40},...}; cout << mp.size();"},
+{title:"Check if a Key Exists using count()",difficulty:"Very Easy",problem:"Given a map: Math→95, Science→88, English→76. Check if the key <code>\"Hindi\"</code> exists. Print \"Yes\" or \"No\".",inputEx:"(no input needed)",outputEx:"No",constraints:"count() returns 0 or 1 for unordered_map",hint:"mp.count(\"Hindi\") returns 1 if found, 0 if not.",approach:"if(mp.count(\"Hindi\")) cout << \"Yes\"; else cout << \"No\";"},
+{title:"Check if a Value Exists",difficulty:"Very Easy",problem:"Given marks: Math→95, Science→88, English→76. Check if any subject has the value 88. Print true/false. <em>Note: C++ has no containsValue() — you must iterate.</em>",inputEx:"(no input needed)",outputEx:"true",constraints:"Must iterate to check values",hint:"Loop through all entries. If any entry's .second == 88, set found = true.",approach:"bool found=false; for(auto& [k,v] : mp) if(v==88) {found=true; break;} cout << boolalpha << found;"},
+{title:"Store Integers as Keys",difficulty:"Very Easy",problem:"Create a map where roll numbers (int) are keys and student names (string) are values: 101→\"Aarav\", 102→\"Priya\", 103→\"Karan\". Access and print the name for roll number 102.",inputEx:"(no input needed)",outputEx:"Priya",constraints:"Use unordered_map<int, string>",hint:"mp[102] returns the value \"Priya\" directly.",approach:"unordered_map<int,string> students; students[102]=\"Priya\"; cout << students[102];"},
+{title:"Overwrite a Value",difficulty:"Very Easy",problem:"Create a map: <code>\"Java\" → \"Easy\"</code>. Now assign <code>\"Java\" → \"Moderate\"</code> again. Print the value. <strong>What happens?</strong>",inputEx:"(no input needed)",outputEx:"Moderate",constraints:"Keys are unique in a map",hint:"The [] operator overwrites the value if the key already exists.",approach:"mp[\"Java\"]=\"Easy\"; mp[\"Java\"]=\"Moderate\"; // old value replaced. Keys are unique."},
+{title:"Initialize Using Initializer List",difficulty:"Very Easy",problem:"Create an <code>unordered_map</code> from this table using C++ initializer list: Mumbai→400001, Delhi→110001, Pune→411001. Print all entries.",inputEx:"(no input needed)",outputEx:"Mumbai → 400001\nDelhi → 110001\nPune → 411001",constraints:"Use { {k1,v1}, {k2,v2}, ... } syntax",hint:"unordered_map<string,int> cities = { {\"Mumbai\",400001}, ... };",approach:"Initializer lists allow you to define all entries at declaration time. Iterate to print."},
+{title:"Store Boolean Values",difficulty:"Very Easy",problem:"Create a map tracking task completion: Homework→true, Laundry→false, Exercise→true. Access and print whether Laundry is done.",inputEx:"(no input needed)",outputEx:"false",constraints:"Use unordered_map<string, bool>",hint:"cout << boolalpha << mp[\"Laundry\"];",approach:"boolalpha makes cout print 'true'/'false' instead of 1/0."},
+{title:"Store Double Values",difficulty:"Very Easy",problem:"Create a map for product weights (kg): Rice→5.0, Sugar→1.5, Oil→2.0. Print the weight of Sugar.",inputEx:"(no input needed)",outputEx:"1.5",constraints:"Use unordered_map<string, double>",hint:"Access with mp[\"Sugar\"] and print directly.",approach:"unordered_map<string,double> weights = {{\"Rice\",5.0},{\"Sugar\",1.5},{\"Oil\",2.0}}; cout << weights[\"Sugar\"];"},
+{title:"Print All Keys Only",difficulty:"Very Easy",problem:"Given the map: Red→\"#FF0000\", Green→\"#00FF00\", Blue→\"#0000FF\". Print only the color names (keys), one per line.",inputEx:"(no input needed)",outputEx:"Red\nGreen\nBlue",constraints:"Only print keys, not values",hint:"In a structured binding for(auto& [k,v] : mp), just use k.",approach:"for(auto& [color, hex] : mp) cout << color << endl; — ignore the value."},
+{title:"Print All Values Only",difficulty:"Very Easy",problem:"Using the same color map, print only the hex values, one per line.",inputEx:"(no input needed)",outputEx:"#FF0000\n#00FF00\n#0000FF",constraints:"Only print values, not keys",hint:"Same loop but print v (the second element) instead of k.",approach:"for(auto& [color, hex] : mp) cout << hex << endl;"},
+{title:"insert() vs [] — The Difference",difficulty:"Very Easy",problem:"Create a map: <code>\"Python\" → 90</code>. Use <code>insert()</code> to try adding \"Python\"→100 and \"C++\"→75. Print the map. <strong>Notice: insert() does NOT overwrite!</strong>",inputEx:"(no input needed)",outputEx:"Python → 90\nC++ → 75",constraints:"insert() keeps existing keys; [] overwrites",hint:"mp.insert({\"Python\",100}) fails silently because \"Python\" already exists. mp.insert({\"C++\",75}) succeeds.",approach:"insert() is safe — it never overwrites. [] always overwrites. Choose based on your intent."},
+{title:"Create Map, Add 5 Items, Print Size",difficulty:"Very Easy",problem:"Create an empty map. Add 5 country-capital pairs: India→New Delhi, Japan→Tokyo, France→Paris, USA→Washington DC, Germany→Berlin. Print the size.",inputEx:"(no input needed)",outputEx:"5",constraints:"Use [] operator to add entries one by one",hint:"Add each with mp[country] = capital; then print mp.size().",approach:"5 insertions → size = 5. Simple exercise in map construction."},
+{title:"Access Value and Store in Variable",difficulty:"Very Easy",problem:"Given: Laptop→55000, Phone→25000, Tablet→30000. Access the price of Phone, store it in a variable <code>phonePrice</code>, and print: <code>Phone costs: 25000</code>.",inputEx:"(no input needed)",outputEx:"Phone costs: 25000",constraints:"Store in an int variable before printing",hint:"int phonePrice = mp[\"Phone\"]; cout << \"Phone costs: \" << phonePrice;",approach:"Accessing a map value and storing it in a separate variable for later use."},
+
+// ===== Section 2: Iteration & Printing (Q21–Q35) =====
+{title:"Iterate and Print All Key-Value Pairs",difficulty:"Easy",problem:"Given marks: Math→90, Science→85, English→78. Iterate and print each entry as: <code>Subject: Math, Marks: 90</code>.",inputEx:"(no input needed)",outputEx:"Subject: Math, Marks: 90\nSubject: Science, Marks: 85\nSubject: English, Marks: 78",constraints:"Use structured bindings (C++17) or .first/.second",hint:"for(auto& [subject, mark] : marks) — structured bindings give named access to key and value.",approach:"for(auto& [subject, mark] : marks) cout << \"Subject: \" << subject << \", Marks: \" << mark << endl;"},
+{title:"Iterate Using Explicit Iterator",difficulty:"Easy",problem:"Given drinks: Coffee→150, Tea→30, Juice→80. Print only the drink names using an explicit iterator (auto it = mp.begin()).",inputEx:"(no input needed)",outputEx:"Coffee\nTea\nJuice",constraints:"Use iterator syntax, not range-based for",hint:"for(auto it = mp.begin(); it != mp.end(); ++it) cout << it->first;",approach:"Explicit iterators use -> to access first (key) and second (value). Useful when you need to erase during iteration."},
+{title:"Print Only Values Using a Loop",difficulty:"Easy",problem:"Using the same drinks map, print only the prices, one per line.",inputEx:"(no input needed)",outputEx:"150\n30\n80",constraints:"Print .second or v only",hint:"for(auto& [drink, price] : mp) cout << price << endl;",approach:"In a range-for, the second part of the pair is the value. Just ignore the key."},
+{title:"Print in Table Format",difficulty:"Easy",problem:"Given student marks: Aman→91, Bhavna→85, Chirag→72. Print as a formatted table with headers using <code>&lt;iomanip&gt;</code>.",inputEx:"(no input needed)",outputEx:"Student     Marks\n-----------------\nAman        91\nBhavna      85\nChirag      72",constraints:"Use setw() and left from <iomanip>",hint:"#include <iomanip>. Use cout << left << setw(12) << name << mark;",approach:"setw(n) sets the field width. 'left' aligns text to the left. Combine for a clean table."},
+{title:"Count Entries Manually with a Loop",difficulty:"Easy",problem:"Given a map of 4 items: A→1, B→2, C→3, D→4. Iterate and count entries manually (do NOT use size()). Print the count.",inputEx:"(no input needed)",outputEx:"Count: 4",constraints:"Use a counter variable, not size()",hint:"int count = 0; for(auto& p : mp) count++;",approach:"Initialize count=0, increment for each entry during iteration. Result should match mp.size()."},
+{title:"Print Keys Where Value > Threshold",difficulty:"Easy",problem:"Given marks: Raj→55, Simran→92, Kabir→40, Neha→78. Print names of students who scored <strong>above 60</strong>.",inputEx:"Threshold = 60",outputEx:"Simran\nNeha",constraints:"Filter during iteration",hint:"In the loop, add if(mark > 60) before printing the name.",approach:"for(auto& [name,mark] : mp) if(mark > 60) cout << name << endl; — simple conditional filter."},
+{title:"Sum of All Values",difficulty:"Easy",problem:"Given product prices: Pen→10, Book→120, Bag→500. Iterate and calculate the total price. Print it.",inputEx:"(no input needed)",outputEx:"Total: 630",constraints:"Initialize sum = 0",hint:"int total = 0; for(auto& [item, price] : mp) total += price;",approach:"Accumulator pattern: start at 0, add each value during iteration."},
+{title:"Find Maximum Value",difficulty:"Easy",problem:"Given marks: A→70, B→95, C→82. Iterate and find the student with the <strong>highest marks</strong>. Print the name and marks.",inputEx:"(no input needed)",outputEx:"Topper: B with 95 marks",constraints:"Track both the key and value of the max",hint:"Track string topper and int maxMarks. Update when you find a larger value.",approach:"maxMarks=INT_MIN. For each entry: if(mark > maxMarks) { maxMarks=mark; topper=name; }"},
+{title:"Find Minimum Value",difficulty:"Easy",problem:"Using the same map (A→70, B→95, C→82), find and print the student with the <strong>lowest marks</strong>.",inputEx:"(no input needed)",outputEx:"Lowest: A with 70 marks",constraints:"Track both key and value of the min",hint:"Same approach as max but update when mark < minMarks.",approach:"minMarks=INT_MAX. For each entry: if(mark < minMarks) { minMarks=mark; lowest=name; }"},
+{title:"Print in Reverse Format — Value: Key",difficulty:"Easy",problem:"Given: Dog→\"Bark\", Cat→\"Meow\", Cow→\"Moo\". Print in <strong>reverse format</strong>: <code>Bark → Dog</code>.",inputEx:"(no input needed)",outputEx:"Bark → Dog\nMeow → Cat\nMoo → Cow",constraints:"Swap print order of key and value",hint:"Simply print value first, then key in the output statement.",approach:"for(auto& [animal,sound] : mp) cout << sound << \" → \" << animal;"},
+{title:"Use std::for_each with Lambda",difficulty:"Easy",problem:"Given: X→10, Y→20, Z→30. Print all entries using <code>std::for_each</code> with a lambda expression.",inputEx:"(no input needed)",outputEx:"X = 10\nY = 20\nZ = 30",constraints:"#include <algorithm>; use for_each()",hint:"for_each(mp.begin(), mp.end(), [](const pair<string,int>& p){ ... });",approach:"Lambda takes a const pair reference. Access p.first and p.second inside the lambda body."},
+{title:"Print Keys in Sorted Order (std::map)",difficulty:"Easy",problem:"Given: Banana→40, Apple→120, Cherry→80. Print keys in <strong>alphabetical order</strong>. <em>Hint: Use std::map instead!</em>",inputEx:"(no input needed)",outputEx:"Apple → 120\nBanana → 40\nCherry → 80",constraints:"std::map auto-sorts by key",hint:"map<string,int> (not unordered_map) automatically sorts keys using a Red-Black Tree.",approach:"Simply use std::map and iterate — keys come out sorted. No extra sorting needed."},
+{title:"Print Entries with Even Values Only",difficulty:"Easy",problem:"Given: A→11, B→22, C→33, D→44. Print only entries where the value is <strong>even</strong>.",inputEx:"(no input needed)",outputEx:"B → 22\nD → 44",constraints:"Check val % 2 == 0",hint:"Add an if(val % 2 == 0) condition inside the iteration loop.",approach:"for(auto& [k,v] : mp) if(v % 2 == 0) cout << k << \" → \" << v << endl;"},
+{title:"Convert Map to Two Vectors",difficulty:"Easy",problem:"Given: One→1, Two→2, Three→3. Create one vector of keys and one of values. Print both.",inputEx:"(no input needed)",outputEx:"Keys: One Two Three\nValues: 1 2 3",constraints:"Use vector<string> and vector<int>",hint:"push_back keys and values separately during iteration.",approach:"vector<string> keys; vector<int> vals; for(auto& [k,v] : mp) { keys.push_back(k); vals.push_back(v); }"},
+{title:"Count Values Above Average",difficulty:"Easy",problem:"Given marks: A→60, B→80, C→90, D→50. Calculate the average, then count how many students scored <strong>above average</strong>.",inputEx:"(no input needed)",outputEx:"Average: 70\nStudents above average: 2",constraints:"Two-pass: first sum, then count",hint:"Pass 1: compute sum and average. Pass 2: count entries where value > average.",approach:"sum all values → avg = sum/size. Then count entries where mark > avg."},
+
+// ===== Section 3: Slightly Advanced Basics (Q36–Q50) =====
+{title:"Update a Value",difficulty:"Moderate",problem:"Given: Mango→100. Update the price of Mango to 120 using the [] operator. Print the value before and after.",inputEx:"(no input needed)",outputEx:"Before: 100\nAfter: 120",constraints:"[] overwrites existing values",hint:"Read with mp[\"Mango\"], change with mp[\"Mango\"] = 120.",approach:"cout << mp[\"Mango\"]; mp[\"Mango\"]=120; cout << mp[\"Mango\"]; — simple overwrite."},
+{title:"Increment a Value",difficulty:"Moderate",problem:"Given: PageViews→150. Increment the value by 1 using <code>mp[key]++</code>. Print the updated value.",inputEx:"(no input needed)",outputEx:"PageViews: 151",constraints:"Use ++ operator directly on mp[key]",hint:"mp[\"PageViews\"]++; works because [] returns a reference.",approach:"mp[key]++ is a common idiom. The [] operator returns a reference to the value, so ++ modifies it in-place."},
+{title:"Delete an Entry with erase()",difficulty:"Moderate",problem:"Given: A→1, B→2, C→3. Remove the key \"B\" using <code>erase()</code>. Print the map after deletion.",inputEx:"(no input needed)",outputEx:"A → 1\nC → 3",constraints:"erase() by key or by iterator",hint:"mp.erase(\"B\"); removes the entry with key \"B\".",approach:"erase(key) removes the entry. erase(iterator) also works. Returns the number of elements removed (0 or 1)."},
+{title:"Delete Only If Value Matches",difficulty:"Moderate",problem:"Given: X→100, Y→200. Remove \"X\" <strong>only if</strong> its value is 100. C++ has no erase(key,value) — check manually first.",inputEx:"(no input needed)",outputEx:"Y → 200",constraints:"Must check value before erasing",hint:"auto it = mp.find(\"X\"); if(it != mp.end() && it->second == 100) mp.erase(it);",approach:"find() first, check the value, then erase the iterator. This is safe and avoids the [] side-effect."},
+{title:"Clear All Entries",difficulty:"Moderate",problem:"Create a map with 3 entries. Print the size, call <code>clear()</code>, then print the size again.",inputEx:"(no input needed)",outputEx:"Before: 3\nAfter: 0",constraints:"clear() removes all entries",hint:"mp.clear(); sets the size to 0.",approach:"clear() destroys all elements. The map is now empty. size() returns 0."},
+{title:"Merge Two unordered_maps",difficulty:"Moderate",problem:"Given: map1 = {A→1, B→2}, map2 = {C→3, D→4}. Merge both into map1. Print all entries.",inputEx:"(no input needed)",outputEx:"A → 1\nB → 2\nC → 3\nD → 4",constraints:"Use insert(begin, end)",hint:"map1.insert(map2.begin(), map2.end()); copies all of map2 into map1.",approach:"insert(range) adds all entries from map2 that don't already exist in map1."},
+{title:"Handle Duplicate Keys During Merge",difficulty:"Moderate",problem:"Given: map1 = {A→1, B→2}, map2 = {B→99, C→3}. Merge them using insert(), then using []. Compare what happens to key \"B\".",inputEx:"(no input needed)",outputEx:"After insert(): B = 2 (kept)\nAfter [] loop: B = 99 (overwritten)",constraints:"insert() keeps old, [] overwrites",hint:"insert() won't overwrite existing keys. To force overwrite, loop with mp1[k] = v.",approach:"insert() is safe (keeps original). for(auto& [k,v] : map2) map1[k]=v; forces overwrite. Choose based on intent."},
+{title:"Nested unordered_map — Student Subjects",difficulty:"Moderate",problem:"Create a nested map: Ravi→{Math→90, Science→80}, Priya→{Math→95, Science→88}. Access and print Priya's Science marks.",inputEx:"(no input needed)",outputEx:"88",constraints:"unordered_map<string, unordered_map<string,int>>",hint:"students[\"Pravi\"][\"Science\"] chains two [] operations.",approach:"Outer map maps student→inner_map. Inner map maps subject→marks. Chain access: students[\"Priya\"][\"Science\"]."},
+{title:"Iterate Over Nested Map",difficulty:"Moderate",problem:"Using the nested map from Q43, print all students and their subjects with marks in an indented format.",inputEx:"(no input needed)",outputEx:"Ravi:\n  Math → 90\n  Science → 80\nPriya:\n  Math → 95\n  Science → 88",constraints:"Nested for loops",hint:"Outer loop over students, inner loop over their subject maps.",approach:"for(auto& [student, subjects] : students) { cout << student; for(auto& [subj, mark] : subjects) cout << subj << \" → \" << mark; }"},
+{title:"Conditional Insert — Only If Key Absent",difficulty:"Moderate",problem:"Given: {A→100}. Insert A→200 <strong>only if</strong> key A does NOT already exist. Print the final value of A. <em>Use insert() or count() check.</em>",inputEx:"(no input needed)",outputEx:"A = 100",constraints:"insert() does not overwrite; [] does",hint:"mp.insert({\"A\", 200}) will not overwrite since \"A\" already exists. Or use if(!mp.count(\"A\")) mp[\"A\"]=200;",approach:"insert() is the easiest way — it's a no-op for existing keys. Alternatively, check with count() before using []."},
+{title:"Safe Erase During Iteration",difficulty:"Moderate",problem:"Given: A→1, B→2, C→3, D→4. Remove all entries where the value is <strong>odd</strong>. Print the remaining map. <strong>Warning: erasing during iteration requires care!</strong>",inputEx:"(no input needed)",outputEx:"B → 2\nD → 4",constraints:"Use it = mp.erase(it) pattern",hint:"Never do mp.erase(it); ++it; — that's undefined behavior! Use it = mp.erase(it);",approach:"for(auto it=mp.begin(); it!=mp.end(); ) { if(it->second % 2 != 0) it=mp.erase(it); else ++it; }"},
+{title:"Frequency Counter ⭐",difficulty:"Moderate",problem:"Given the string <code>\"hello\"</code>, count the <strong>frequency of each character</strong> using an unordered_map. Print each character and its count.",inputEx:"str = \"hello\"",outputEx:"h → 1\ne → 1\nl → 2\no → 1",constraints:"This is the #1 most important map pattern!",hint:"for(char c : str) freq[c]++; — the [] operator creates with 0, then ++ increments.",approach:"freq[c]++ works because [] inserts default 0 for missing keys, then ++ increments. This is THE most common interview pattern."},
+{title:"Invert a Map (Swap Keys and Values)",difficulty:"Moderate",problem:"Given: A→1, B→2, C→3. Create a <strong>new map</strong> where keys become values and values become keys. Print the inverted map.",inputEx:"(no input needed)",outputEx:"1 → A\n2 → B\n3 → C",constraints:"Only works when all values are unique!",hint:"Create unordered_map<int,string> inverted; Loop original and do inverted[v] = k;",approach:"for(auto& [k,v] : original) inverted[v] = k; WARNING: duplicate values will cause key overwriting."},
+{title:"Group Items by Category",difficulty:"Moderate",problem:"Given items: Apple→Fruit, Carrot→Vegetable, Banana→Fruit, Potato→Vegetable, Mango→Fruit. Group them by category into <code>unordered_map&lt;string, vector&lt;string&gt;&gt;</code>.",inputEx:"(no input needed)",outputEx:"Fruit → Apple Banana Mango\nVegetable → Carrot Potato",constraints:"Value type is vector<string>",hint:"groups[category].push_back(item); — [] creates an empty vector for new categories automatically.",approach:"The [] operator creates a default vector<string> for missing keys. push_back adds items. This is a very common grouping pattern."},
+{title:"Complete Mini-Project: Phone Directory",difficulty:"Moderate",problem:"Build a phone directory supporting: (1) Add contacts, (2) Search by name, (3) Delete a contact, (4) Display all, (5) Update a number, (6) Check if contact exists. Demonstrate all 6 operations with sample data.",inputEx:"Amit→9876543210\nPriya→9123456780\nRahul→9988776655",outputEx:"--- Phone Directory ---\nAll: Amit:9876543210, Priya:9123456780, Rahul:9988776655\nSearch Priya: 9123456780\nUpdate Amit → 9000000000\nDelete Rahul\nRahul exists? false\nTotal: 2",constraints:"Use all map operations: insert, find, erase, [], count, size",hint:"This is a synthesis of all operations you've learned. Use [] for insert/update, find() for search, erase() for delete, count() for existence.",approach:"put it all together: [] for add/update, find() for safe search, erase() for delete, count() for exists check, range-for for display. This mini-project tests all fundamental map operations."}
+];
+
+const MUST_DO = [
+"Q1 — Create Empty Map: Understand declaration syntax and empty() check",
+"Q5 — Access Non-Existent Key: Critical gotcha — [] INSERTS missing keys with default value. This trips up most beginners!",
+"Q6 — Safe Access with find(): Always use find() to check before accessing. Never use [] for lookup when key might not exist",
+"Q9 — count() for Key Check: The fastest way to check key existence — returns 0 or 1",
+"Q18 — insert() vs []: Know the difference — insert() is safe (no overwrite), [] always overwrites",
+"Q21 — Iterate Key-Value Pairs: Master the for(auto& [k,v] : mp) pattern — you'll use it everywhere",
+"Q32 — Sorted Keys with std::map: Know when to use map (sorted) vs unordered_map (fast)",
+"Q46 — Safe Erase During Iteration: it = mp.erase(it) is the ONLY safe pattern. Never erase then increment!",
+"Q47 — Frequency Counter ⭐: freq[c]++ is the foundation of 80% of map-based interview questions. Practice until muscle memory!",
+"Q50 — Phone Directory Project: Combines all operations — proves you truly understand the data structure"
+];
+
+const MISTAKES = [
+"Using [] to check if a key exists — this INSERTS the key with default value (0, \"\", false)! Use find() or count() instead",
+"Erasing during iteration incorrectly — mp.erase(it); ++it; is UNDEFINED BEHAVIOR. Always use it = mp.erase(it);",
+"Assuming unordered_map maintains insertion order — it does NOT. Use std::map for sorted keys, or a vector to track order",
+"Confusing insert() and [] — insert() does NOT overwrite existing keys; [] ALWAYS overwrites. Choose intentionally!",
+"Forgetting #include <unordered_map> — won't compile without the header. Also need <map> for std::map",
+"Using at() without try-catch — mp.at(\"missing_key\") throws std::out_of_range. Use find() for safe access",
+"Not understanding default values — mp[\"missing_int_key\"] creates entry with value 0, not null or undefined",
+"Thinking unordered_map is always O(1) — worst case is O(n) when all keys hash to the same bucket",
+"Using custom types as keys without providing a hash function — won't compile. Must specialize std::hash<T>",
+"Ignoring the return value of erase() — erase(key) returns count of removed elements (0 or 1), useful for checking"
+];
+
+const KEY_PATTERNS = [
+"<strong>freq[key]++:</strong> The frequency counter idiom. [] creates default 0 for missing keys, then ++ increments. Used in 80% of map problems",
+"<strong>find() → check → access:</strong> Safe lookup pattern: auto it = mp.find(key); if(it != mp.end()) use it->second",
+"<strong>Structured Bindings:</strong> for(auto& [k,v] : mp) — clean C++17 way to iterate key-value pairs",
+"<strong>insert() for safe add:</strong> mp.insert({key, val}) only adds if key is absent — never overwrites",
+"<strong>Erase with iterator:</strong> it = mp.erase(it) for safe deletion during iteration",
+"<strong>groups[category].push_back(item):</strong> Grouping pattern using map<K, vector<V>>. [] auto-creates empty vectors",
+"<strong>map vs unordered_map:</strong> Use map when you need sorted keys (O(log n)), unordered_map for speed (O(1) avg)",
+"<strong>Nested maps:</strong> unordered_map<K1, unordered_map<K2, V>> for 2D key access like students[name][subject]",
+"<strong>count() for existence:</strong> mp.count(key) returns 1 if present, 0 if not — cleaner than find() for simple checks",
+"<strong>Accumulator on values:</strong> Iterate and sum/max/min/filter values — always O(n) since no direct value lookup exists"
+];
+</script>
+<script src="topic_template.js"></script>
+</body>
+</html>
