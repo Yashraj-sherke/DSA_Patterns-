@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="STL Toolkit — 50 Practice Questions in C++. Stack, Queue, Deque, Set, Priority Queue, Pair, and key STL algorithms for DSA.">
+<title>🧰 STL Toolkit — 50 Beginner Problems (C++)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="topic_styles.css">
+<style>:root{--accent:#f472b6;--accent2:#ec4899;--glow1:rgba(244,114,182,.08);--glow2:rgba(236,72,153,.06)}
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:16px}
+.concept-card{background:linear-gradient(145deg,#12121f,#181830);border:1px solid #2a2a4a;border-radius:14px;padding:18px;transition:all .3s}
+.concept-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(244,114,182,.1)}
+.concept-card .cc-title{font-size:.85rem;font-weight:700;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.concept-card .cc-body{font-size:.75rem;color:#bbb;line-height:1.6}
+.concept-card .cc-code{background:#0d0d18;border:1px solid #1e1e30;border-radius:8px;padding:6px 10px;font-family:'Courier New',monospace;font-size:.7rem;color:#f9a8d4;margin-top:8px;overflow-x:auto;white-space:pre}
+.concept-card table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.7rem}
+.concept-card th{text-align:left;color:var(--accent);padding:4px 8px;border-bottom:1px solid #2a2a4a}
+.concept-card td{padding:4px 8px;color:#bbb;border-bottom:1px solid #1a1a2e}
+.syntax-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.72rem}
+.syntax-table th{text-align:left;color:var(--accent);padding:6px 10px;border-bottom:1px solid #2a2a4a;background:rgba(244,114,182,.06)}
+.syntax-table td{padding:6px 10px;color:#bbb;border-bottom:1px solid #1a1a2e;font-family:'Courier New',monospace;font-size:.68rem}
+.syntax-table tr:hover{background:rgba(244,114,182,.04)}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div><div class="bg-glow2"></div>
+<div class="container">
+<nav>
+ <a href="logic_hub.html">📚 Hub</a><a href="topic_conditionals.html">🔀 Conditionals</a><a href="topic_loops.html">🔄 Loops</a>
+ <a href="topic_patterns.html">🔷 Patterns</a><a href="topic_arrays.html">📦 Arrays</a><a href="topic_strings.html">🔤 Strings</a>
+ <a href="topic_hashmap.html">🗺️ HashMap</a><a href="topic_vector.html">📐 Vector</a>
+ <a href="topic_stl.html" class="active">🧰 STL Toolkit</a>
+</nav>
+<header><h1>🧰 STL Toolkit</h1><p class="subtitle">50 Problems in C++ — Stack, Queue, Deque, Set, Priority Queue, Pair & Key Algorithms</p></header>
+<div class="stats-row">
+ <div class="stat-card"><div class="num" id="totalCount">50</div><div class="lbl">Total</div></div>
+ <div class="stat-card"><div class="num" id="doneCount">0</div><div class="lbl">Done</div></div>
+ <div class="stat-card"><div class="num" id="pctCount">0%</div><div class="lbl">Progress</div></div>
+</div>
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..."></div>
+<div class="toolbar"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="done">✅ Done</button><button class="filter-btn" data-filter="todo">📝 To-Do</button></div>
+
+<!-- STL Concepts Section -->
+<div class="supp-section" style="margin-bottom:20px">
+ <div class="supp-title" style="color:#f472b6">📚 STL Containers — When to Use What</div>
+ <div class="concept-grid">
+  <div class="concept-card">
+   <div class="cc-title">📚 Stack (LIFO)</div>
+   <div class="cc-body">
+    Last-In First-Out. Like a stack of plates — you can only add/remove from the <strong style="color:#f9a8d4">top</strong>.
+    <div class="cc-code">#include &lt;stack&gt;
+stack&lt;int&gt; s;
+s.push(10);   // add to top
+s.top();      // peek top
+s.pop();      // remove top
+s.size();     // count
+s.empty();    // is empty?</div>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">🚶 Queue (FIFO)</div>
+   <div class="cc-body">
+    First-In First-Out. Like a line at a counter — first person in line gets served first.
+    <div class="cc-code">#include &lt;queue&gt;
+queue&lt;int&gt; q;
+q.push(10);   // add to back
+q.front();    // peek front
+q.back();     // peek back
+q.pop();      // remove front
+q.size(); q.empty();</div>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">🔄 Deque (Double-Ended)</div>
+   <div class="cc-body">
+    Insert/remove from <strong style="color:#f9a8d4">both ends</strong> in O(1). Like a two-sided queue.
+    <div class="cc-code">#include &lt;deque&gt;
+deque&lt;int&gt; dq;
+dq.push_front(1);
+dq.push_back(2);
+dq.pop_front();
+dq.pop_back();
+dq[i]; // random access O(1)</div>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">🎯 Set (Sorted Unique)</div>
+   <div class="cc-body">
+    Stores <strong style="color:#6ee7b7">unique elements</strong> in <strong style="color:#fbbf24">sorted order</strong>. Uses Red-Black Tree.
+    <div class="cc-code">#include &lt;set&gt;
+set&lt;int&gt; s = {3,1,2}; // → {1,2,3}
+s.insert(4);    // O(log n)
+s.erase(2);     // O(log n)
+s.count(3);     // 0 or 1
+s.find(3);      // iterator</div>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">⚡ Priority Queue (Max Heap)</div>
+   <div class="cc-body">
+    Always gives the <strong style="color:#ef4444">largest element</strong> first. Uses a binary heap.
+    <div class="cc-code">#include &lt;queue&gt;
+priority_queue&lt;int&gt; pq; // max heap
+pq.push(3); pq.push(7); pq.push(1);
+pq.top();  // → 7 (largest)
+pq.pop();  // removes 7
+// Min heap:
+priority_queue&lt;int,vector&lt;int&gt;,
+  greater&lt;int&gt;&gt; minPQ;</div>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">📊 Complexity Comparison</div>
+   <div class="cc-body">
+    <table>
+     <tr><th>Container</th><th>Insert</th><th>Access</th><th>Delete</th></tr>
+     <tr><td style="color:#f9a8d4">stack</td><td style="color:#6ee7b7">O(1)</td><td style="color:#6ee7b7">O(1) top</td><td style="color:#6ee7b7">O(1)</td></tr>
+     <tr><td style="color:#f9a8d4">queue</td><td style="color:#6ee7b7">O(1)</td><td style="color:#6ee7b7">O(1) front</td><td style="color:#6ee7b7">O(1)</td></tr>
+     <tr><td style="color:#f9a8d4">deque</td><td style="color:#6ee7b7">O(1)</td><td style="color:#6ee7b7">O(1)</td><td style="color:#6ee7b7">O(1)</td></tr>
+     <tr><td style="color:#f9a8d4">set</td><td style="color:#fbbf24">O(log n)</td><td style="color:#fbbf24">O(log n)</td><td style="color:#fbbf24">O(log n)</td></tr>
+     <tr><td style="color:#f9a8d4">priority_queue</td><td style="color:#fbbf24">O(log n)</td><td style="color:#6ee7b7">O(1) top</td><td style="color:#fbbf24">O(log n)</td></tr>
+     <tr><td style="color:#f9a8d4">unordered_set</td><td style="color:#6ee7b7">O(1) avg</td><td style="color:#6ee7b7">O(1) avg</td><td style="color:#6ee7b7">O(1) avg</td></tr>
+    </table>
+   </div>
+  </div>
+ </div>
+</div>
+
+<div id="questionsContainer"></div>
+<div class="supp-section"><div class="supp-title must-do">🏆 Top 10 Must-Do Questions</div><div id="mustDoList"></div></div>
+<div class="supp-section"><div class="supp-title mistakes">❌ Common Mistakes Beginners Make</div><div id="mistakesList"></div></div>
+<div class="supp-section"><div class="supp-title patterns-title">🔑 Key Patterns & Logic Used</div><div id="patternsList"></div></div>
+<div class="footer">🧰 STL Toolkit — 50 Problems • Logic Building Hub</div>
+</div>
+<script>
+const TOPIC_KEY = 'stl';
+const QUESTIONS = [
+// ===== PAIR & TUPLE (Q1–Q5) =====
+{title:"Create and Access a Pair",difficulty:"Very Easy",problem:"Create a <code>pair&lt;string, int&gt;</code> with values (\"Alice\", 25). Print both elements using <code>.first</code> and <code>.second</code>.",inputEx:"(no input needed)",outputEx:"Name: Alice\nAge: 25",constraints:"#include <utility> (or any STL header)",hint:"pair<string,int> p = {\"Alice\", 25}; or make_pair(\"Alice\", 25);",approach:"p.first gives the first element, p.second gives the second. Pairs are used EVERYWHERE in DSA."},
+{title:"Create Pair Using make_pair",difficulty:"Very Easy",problem:"Create a pair of two integers (x=3, y=7) using <code>make_pair()</code>. Print it as (3, 7).",inputEx:"(no input needed)",outputEx:"(3, 7)",constraints:"make_pair() auto-deduces types",hint:"auto p = make_pair(3, 7); cout << \"(\" << p.first << \", \" << p.second << \")\";",approach:"make_pair is older syntax. Modern C++: pair p = {3, 7}; or pair<int,int> p{3,7};"},
+{title:"Compare Two Pairs",difficulty:"Very Easy",problem:"Create p1 = (1, 5) and p2 = (1, 3). Compare using < operator. How does pair comparison work?",inputEx:"(no input needed)",outputEx:"p1 > p2: true\n(compares first, then second)",constraints:"Lexicographic comparison",hint:"Pairs compare first by .first, then by .second if firsts are equal.",approach:"p1 < p2 checks first elements. If equal, checks second. This is why sorting vector<pair> works naturally."},
+{title:"Swap Two Pairs",difficulty:"Very Easy",problem:"Create p1 = (10, 20) and p2 = (30, 40). Swap them using <code>swap()</code>. Print both after.",inputEx:"(no input needed)",outputEx:"p1: (30, 40)\np2: (10, 20)",constraints:"swap() works on pairs too",hint:"swap(p1, p2); exchanges both .first and .second.",approach:"swap() is a universal utility. Works on pairs, vectors, and all STL containers."},
+{title:"Pair Inside a Map",difficulty:"Very Easy",problem:"You've used pair implicitly in maps! Iterate a <code>map&lt;string, int&gt;</code> and print using the pair structure (.first, .second).",inputEx:"map: {\"a\"→1, \"b\"→2}",outputEx:"a → 1\nb → 2",constraints:"Each map entry IS a pair<const Key, Value>",hint:"for(auto& p : mp) cout << p.first << \" → \" << p.second;",approach:"Every map element is a pair. Structured bindings for(auto& [k,v] : mp) are syntactic sugar over .first/.second."},
+
+// ===== STACK (Q6–Q15) =====
+{title:"Create and Push to Stack",difficulty:"Very Easy",problem:"Create a stack of integers. Push 10, 20, 30. Print the top element.",inputEx:"(no input needed)",outputEx:"Top: 30",constraints:"LIFO — last pushed is on top",hint:"stack<int> s; s.push(10); s.push(20); s.push(30); cout << s.top();",approach:"push() adds to top. top() peeks without removing. LIFO = Last In, First Out."},
+{title:"Pop Elements from Stack",difficulty:"Very Easy",problem:"Given stack with elements 10, 20, 30 (30 on top). Pop all elements and print them one by one.",inputEx:"Stack: [10, 20, 30]",outputEx:"30\n20\n10",constraints:"pop() removes top; use top() before pop() to read",hint:"while(!s.empty()) { cout << s.top(); s.pop(); }",approach:"top() reads the top element. pop() removes it but returns void. Must call top() BEFORE pop()."},
+{title:"Check Stack Size and Empty",difficulty:"Very Easy",problem:"Create a stack, push 3 elements. Print size. Pop all elements. Print size and whether empty.",inputEx:"(no input needed)",outputEx:"Size: 3\nAfter popping: Size: 0, Empty: true",constraints:"size() and empty()",hint:"s.size() gives count. s.empty() returns true when stack is empty.",approach:"Always check empty() before top()/pop() to avoid undefined behavior."},
+{title:"Reverse a String Using Stack",difficulty:"Easy",problem:"Given string <code>\"hello\"</code>, reverse it using a stack. Push all characters, then pop and build reversed string.",inputEx:"str = \"hello\"",outputEx:"olleh",constraints:"Classic stack application",hint:"Push each char onto stack. Pop all chars — they come out in reverse (LIFO).",approach:"for(char c : str) s.push(c); while(!s.empty()) { result += s.top(); s.pop(); } — LIFO reverses order."},
+{title:"Check Balanced Parentheses",difficulty:"Easy",problem:"Given string <code>\"({[]})\"</code>, check if parentheses are balanced using a stack. Print \"Balanced\" or \"Not Balanced\".",inputEx:"str = \"({[]})\"",outputEx:"Balanced",constraints:"Classic interview problem!",hint:"Push opening brackets. On closing bracket, check if top matches. If not, unbalanced.",approach:"For '({[': push. For ')}]': check top matches, pop. If stack empty at end → balanced. This is THE #1 stack problem."},
+{title:"Next Greater Element (Basic)",difficulty:"Easy",problem:"Given array {4, 5, 2, 10, 8}, for each element find the next greater element to its right. Use brute force (nested loop). Print results.",inputEx:"arr = {4, 5, 2, 10, 8}",outputEx:"4 → 5\n5 → 10\n2 → 10\n10 → -1\n8 → -1",constraints:"O(n²) brute force approach is fine for now",hint:"For each element, scan right until you find a larger one. If none found, answer is -1.",approach:"Nested loop: for each i, find first j > i where arr[j] > arr[i]. Stack-based O(n) solution exists — learn later!"},
+{title:"Implement Min Stack",difficulty:"Easy",problem:"Design a stack that supports push, pop, top, and <code>getMin()</code> in O(1). Use two stacks: one main, one to track minimums.",inputEx:"push(3), push(1), push(2)\ngetMin() → 1\npop()\ngetMin() → 1",outputEx:"Min: 1\nAfter pop: Min: 1",constraints:"O(1) for all operations including getMin",hint:"Maintain a second stack that tracks the current minimum at each level.",approach:"When pushing x: also push min(x, minStack.top()) onto minStack. When popping: pop from both. getMin() = minStack.top()."},
+{title:"Sort a Stack Using Another Stack",difficulty:"Easy",problem:"Given stack [5, 1, 3, 2, 4] (4 on top), sort it so smallest is on top using only one additional stack.",inputEx:"Stack: 5 1 3 2 4",outputEx:"Sorted: 1 2 3 4 5 (1 on top)",constraints:"Only use one extra stack, no other data structure",hint:"Pop from input. Insert into temp stack in sorted order (move elements back while temp.top() > current).",approach:"While input not empty: pop element. While temp.top() > element: move temp.top() back to input. Push element to temp."},
+{title:"Evaluate Postfix Expression",difficulty:"Easy",problem:"Evaluate the postfix expression <code>\"2 3 + 4 *\"</code> using a stack. Print the result.",inputEx:"expr = \"2 3 + 4 *\"",outputEx:"Result: 20",constraints:"Postfix: operands first, then operator",hint:"If number → push. If operator → pop two, apply operator, push result.",approach:"2→push, 3→push. +→pop 3,2, push 5. 4→push. *→pop 4,5, push 20. Final answer: 20."},
+{title:"Stock Span Problem (Concept)",difficulty:"Easy",problem:"Given stock prices {100, 80, 60, 70, 60, 75, 85}, find the span for each day (consecutive days before it with price ≤ today). Use brute force.",inputEx:"prices = {100, 80, 60, 70, 60, 75, 85}",outputEx:"Spans: 1 1 1 2 1 4 6",constraints:"O(n²) brute force; stack solution exists",hint:"For each day i, count backward while price[j] <= price[i].",approach:"Span[i] = count of consecutive days before i (including i) where price ≤ price[i]. Stack optimization makes this O(n)."},
+
+// ===== QUEUE (Q16–Q22) =====
+{title:"Create and Use a Queue",difficulty:"Very Easy",problem:"Create a queue. Enqueue 10, 20, 30. Print front, back, and size.",inputEx:"(no input needed)",outputEx:"Front: 10\nBack: 30\nSize: 3",constraints:"FIFO — first in, first out",hint:"q.push(10); q.front(); q.back(); q.size();",approach:"push() adds to back. front() peeks the front. pop() removes from front. FIFO order."},
+{title:"Dequeue All Elements",difficulty:"Very Easy",problem:"Given queue with 10, 20, 30, 40 (10 at front). Remove all elements and print them in order.",inputEx:"Queue: [10, 20, 30, 40]",outputEx:"10 20 30 40",constraints:"Elements come out in FIFO order",hint:"while(!q.empty()) { cout << q.front(); q.pop(); }",approach:"pop() removes front element. front() reads it first. Elements exit in insertion order (FIFO)."},
+{title:"Generate Numbers Using Queue (BFS-style)",difficulty:"Easy",problem:"Given the digit set {1, 2}, generate the first 10 numbers containing only these digits. Use a queue.",inputEx:"digits: 1, 2",outputEx:"1 2 11 12 21 22 111 112 121 122",constraints:"BFS-style generation",hint:"Start with 1 and 2 in queue. Pop front, print it, push front+\"1\" and front+\"2\".",approach:"This is BFS level-by-level generation. Each number generates two children by appending 1 or 2."},
+{title:"Reverse First K Elements of Queue",difficulty:"Easy",problem:"Given queue [1, 2, 3, 4, 5] and K=3, reverse the first 3 elements. Result: [3, 2, 1, 4, 5].",inputEx:"Queue: 1 2 3 4 5, K=3",outputEx:"3 2 1 4 5",constraints:"Use a stack to reverse the first K",hint:"Pop first K elements into a stack. Push them back from stack (reversed). Move remaining to back.",approach:"Step 1: Pop K from queue into stack. Step 2: Push stack into queue. Step 3: Move (size-K) elements from front to back."},
+{title:"Implement Queue Using Two Stacks",difficulty:"Easy",problem:"Implement a queue (enqueue and dequeue) using only two stacks. Demonstrate with: enqueue(1), enqueue(2), dequeue(), enqueue(3), dequeue().",inputEx:"Operations: enq(1), enq(2), deq, enq(3), deq",outputEx:"Dequeue: 1\nDequeue: 2",constraints:"Classic interview question",hint:"Push to stack1. To dequeue: if stack2 empty, transfer all from stack1 to stack2, then pop stack2.",approach:"stack1 = input stack. stack2 = output stack. Transfer reverses order, making oldest element on top of stack2."},
+{title:"Circular Queue Concept",difficulty:"Easy",problem:"Implement a basic circular queue of size 5 using an array/vector. Support enqueue, dequeue, front, and isFull operations.",inputEx:"enqueue: 10, 20, 30, 40, 50\ntry enqueue 60 → Full!",outputEx:"Queue: 10 20 30 40 50\nFull: true\nDequeue: 10\nEnqueue 60: success",constraints:"Use modulo for wrapping: (rear+1) % size",hint:"front and rear indices wrap around using % capacity. Full when (rear+1)%cap == front.",approach:"Circular queue avoids wasted space in linear queue. Indices wrap: next = (current + 1) % capacity."},
+{title:"BFS Level Order Concept (Using Queue)",difficulty:"Easy",problem:"Simulate BFS on a simple tree: Root=1, children of 1=[2,3], children of 2=[4,5], children of 3=[6]. Print level order.",inputEx:"Tree: 1→[2,3], 2→[4,5], 3→[6]",outputEx:"Level 0: 1\nLevel 1: 2 3\nLevel 2: 4 5 6",constraints:"Queue-based level order traversal",hint:"Push root. While queue not empty: process all nodes at current level, push their children.",approach:"Queue drives BFS. Process level by level using the queue size trick: int sz = q.size(); for(i=0;i<sz;i++) {...}"},
+
+// ===== SET & UNORDERED_SET (Q23–Q32) =====
+{title:"Create a Set and Insert Elements",difficulty:"Very Easy",problem:"Create a <code>set&lt;int&gt;</code> and insert: 5, 3, 8, 1, 3, 5. Print all elements. Notice: duplicates are removed and elements are sorted!",inputEx:"Insert: 5, 3, 8, 1, 3, 5",outputEx:"1 3 5 8",constraints:"set stores unique elements in sorted order",hint:"set<int> s; s.insert(5); ... Duplicates are ignored. Elements auto-sorted.",approach:"Set uses Red-Black Tree. insert() is O(log n). Duplicates silently ignored. Iteration gives sorted order."},
+{title:"Check if Element Exists in Set",difficulty:"Very Easy",problem:"Given set {10, 20, 30, 40, 50}, check if 30 exists and if 99 exists. Use <code>count()</code> and <code>find()</code>.",inputEx:"(no input needed)",outputEx:"30 exists: true\n99 exists: false",constraints:"count() returns 0 or 1; find() returns iterator",hint:"s.count(30) → 1 (found). s.find(99) == s.end() → not found.",approach:"count() is simpler for existence check. find() is needed when you also want the iterator position."},
+{title:"Erase from Set",difficulty:"Easy",problem:"Given set {1, 2, 3, 4, 5}, erase element 3. Then erase all elements ≥ 4 using iterators. Print after each step.",inputEx:"(no input needed)",outputEx:"After erase(3): 1 2 4 5\nAfter range erase: 1 2",constraints:"erase(value), erase(iterator), erase(first, last)",hint:"s.erase(3); removes value 3. s.erase(s.find(4), s.end()); removes from 4 to end.",approach:"Three forms of erase: by value, by iterator, by range. lower_bound can find the start of a range."},
+{title:"lower_bound and upper_bound in Set",difficulty:"Easy",problem:"Given set {1, 3, 5, 7, 9}, find lower_bound(5) and upper_bound(5). Print the values they point to.",inputEx:"(no input needed)",outputEx:"lower_bound(5): 5 (first >= 5)\nupper_bound(5): 7 (first > 5)",constraints:"O(log n) in set (uses tree, not binary search)",hint:"auto lb = s.lower_bound(5); → points to 5. auto ub = s.upper_bound(5); → points to 7.",approach:"lower_bound = first element ≥ val. upper_bound = first element > val. Use set's MEMBER functions (faster than algorithm version)."},
+{title:"Multiset — Allowing Duplicates",difficulty:"Easy",problem:"Create a <code>multiset&lt;int&gt;</code> and insert: 3, 1, 4, 1, 5, 9, 2, 6, 5. Print all elements. Count how many 5s exist.",inputEx:"(no input needed)",outputEx:"Elements: 1 1 2 3 4 5 5 6 9\nCount of 5: 2",constraints:"multiset allows duplicates, still sorted",hint:"multiset<int> ms; ms.insert(5); ms.count(5) returns actual count (can be > 1).",approach:"multiset is like set but allows duplicates. count() returns actual frequency. erase(value) removes ALL copies!"},
+{title:"Unordered_set — O(1) Lookup",difficulty:"Easy",problem:"Create an <code>unordered_set&lt;string&gt;</code> of fruits: apple, banana, cherry. Check if \"banana\" exists. Print all elements (note: no specific order!).",inputEx:"(no input needed)",outputEx:"banana found: true\nElements: cherry apple banana (order varies)",constraints:"Hash-based, O(1) avg, no ordering",hint:"unordered_set<string> us = {\"apple\",\"banana\",\"cherry\"}; us.count(\"banana\");",approach:"unordered_set uses hashing for O(1) average. Use when you need fast lookup but don't care about order."},
+{title:"Set Union of Two Sets",difficulty:"Easy",problem:"Given A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, find the union. Print the result.",inputEx:"(no input needed)",outputEx:"Union: 1 2 3 4 5 6",constraints:"Insert all from both (set removes duplicates)",hint:"set<int> result(A.begin(), A.end()); result.insert(B.begin(), B.end());",approach:"Insert all elements from both sets into a new set. Duplicates are auto-removed by set."},
+{title:"Set Intersection of Two Sets",difficulty:"Easy",problem:"Given A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, find the intersection (common elements). Print the result.",inputEx:"(no input needed)",outputEx:"Intersection: 3 4",constraints:"Only elements in BOTH sets",hint:"For each element in A, check if it's in B using B.count().",approach:"for(int x : A) if(B.count(x)) result.insert(x); Or use set_intersection from <algorithm>."},
+{title:"Set Difference",difficulty:"Easy",problem:"Given A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, find elements in A but NOT in B. Print the result.",inputEx:"(no input needed)",outputEx:"Difference (A-B): 1 2",constraints:"Elements unique to A",hint:"for(int x : A) if(!B.count(x)) result.insert(x);",approach:"Check each element of A against B. If not found in B, it's in the difference."},
+{title:"Remove Duplicates from Vector Using Set",difficulty:"Easy",problem:"Given vector {3, 1, 4, 1, 5, 9, 2, 6, 5, 3}, remove duplicates using a set. Print unique elements sorted.",inputEx:"(no input needed)",outputEx:"1 2 3 4 5 6 9",constraints:"Set automatically handles uniqueness and sorting",hint:"set<int> s(v.begin(), v.end()); — done! Constructor handles everything.",approach:"Construct set from vector iterators. Set removes duplicates and sorts. Convert back to vector if needed."},
+
+// ===== DEQUE (Q33–Q35) =====
+{title:"Create and Use a Deque",difficulty:"Easy",problem:"Create a deque. push_front(1), push_back(2), push_front(3). Print all elements. Then pop_front and pop_back.",inputEx:"(no input needed)",outputEx:"After pushes: 3 1 2\nAfter pops: 1",constraints:"Insert/remove from both ends in O(1)",hint:"deque<int> dq; dq.push_front(1); dq.push_back(2); dq.push_front(3);",approach:"Deque = Double Ended Queue. O(1) push/pop from BOTH ends. Also supports O(1) random access dq[i]."},
+{title:"Sliding Window Maximum (Concept)",difficulty:"Easy",problem:"Given array {1, 3, -1, -3, 5, 3, 6, 7} and window size K=3, find the maximum in each window. Use brute force.",inputEx:"arr = {1,3,-1,-3,5,3,6,7}, K=3",outputEx:"Windows: [1,3,-1]→3, [3,-1,-3]→3, [-1,-3,5]→5, [-3,5,3]→5, [5,3,6]→6, [3,6,7]→7",constraints:"O(n*K) brute force; deque solution is O(n)",hint:"For each window of size K, find the max using a loop.",approach:"Brute: for each i, check arr[i] to arr[i+K-1]. Deque optimization (monotonic deque) makes this O(n) — learn later!"},
+{title:"Implement Stack and Queue Using Deque",difficulty:"Easy",problem:"Show that deque can simulate both a stack (LIFO) and a queue (FIFO). Demonstrate with same data: push 1, 2, 3, then pop all.",inputEx:"Push: 1, 2, 3",outputEx:"As Stack (LIFO): 3 2 1\nAs Queue (FIFO): 1 2 3",constraints:"push_back + pop_back = stack; push_back + pop_front = queue",hint:"Stack: push_back, pop_back. Queue: push_back, pop_front. One container, two behaviors!",approach:"Deque is the most versatile container. In fact, STL stack and queue use deque as their DEFAULT underlying container!"},
+
+// ===== PRIORITY QUEUE (Q36–Q42) =====
+{title:"Create a Max Heap (Priority Queue)",difficulty:"Easy",problem:"Create a <code>priority_queue&lt;int&gt;</code>. Push: 3, 7, 1, 9, 4. Print and pop all elements. Observe: largest comes first!",inputEx:"Push: 3 7 1 9 4",outputEx:"9 7 4 3 1",constraints:"Default priority_queue is a MAX heap",hint:"priority_queue<int> pq; pq.push(3); ... while(!pq.empty()) { cout << pq.top(); pq.pop(); }",approach:"Default PQ is max heap — top() always returns the largest element. Elements come out in descending order."},
+{title:"Create a Min Heap",difficulty:"Easy",problem:"Create a <strong>min heap</strong> priority_queue. Push: 3, 7, 1, 9, 4. Pop all elements — smallest should come first.",inputEx:"Push: 3 7 1 9 4",outputEx:"1 3 4 7 9",constraints:"Use greater<int> as comparator",hint:"priority_queue<int, vector<int>, greater<int>> minPQ;",approach:"The three template args: element type, container type, comparator. greater<int> flips to min heap. MEMORIZE this syntax!"},
+{title:"Find K-th Largest Element",difficulty:"Easy",problem:"Given array {3, 2, 1, 5, 6, 4} and K=2, find the 2nd largest element using a min heap of size K.",inputEx:"arr = {3,2,1,5,6,4}, K=2",outputEx:"2nd largest: 5",constraints:"Use min heap of size K",hint:"Push elements into min heap. If size > K, pop (removes smallest). After all elements, top = Kth largest.",approach:"Min heap of size K: push each element. If size > K, pop (removes too-small elements). top() = Kth largest. O(n log K)."},
+{title:"Sort Using Priority Queue (Heap Sort)",difficulty:"Easy",problem:"Given array {5, 2, 8, 1, 9, 3}, sort it by pushing all into a max heap, then popping all out.",inputEx:"arr = {5,2,8,1,9,3}",outputEx:"9 8 5 3 2 1 (descending)",constraints:"Push all, pop all",hint:"Push everything. Pop into result vector — comes out in descending order.",approach:"This demonstrates heap sort concept. Push: O(n log n). Pop all: O(n log n). Total: O(n log n)."},
+{title:"Priority Queue of Pairs",difficulty:"Easy",problem:"Create a priority queue of <code>pair&lt;int,string&gt;</code>. Push (3,\"Low\"), (9,\"Critical\"), (5,\"Medium\"). Pop all and print — highest priority first.",inputEx:"(no input needed)",outputEx:"(9, Critical)\n(5, Medium)\n(3, Low)",constraints:"Pairs compare by first, then second",hint:"priority_queue<pair<int,string>> pq; pq.push({9,\"Critical\"});",approach:"PQ of pairs sorts by first element (priority), breaking ties with second. Common in Dijkstra's algorithm."},
+{title:"Merge K Sorted Arrays (Concept)",difficulty:"Moderate",problem:"Given 3 sorted arrays: [1,4,7], [2,5,8], [3,6,9]. Merge them into one sorted array using a min heap.",inputEx:"Arrays: [1,4,7], [2,5,8], [3,6,9]",outputEx:"1 2 3 4 5 6 7 8 9",constraints:"Use min heap with (value, array_idx, element_idx)",hint:"Push first element of each array. Pop min, push next element from same array.",approach:"Min heap stores (value, arrayIndex, elementIndex). Pop min, push next from that array. O(N log K) where N=total elements, K=arrays."},
+{title:"Median from Stream (Concept)",difficulty:"Moderate",problem:"Given a stream of numbers [5, 15, 1, 3], find the running median after each insertion. Use two heaps: max heap (left) and min heap (right).",inputEx:"Stream: 5, 15, 1, 3",outputEx:"After 5: median=5\nAfter 15: median=10\nAfter 1: median=5\nAfter 3: median=4",constraints:"Two heaps technique",hint:"Max heap for lower half. Min heap for upper half. Balance sizes. Median = top(s) or average of tops.",approach:"Maintain maxHeap (left half) and minHeap (right half). Balance: sizes differ by at most 1. Median from top(s)."},
+
+// ===== ALGORITHMS & COMBINED (Q43–Q50) =====
+{title:"Pair Sorting — Custom Comparator",difficulty:"Moderate",problem:"Given vector of (name, score) pairs: (\"Charlie\",85), (\"Alice\",92), (\"Bob\",85). Sort by score descending. If tied, sort by name ascending.",inputEx:"(no input needed)",outputEx:"Alice: 92\nBob: 85\nCharlie: 85",constraints:"Custom comparator with lambda",hint:"sort(v.begin(), v.end(), [](auto& a, auto& b){ if(a.second != b.second) return a.second > b.second; return a.first < b.first; });",approach:"Custom comparators let you define any sort order. Return true if 'a' should come before 'b'. Extremely common in interviews."},
+{title:"Using Set for Sliding Window Distinct Count",difficulty:"Moderate",problem:"Given string <code>\"aababcabcd\"</code> and K=4, find the count of distinct characters in each window of size K.",inputEx:"str = \"aababcabcd\", K=4",outputEx:"Windows: aaba→2, abab→2, babc→3, abca→3, bcab→3, cabc→3, abcd→4",constraints:"Use unordered_map for frequency tracking",hint:"Maintain a frequency map. Slide window: add right char, remove left char. Distinct = map size.",approach:"Sliding window + map. Add right: freq[c]++. Remove left: freq[c]--, if 0 erase. Distinct count = freq.size()."},
+{title:"Stack + Queue Combined: Interleave Queue",difficulty:"Moderate",problem:"Given queue [1, 2, 3, 4, 5, 6], interleave the first and second halves. Result: [1, 4, 2, 5, 3, 6].",inputEx:"Queue: 1 2 3 4 5 6",outputEx:"1 4 2 5 3 6",constraints:"Use a stack or queue to help rearrange",hint:"Push first half into stack/queue. Then alternately pop from helper and original queue.",approach:"Put first half into a stack. Push stack back to queue. Move first half to back. Then interleave by moving alternately."},
+{title:"LRU Cache Concept (List + Map)",difficulty:"Moderate",problem:"Implement a simple LRU (Least Recently Used) cache of capacity 3 using <code>list</code> + <code>unordered_map</code>. Demonstrate with: put(1,A), put(2,B), put(3,C), get(1), put(4,D). What gets evicted?",inputEx:"Operations: put(1,A), put(2,B), put(3,C), get(1), put(4,D)",outputEx:"Cache after all ops: [4,D] [1,A] [3,C]\nEvicted: 2 (least recently used)",constraints:"O(1) get and put using list + map",hint:"list stores order (front = most recent). map stores key → list iterator for O(1) access.",approach:"list<pair<int,string>> for order. unordered_map<int, list::iterator> for O(1) lookup. On access: move to front. On capacity full: remove back."},
+{title:"Priority Queue + Set: Top K Frequent Elements",difficulty:"Moderate",problem:"Given array {1,1,1,2,2,3}, find the K=2 most frequent elements. Use a map for frequency, then a min heap to find top K.",inputEx:"arr = {1,1,1,2,2,3}, K=2",outputEx:"Top 2 frequent: 1 2",constraints:"Map for counting + heap for top K",hint:"Step 1: Count freq with map. Step 2: Push (freq, num) into min heap of size K. Top K remain.",approach:"unordered_map for freq count. Then use min heap of size K: push (freq, val). If size > K, pop. Remaining = top K."},
+{title:"Complete STL Mini-Project: Task Scheduler",difficulty:"Moderate",problem:"Build a task scheduler using: stack (undo history), queue (task queue), priority_queue (priority tasks), set (completed task IDs). Support: (1) Add task, (2) Process highest priority, (3) Undo last completed, (4) Show pending, (5) Show completed.",inputEx:"Add: (3,\"Email\"), (7,\"Bug Fix\"), (5,\"Meeting\")\nProcess top → Bug Fix\nUndo → Bug Fix back to queue",outputEx:"Processed: Bug Fix (priority 7)\nUndo: Bug Fix restored\nCompleted: {}\nPending: Bug Fix, Meeting, Email",constraints:"Combines all STL containers",hint:"PQ for pending tasks (sorted by priority). Queue for FIFO fallback. Stack for undo. Set for tracking completed IDs.",approach:"This combines ALL containers: priority_queue for scheduling, stack for undo history, set for tracking completed tasks. Real-world application of STL!"}
+];
+
+const MUST_DO = [
+"Q1 — Pair Basics: Pairs are used everywhere — maps, sorting, graph edges. Master .first and .second",
+"Q6 — Stack Push/Pop: Foundation for recursion call stack, DFS, expression evaluation, and monotonic stack",
+"Q10 — Balanced Parentheses: THE #1 most asked stack problem in interviews. Must solve in sleep!",
+"Q16 — Queue Basics: Foundation for BFS, which is used in shortest path, level-order traversal, and more",
+"Q20 — Queue Using Two Stacks: Classic interview question — tests understanding of both stack and queue",
+"Q23 — Set Basics: Unique sorted elements — used in meeting intervals, distinct counts, and set operations",
+"Q36 — Max Heap: Know max heap AND min heap syntax. Essential for K-th element and merge K sorted lists",
+"Q37 — Min Heap Syntax: MEMORIZE: priority_queue<int, vector<int>, greater<int>> — you'll need this a LOT",
+"Q38 — K-th Largest: Classic heap problem. Min heap of size K gives K-th largest in O(n log K)",
+"Q43 — Custom Comparator: Writing custom sort comparators with lambdas is essential for real interview problems"
+];
+
+const MISTAKES = [
+"Calling top()/front() on empty stack/queue — UNDEFINED BEHAVIOR. Always check empty() first!",
+"Forgetting that pop() returns VOID in C++ — you must call top()/front() BEFORE pop() to read the value",
+"Using wrong PQ syntax for min heap — it's priority_queue<int, vector<int>, greater<int>>, NOT just greater<int>",
+"Confusing set::count() (returns 0 or 1) with multiset::count() (returns actual count)",
+"Using erase(value) on multiset — it removes ALL copies! Use erase(find(value)) to remove just one",
+"Forgetting that set/map iterators are bidirectional, NOT random access — can't do s.begin() + 5",
+"Modifying set elements through iterators — set elements are const! You must erase and re-insert to 'update'",
+"Assuming priority_queue supports iteration — it does NOT. You can only access top(). Must pop to see others",
+"Using [] on map inside a comparator or const function — [] is non-const (inserts on missing key). Use find() or at()",
+"Not understanding that stack and queue adapter containers DON'T support iterators — no for loops on them!"
+];
+
+const KEY_PATTERNS = [
+"<strong>Stack for matching/nesting:</strong> Balanced parentheses, nested structures, monotonic stack — push opening, match closing",
+"<strong>Stack for reversal:</strong> LIFO naturally reverses order — reverse strings, undo operations, backtracking",
+"<strong>Queue for BFS:</strong> Level-by-level processing. size() trick: int sz=q.size(); for(int i=0;i&lt;sz;i++) for per-level processing",
+"<strong>Two stacks = Queue:</strong> Stack1 for input, Stack2 for output. Transfer on demand. Amortized O(1)",
+"<strong>Set for unique + sorted:</strong> Auto-dedup and sort. lower_bound/upper_bound for range queries in O(log n)",
+"<strong>unordered_set for O(1) lookup:</strong> When you only care about existence, not order. Like a key-only hashmap",
+"<strong>Priority Queue for top-K:</strong> Min heap of size K for K-th largest. Max heap of size K for K-th smallest",
+"<strong>Two heaps for median:</strong> Max heap (lower half) + min heap (upper half). Balance sizes for running median",
+"<strong>Pair for compound data:</strong> Store (weight, node) for Dijkstra, (freq, value) for frequency problems, (x, y) for coordinates",
+"<strong>Custom comparators:</strong> Lambda: [](auto& a, auto& b){ return ...; } — essential for custom sort orders in all containers"
+];
+</script>
+<script src="topic_template.js"></script>
+</body>
+</html>

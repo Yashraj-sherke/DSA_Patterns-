@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Vector (std::vector) — 50 Beginner Practice Questions in C++. Initialization, access, insertion, deletion, iteration, 2D vectors, and STL algorithms.">
+<title>📦 Vector — 50 Beginner Problems (C++)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="topic_styles.css">
+<style>:root{--accent:#6366f1;--accent2:#4f46e5;--glow1:rgba(99,102,241,.08);--glow2:rgba(79,70,229,.06)}
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:16px}
+.concept-card{background:linear-gradient(145deg,#12121f,#181830);border:1px solid #2a2a4a;border-radius:14px;padding:18px;transition:all .3s}
+.concept-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,102,241,.1)}
+.concept-card .cc-title{font-size:.85rem;font-weight:700;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.concept-card .cc-body{font-size:.75rem;color:#bbb;line-height:1.6}
+.concept-card .cc-code{background:#0d0d18;border:1px solid #1e1e30;border-radius:8px;padding:6px 10px;font-family:'Courier New',monospace;font-size:.7rem;color:#a5b4fc;margin-top:8px;overflow-x:auto;white-space:pre}
+.concept-card table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.7rem}
+.concept-card th{text-align:left;color:var(--accent);padding:4px 8px;border-bottom:1px solid #2a2a4a}
+.concept-card td{padding:4px 8px;color:#bbb;border-bottom:1px solid #1a1a2e}
+.syntax-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.72rem}
+.syntax-table th{text-align:left;color:var(--accent);padding:6px 10px;border-bottom:1px solid #2a2a4a;background:rgba(99,102,241,.06)}
+.syntax-table td{padding:6px 10px;color:#bbb;border-bottom:1px solid #1a1a2e;font-family:'Courier New',monospace;font-size:.68rem}
+.syntax-table tr:hover{background:rgba(99,102,241,.04)}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div><div class="bg-glow2"></div>
+<div class="container">
+<nav>
+ <a href="logic_hub.html">📚 Hub</a><a href="topic_conditionals.html">🔀 Conditionals</a><a href="topic_loops.html">🔄 Loops</a>
+ <a href="topic_patterns.html">🔷 Patterns</a><a href="topic_recursion.html">🪞 Recursion</a><a href="topic_arrays.html">📦 Arrays</a>
+ <a href="topic_strings.html">🔤 Strings</a><a href="topic_math.html">🔢 Math</a><a href="topic_mixed.html">🧩 Mixed</a>
+ <a href="topic_hashmap.html">🗺️ HashMap</a><a href="topic_vector.html" class="active">📐 Vector</a>
+</nav>
+<header><h1>📐 Vector (std::vector)</h1><p class="subtitle">50 Beginner Problems in C++ — Initialization, Access, Insert, Delete, Iterate, 2D Vectors & STL Algorithms</p></header>
+<div class="stats-row">
+ <div class="stat-card"><div class="num" id="totalCount">50</div><div class="lbl">Total</div></div>
+ <div class="stat-card"><div class="num" id="doneCount">0</div><div class="lbl">Done</div></div>
+ <div class="stat-card"><div class="num" id="pctCount">0%</div><div class="lbl">Progress</div></div>
+</div>
+<div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+<div class="search-bar"><input type="text" id="searchBox" placeholder="🔍 Search problems..."></div>
+<div class="toolbar"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="done">✅ Done</button><button class="filter-btn" data-filter="todo">📝 To-Do</button></div>
+
+<!-- Vector Concepts Section -->
+<div class="supp-section" style="margin-bottom:20px">
+ <div class="supp-title" style="color:#6366f1">📚 Vector Internals — Quick Reference</div>
+ <div class="concept-grid">
+  <div class="concept-card">
+   <div class="cc-title">📐 What is a Vector?</div>
+   <div class="cc-body">
+    A <strong style="color:#a5b4fc">dynamic array</strong> that can grow/shrink at runtime. Stores elements in <strong style="color:#fbbf24">contiguous memory</strong> for cache-friendly access.
+    <div class="cc-code">#include &lt;vector&gt;
+vector&lt;int&gt; v = {1, 2, 3};
+v.push_back(4); // grows automatically</div>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">🧮 Size vs Capacity</div>
+   <div class="cc-body">
+    <strong style="color:#a5b4fc">size()</strong> = number of elements stored.<br>
+    <strong style="color:#fbbf24">capacity()</strong> = allocated memory slots.<br>
+    When size exceeds capacity → <strong style="color:#ef4444">reallocation</strong> (doubles capacity).
+    <div class="cc-code">v.size();      // elements count
+v.capacity();  // allocated slots
+v.reserve(100); // pre-allocate
+v.shrink_to_fit(); // free excess</div>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">⚡ Time Complexity</div>
+   <div class="cc-body">
+    <table>
+     <tr><th>Operation</th><th>Time</th></tr>
+     <tr><td style="color:#a5b4fc">Access [i]</td><td style="color:#6ee7b7">O(1)</td></tr>
+     <tr><td style="color:#a5b4fc">push_back</td><td style="color:#6ee7b7">O(1) amortized</td></tr>
+     <tr><td style="color:#a5b4fc">pop_back</td><td style="color:#6ee7b7">O(1)</td></tr>
+     <tr><td style="color:#a5b4fc">insert(pos)</td><td style="color:#fbbf24">O(n)</td></tr>
+     <tr><td style="color:#a5b4fc">erase(pos)</td><td style="color:#fbbf24">O(n)</td></tr>
+     <tr><td style="color:#a5b4fc">find (unsorted)</td><td style="color:#ef4444">O(n)</td></tr>
+    </table>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">🔄 Vector vs Array vs List</div>
+   <div class="cc-body">
+    <table>
+     <tr><th>Feature</th><th>vector</th><th>array</th><th>list</th></tr>
+     <tr><td>Size</td><td style="color:#6ee7b7">Dynamic</td><td style="color:#ef4444">Fixed</td><td style="color:#6ee7b7">Dynamic</td></tr>
+     <tr><td>Access</td><td style="color:#6ee7b7">O(1)</td><td style="color:#6ee7b7">O(1)</td><td style="color:#ef4444">O(n)</td></tr>
+     <tr><td>Insert mid</td><td style="color:#fbbf24">O(n)</td><td style="color:#ef4444">N/A</td><td style="color:#6ee7b7">O(1)</td></tr>
+     <tr><td>Memory</td><td>Contiguous</td><td>Contiguous</td><td>Scattered</td></tr>
+    </table>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">🏗️ Memory Layout</div>
+   <div class="cc-body">
+    Vector stores a pointer to a heap-allocated array, plus size &amp; capacity metadata.
+    <div class="cc-code">Stack:  [ptr | size=3 | cap=4]
+            ↓
+Heap:   [10][20][30][ _ ]
+         0   1   2  (unused)</div>
+   </div>
+  </div>
+  <div class="concept-card">
+   <div class="cc-title">🎯 When to Use Vector</div>
+   <div class="cc-body">
+    ✅ Need dynamic size<br>
+    ✅ Frequent random access (v[i])<br>
+    ✅ Mostly add/remove at the <strong style="color:#6ee7b7">end</strong><br>
+    ❌ Frequent insert/delete in the <strong style="color:#ef4444">middle</strong> → use list<br>
+    ❌ Need unique elements → use set
+   </div>
+  </div>
+ </div>
+ <div style="margin-top:16px">
+  <div style="font-size:.85rem;font-weight:700;color:#6366f1;margin-bottom:10px">⌨️ C++ Vector Syntax Quick Reference</div>
+  <table class="syntax-table">
+   <tr><th style="width:30%">Operation</th><th>C++ Code</th></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Create empty</td><td>vector&lt;int&gt; v;</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Create with size</td><td>vector&lt;int&gt; v(n, 0); // n zeros</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Init list</td><td>vector&lt;int&gt; v = {1, 2, 3};</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Add to end</td><td>v.push_back(x);</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Remove last</td><td>v.pop_back();</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Access</td><td>v[i] or v.at(i)</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">First / Last</td><td>v.front() / v.back()</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Size</td><td>v.size()</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Empty?</td><td>v.empty()</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Insert at pos</td><td>v.insert(v.begin()+i, val);</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Erase at pos</td><td>v.erase(v.begin()+i);</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Clear</td><td>v.clear();</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Sort</td><td>sort(v.begin(), v.end());</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Reverse</td><td>reverse(v.begin(), v.end());</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">Iterate</td><td>for(auto& x : v)</td></tr>
+   <tr><td style="color:#ddd;font-family:inherit">2D vector</td><td>vector&lt;vector&lt;int&gt;&gt; grid(r, vector&lt;int&gt;(c, 0));</td></tr>
+  </table>
+ </div>
+</div>
+
+<div id="questionsContainer"></div>
+<div class="supp-section"><div class="supp-title must-do">🏆 Top 10 Must-Do Questions</div><div id="mustDoList"></div></div>
+<div class="supp-section"><div class="supp-title mistakes">❌ Common Mistakes Beginners Make</div><div id="mistakesList"></div></div>
+<div class="supp-section"><div class="supp-title patterns-title">🔑 Key Patterns & Logic Used</div><div id="patternsList"></div></div>
+<div class="footer">📐 Vector — 50 Problems • Logic Building Hub</div>
+</div>
+<script>
+const TOPIC_KEY = 'vector';
+const QUESTIONS = [
+// ===== Section 1: Very Basic — Creation, Initialization & Access (Q1–Q20) =====
+{title:"Create an Empty Vector",difficulty:"Very Easy",problem:"Create an empty <code>vector&lt;int&gt;</code>. Print its size and whether it's empty.",inputEx:"(no input needed)",outputEx:"Size: 0\nEmpty: true",constraints:"#include <vector>",hint:"Use v.size() and v.empty().",approach:"vector<int> v; cout << v.size(); cout << boolalpha << v.empty();"},
+{title:"Initialize with Values",difficulty:"Very Easy",problem:"Create a vector with values {10, 20, 30, 40, 50} using an initializer list. Print all elements.",inputEx:"(no input needed)",outputEx:"10 20 30 40 50",constraints:"Use initializer list syntax",hint:"vector<int> v = {10, 20, 30, 40, 50}; then loop to print.",approach:"Initializer lists let you define all values at declaration. Use range-based for to print."},
+{title:"Create Vector of Fixed Size with Default Value",difficulty:"Very Easy",problem:"Create a vector of size 5, all initialized to 0. Print all elements.",inputEx:"n = 5",outputEx:"0 0 0 0 0",constraints:"Use constructor: vector<int>(n, val)",hint:"vector<int> v(5, 0); creates 5 elements, all zeros.",approach:"The two-argument constructor: vector<int>(size, default_value). Very common for initializing DP arrays."},
+{title:"Add Elements with push_back",difficulty:"Very Easy",problem:"Create an empty vector. Add elements 5, 10, 15 using <code>push_back()</code>. Print the vector.",inputEx:"(no input needed)",outputEx:"5 10 15",constraints:"push_back adds to the end",hint:"v.push_back(5); v.push_back(10); v.push_back(15);",approach:"push_back() appends to end. O(1) amortized. Most common way to add elements."},
+{title:"Access Elements by Index",difficulty:"Very Easy",problem:"Given vector {100, 200, 300, 400, 500}, print the element at index 0, index 2, and the last element.",inputEx:"(no input needed)",outputEx:"First: 100\nMiddle: 300\nLast: 500",constraints:"Use [] or .at() for access",hint:"v[0] for first, v[2] for middle, v[v.size()-1] or v.back() for last.",approach:"[] gives O(1) access. v.back() is shorthand for the last element."},
+{title:"Access First and Last Elements",difficulty:"Very Easy",problem:"Given vector {7, 14, 21, 28}, print the first and last elements using <code>front()</code> and <code>back()</code>.",inputEx:"(no input needed)",outputEx:"Front: 7\nBack: 28",constraints:"Use front() and back()",hint:"v.front() returns first element. v.back() returns last element.",approach:"front() and back() avoid manual index math. Cleaner than v[0] and v[v.size()-1]."},
+{title:"Remove Last Element",difficulty:"Very Easy",problem:"Given vector {1, 2, 3, 4, 5}, remove the last element using <code>pop_back()</code>. Print the vector after removal.",inputEx:"(no input needed)",outputEx:"1 2 3 4",constraints:"pop_back() removes the last element",hint:"v.pop_back(); removes the last element. O(1) operation.",approach:"pop_back() is the reverse of push_back(). Both O(1). The last element is destroyed."},
+{title:"Get Size of Vector",difficulty:"Very Easy",problem:"Create a vector with 6 elements. Print the size using <code>size()</code>.",inputEx:"v = {2, 4, 6, 8, 10, 12}",outputEx:"Size: 6",constraints:"size() returns number of elements",hint:"v.size() returns the count of elements currently stored.",approach:"size() returns a size_t (unsigned integer). Use it for loop bounds."},
+{title:"Check if Vector is Empty",difficulty:"Very Easy",problem:"Create two vectors: one empty and one with elements. Print whether each is empty.",inputEx:"(no input needed)",outputEx:"v1 empty: true\nv2 empty: false",constraints:"Use empty() method",hint:"v.empty() returns true if size() == 0.",approach:"empty() is preferred over size() == 0 for readability."},
+{title:"Safe Access with at()",difficulty:"Very Easy",problem:"Given vector {10, 20, 30}, access index 1 using <code>at()</code>. Also try accessing index 5 and catch the exception.",inputEx:"(no input needed)",outputEx:"v.at(1) = 20\nOut of range!",constraints:"at() throws std::out_of_range for invalid index",hint:"try { v.at(5); } catch(out_of_range& e) { cout << \"Out of range!\"; }",approach:"v.at(i) is safer than v[i] — it performs bounds checking and throws on invalid access."},
+{title:"Read Input into Vector",difficulty:"Very Easy",problem:"Read N integers from user input and store them in a vector. Print the vector.",inputEx:"N=4, values: 3 7 1 9",outputEx:"3 7 1 9",constraints:"Read N first, then read N values",hint:"Read N, loop N times: read x, v.push_back(x).",approach:"int n; cin >> n; vector<int> v(n); for(auto& x : v) cin >> x;"},
+{title:"Copy One Vector to Another",difficulty:"Very Easy",problem:"Given vector A = {1, 2, 3, 4}, create a copy B. Modify B (add 5) and show both are independent.",inputEx:"(no input needed)",outputEx:"A: 1 2 3 4\nB: 1 2 3 4 5",constraints:"Assignment copies deeply for vectors",hint:"vector<int> B = A; creates a deep copy. Modifying B won't affect A.",approach:"Unlike arrays, vector assignment (=) creates a full independent copy. This is safe."},
+{title:"Assign New Values with assign()",difficulty:"Very Easy",problem:"Create a vector, then use <code>assign()</code> to fill it with 5 copies of the value 99. Print the vector.",inputEx:"(no input needed)",outputEx:"99 99 99 99 99",constraints:"assign() replaces all contents",hint:"v.assign(5, 99); replaces everything with 5 copies of 99.",approach:"assign(count, value) replaces the entire vector content. Old elements are destroyed."},
+{title:"Iterate with Index-based Loop",difficulty:"Very Easy",problem:"Given vector {10, 20, 30, 40, 50}, iterate using a traditional for loop with index. Print each element with its index.",inputEx:"(no input needed)",outputEx:"[0]: 10\n[1]: 20\n[2]: 30\n[3]: 40\n[4]: 50",constraints:"Use for(int i=0; i<v.size(); i++)",hint:"Classic for loop: for(int i = 0; i < v.size(); i++) cout << v[i];",approach:"Index-based iteration when you need the index value itself."},
+{title:"Iterate with Range-based Loop",difficulty:"Very Easy",problem:"Given vector {5, 10, 15, 20}, iterate using a range-based for loop. Print each element.",inputEx:"(no input needed)",outputEx:"5 10 15 20",constraints:"Use for(auto& x : v)",hint:"for(auto& x : v) cout << x << ' ';",approach:"Range-based for is cleaner when you don't need the index. Use auto& to avoid copying."},
+{title:"Iterate with Iterators",difficulty:"Very Easy",problem:"Given vector {3, 6, 9, 12}, iterate using iterators. Print each element.",inputEx:"(no input needed)",outputEx:"3 6 9 12",constraints:"Use v.begin() and v.end()",hint:"for(auto it = v.begin(); it != v.end(); ++it) cout << *it;",approach:"Iterators are pointer-like objects. *it dereferences to get the value. Needed for some STL algorithms."},
+{title:"Modify Elements In-place",difficulty:"Very Easy",problem:"Given vector {1, 2, 3, 4, 5}, double every element in-place. Print the modified vector.",inputEx:"(no input needed)",outputEx:"2 4 6 8 10",constraints:"Modify using reference in range-for",hint:"for(auto& x : v) x *= 2; — the reference (&) allows modification.",approach:"Without &, range-for creates copies. With &, you modify the original elements."},
+{title:"Compare Two Vectors",difficulty:"Very Easy",problem:"Given A = {1, 2, 3} and B = {1, 2, 3}, check if they are equal using ==. Also check A against C = {1, 2, 4}.",inputEx:"(no input needed)",outputEx:"A == B: true\nA == C: false",constraints:"== compares element by element",hint:"Vectors support ==, !=, <, >, <=, >= for comparison.",approach:"== checks if both vectors have same size AND same elements in same order. O(n)."},
+{title:"Swap Two Vectors",difficulty:"Very Easy",problem:"Given A = {1, 2, 3} and B = {4, 5, 6}, swap their contents using <code>swap()</code>. Print both after swap.",inputEx:"(no input needed)",outputEx:"A: 4 5 6\nB: 1 2 3",constraints:"swap() is O(1) — just swaps internal pointers",hint:"A.swap(B); or swap(A, B); — both work and are O(1).",approach:"swap() doesn't copy elements. It swaps internal pointers, size, and capacity. Constant time!"},
+{title:"Clear a Vector",difficulty:"Very Easy",problem:"Given vector {10, 20, 30}, clear all elements. Print the size before and after.",inputEx:"(no input needed)",outputEx:"Before: 3\nAfter: 0",constraints:"clear() removes all elements",hint:"v.clear(); sets size to 0. Note: capacity may still be non-zero.",approach:"clear() destroys elements but may not free memory. Use shrink_to_fit() after clear() to free."},
+
+// ===== Section 2: Insertion, Deletion & Manipulation (Q21–Q35) =====
+{title:"Insert at a Specific Position",difficulty:"Easy",problem:"Given vector {10, 20, 40, 50}, insert 30 at index 2. Print the result.",inputEx:"(no input needed)",outputEx:"10 20 30 40 50",constraints:"Use v.insert(v.begin()+i, val)",hint:"v.insert(v.begin() + 2, 30); shifts elements right from index 2.",approach:"insert() takes an iterator position. v.begin()+i points to index i. Elements after shift right. O(n)."},
+{title:"Insert Multiple Elements",difficulty:"Easy",problem:"Given vector {1, 5}, insert three copies of 3 at index 1. Print the result.",inputEx:"(no input needed)",outputEx:"1 3 3 3 5",constraints:"insert(pos, count, value)",hint:"v.insert(v.begin()+1, 3, 3); inserts 3 copies of value 3 at index 1.",approach:"Overloaded insert: insert(iterator, count, value). All elements after shift right."},
+{title:"Erase an Element at Index",difficulty:"Easy",problem:"Given vector {10, 20, 30, 40, 50}, erase the element at index 2. Print the result.",inputEx:"(no input needed)",outputEx:"10 20 40 50",constraints:"Use v.erase(v.begin()+i)",hint:"v.erase(v.begin() + 2); removes element at index 2, shifts rest left.",approach:"erase(iterator) removes one element. Returns iterator to next element. O(n) due to shifting."},
+{title:"Erase a Range of Elements",difficulty:"Easy",problem:"Given vector {1, 2, 3, 4, 5, 6, 7}, erase elements from index 2 to 4 (inclusive). Print the result.",inputEx:"(no input needed)",outputEx:"1 2 6 7",constraints:"erase(first, last) — last is exclusive",hint:"v.erase(v.begin()+2, v.begin()+5); removes indices 2, 3, 4.",approach:"erase(first, last) removes [first, last). The last iterator is exclusive. Common STL convention."},
+{title:"Resize a Vector",difficulty:"Easy",problem:"Given vector {1, 2, 3}: (a) resize to 5 (new elements = 0), (b) then resize to 2. Print after each.",inputEx:"(no input needed)",outputEx:"After resize(5): 1 2 3 0 0\nAfter resize(2): 1 2",constraints:"resize() grows or shrinks",hint:"resize(n) adds default-valued elements if growing, removes from end if shrinking.",approach:"resize(n, val) optionally sets new element values. Growing: appends. Shrinking: truncates from end."},
+{title:"Reserve Capacity",difficulty:"Easy",problem:"Create an empty vector. Reserve space for 100 elements. Print size and capacity.",inputEx:"(no input needed)",outputEx:"Size: 0\nCapacity: 100",constraints:"reserve() allocates memory but doesn't add elements",hint:"v.reserve(100); — size stays 0, but capacity becomes ≥ 100.",approach:"Use reserve() when you know the final size to avoid repeated reallocations. Common optimization."},
+{title:"Find an Element",difficulty:"Easy",problem:"Given vector {4, 7, 2, 9, 1}, find the position of element 9. Print the index or \"Not found\".",inputEx:"(no input needed)",outputEx:"Found at index: 3",constraints:"Use std::find from <algorithm>",hint:"auto it = find(v.begin(), v.end(), 9); index = it - v.begin();",approach:"find() returns an iterator. If it == v.end(), element not found. Subtract v.begin() to get index."},
+{title:"Count Occurrences of a Value",difficulty:"Easy",problem:"Given vector {1, 3, 2, 3, 4, 3, 5}, count how many times 3 appears using <code>count()</code>.",inputEx:"(no input needed)",outputEx:"Count of 3: 3",constraints:"Use std::count from <algorithm>",hint:"int c = count(v.begin(), v.end(), 3);",approach:"count(first, last, value) returns the number of elements equal to value. O(n) linear scan."},
+{title:"Sort a Vector (Ascending)",difficulty:"Easy",problem:"Given vector {5, 2, 8, 1, 9, 3}, sort in ascending order. Print the sorted vector.",inputEx:"(no input needed)",outputEx:"1 2 3 5 8 9",constraints:"Use std::sort from <algorithm>",hint:"sort(v.begin(), v.end()); — default sorts ascending.",approach:"sort() uses IntroSort (hybrid of QuickSort, HeapSort, InsertionSort). O(n log n) average. In-place."},
+{title:"Sort a Vector (Descending)",difficulty:"Easy",problem:"Given vector {5, 2, 8, 1, 9, 3}, sort in descending order. Print the result.",inputEx:"(no input needed)",outputEx:"9 8 5 3 2 1",constraints:"Use greater<int>() comparator",hint:"sort(v.begin(), v.end(), greater<int>()); — sorts largest first.",approach:"Pass a comparator to sort(). greater<int>() reverses the order. Or use rbegin()/rend()."},
+{title:"Reverse a Vector",difficulty:"Easy",problem:"Given vector {1, 2, 3, 4, 5}, reverse it in-place. Print the result.",inputEx:"(no input needed)",outputEx:"5 4 3 2 1",constraints:"Use std::reverse from <algorithm>",hint:"reverse(v.begin(), v.end());",approach:"reverse() swaps elements from both ends toward the center. O(n). In-place."},
+{title:"Find Min and Max Elements",difficulty:"Easy",problem:"Given vector {3, 7, 1, 9, 4, 6}, find and print the minimum and maximum elements.",inputEx:"(no input needed)",outputEx:"Min: 1\nMax: 9",constraints:"Use min_element and max_element from <algorithm>",hint:"auto mn = *min_element(v.begin(), v.end()); auto mx = *max_element(v.begin(), v.end());",approach:"min_element/max_element return iterators. Dereference with * to get the value. O(n) each."},
+{title:"Remove Duplicates from Sorted Vector",difficulty:"Easy",problem:"Given sorted vector {1, 1, 2, 2, 3, 3, 3, 4}, remove duplicates. Print the result.",inputEx:"(no input needed)",outputEx:"1 2 3 4",constraints:"Use erase-unique idiom",hint:"v.erase(unique(v.begin(), v.end()), v.end()); — the classic erase-unique idiom.",approach:"unique() moves duplicates to end, returns iterator to new logical end. erase() removes the tail. MUST sort first!"},
+{title:"Accumulate (Sum All Elements)",difficulty:"Easy",problem:"Given vector {1, 2, 3, 4, 5}, find the sum using <code>accumulate()</code>. Print the result.",inputEx:"(no input needed)",outputEx:"Sum: 15",constraints:"#include <numeric>; use accumulate()",hint:"int sum = accumulate(v.begin(), v.end(), 0);",approach:"accumulate(first, last, init) from <numeric>. Third argument is the initial value (usually 0 for sum)."},
+{title:"Check if Vector is Sorted",difficulty:"Easy",problem:"Given vectors {1, 2, 3, 4} and {3, 1, 4, 2}, check if each is sorted using <code>is_sorted()</code>.",inputEx:"(no input needed)",outputEx:"v1 sorted: true\nv2 sorted: false",constraints:"Use std::is_sorted from <algorithm>",hint:"is_sorted(v.begin(), v.end()); returns true if non-decreasing.",approach:"is_sorted() checks if elements are in non-decreasing order. O(n). Very useful for validating."},
+
+// ===== Section 3: Advanced — 2D Vectors, Pairs, Subvectors & Real DSA Patterns (Q36–Q50) =====
+{title:"Create a 2D Vector (Matrix)",difficulty:"Moderate",problem:"Create a 3×4 matrix (2D vector) initialized to 0. Print it in matrix format.",inputEx:"rows=3, cols=4",outputEx:"0 0 0 0\n0 0 0 0\n0 0 0 0",constraints:"vector<vector<int>> grid(rows, vector<int>(cols, 0))",hint:"The inner vector<int>(cols, 0) creates each row. The outer vector creates 'rows' copies of it.",approach:"2D vector = vector of vectors. Initialize with nested constructor. Access with grid[i][j]."},
+{title:"Input and Print a 2D Vector",difficulty:"Moderate",problem:"Read a 3×3 matrix from input and print it in grid format.",inputEx:"1 2 3\n4 5 6\n7 8 9",outputEx:"1 2 3\n4 5 6\n7 8 9",constraints:"Nested loops for input and output",hint:"for(auto& row : grid) for(auto& val : row) cin >> val;",approach:"Outer loop for rows, inner loop for columns. Same pattern for both input and output."},
+{title:"Vector of Pairs",difficulty:"Moderate",problem:"Create a <code>vector&lt;pair&lt;string, int&gt;&gt;</code> storing: (\"Alice\", 90), (\"Bob\", 85), (\"Charlie\", 92). Print all pairs.",inputEx:"(no input needed)",outputEx:"Alice: 90\nBob: 85\nCharlie: 92",constraints:"Use pair<string, int>",hint:"v.push_back({\"Alice\", 90}); or v.push_back(make_pair(\"Alice\", 90));",approach:"vector<pair<T1,T2>> is used everywhere in DSA — storing edges, coordinates, key-value pairs."},
+{title:"Sort Vector of Pairs",difficulty:"Moderate",problem:"Given pairs: (3,\"c\"), (1,\"a\"), (2,\"b\"). Sort by the first element. Then sort by second element using a custom comparator.",inputEx:"(no input needed)",outputEx:"By first: (1,a) (2,b) (3,c)\nBy second: (1,a) (2,b) (3,c)",constraints:"Default sorts by first, then second",hint:"Default sort works on pairs (sorts by first, then second). Custom: sort with lambda.",approach:"sort(v.begin(), v.end()); sorts by first. Custom: sort(v.begin(), v.end(), [](auto& a, auto& b){ return a.second < b.second; });"},
+{title:"Extract a Subvector (Slice)",difficulty:"Moderate",problem:"Given vector {10, 20, 30, 40, 50, 60}, extract elements from index 1 to 4 into a new vector. Print the subvector.",inputEx:"(no input needed)",outputEx:"20 30 40 50",constraints:"Use iterator constructor",hint:"vector<int> sub(v.begin()+1, v.begin()+5); — range is [begin+1, begin+5).",approach:"Vector can be constructed from an iterator range. The range is half-open: [first, last)."},
+{title:"Merge Two Sorted Vectors",difficulty:"Moderate",problem:"Given sorted vectors A = {1, 3, 5} and B = {2, 4, 6}, merge them into a single sorted vector.",inputEx:"(no input needed)",outputEx:"1 2 3 4 5 6",constraints:"Use std::merge from <algorithm>",hint:"vector<int> C(A.size()+B.size()); merge(A.begin(), A.end(), B.begin(), B.end(), C.begin());",approach:"merge() combines two sorted ranges into one sorted range. O(n+m). Foundation of merge sort!"},
+{title:"Rotate a Vector",difficulty:"Moderate",problem:"Given vector {1, 2, 3, 4, 5}, left-rotate by 2 positions. Print the result.",inputEx:"(no input needed)",outputEx:"3 4 5 1 2",constraints:"Use std::rotate from <algorithm>",hint:"rotate(v.begin(), v.begin()+2, v.end()); — the second argument becomes the new first.",approach:"rotate(first, middle, last) — 'middle' becomes the new beginning. O(n). Very efficient."},
+{title:"Partition Elements",difficulty:"Moderate",problem:"Given vector {5, 2, 8, 1, 9, 3}, partition so that all even numbers come before odd. Print the result.",inputEx:"(no input needed)",outputEx:"2 8 5 1 9 3 (evens first)",constraints:"Use std::partition from <algorithm>",hint:"partition(v.begin(), v.end(), [](int x){ return x % 2 == 0; });",approach:"partition() reorders elements so that elements satisfying the predicate come first. Not stable (use stable_partition for order preservation)."},
+{title:"Remove All Occurrences of a Value",difficulty:"Moderate",problem:"Given vector {1, 3, 2, 3, 4, 3, 5}, remove all occurrences of 3. Print the result.",inputEx:"(no input needed)",outputEx:"1 2 4 5",constraints:"Use erase-remove idiom",hint:"v.erase(remove(v.begin(), v.end(), 3), v.end()); — the erase-remove idiom.",approach:"remove() shifts non-matching elements forward, returns new logical end. erase() actually removes the tail. Classic C++ idiom!"},
+{title:"Transform Elements",difficulty:"Moderate",problem:"Given vector {1, 2, 3, 4, 5}, create a new vector where each element is squared. Use <code>transform()</code>.",inputEx:"(no input needed)",outputEx:"1 4 9 16 25",constraints:"Use std::transform from <algorithm>",hint:"transform(v.begin(), v.end(), result.begin(), [](int x){ return x*x; });",approach:"transform() applies a function to each element and stores results. Like map() in other languages."},
+{title:"lower_bound and upper_bound",difficulty:"Moderate",problem:"Given sorted vector {1, 2, 2, 4, 5, 5, 7}, find the lower_bound and upper_bound of 5. Print both positions.",inputEx:"(no input needed)",outputEx:"lower_bound(5) at index: 4\nupper_bound(5) at index: 6",constraints:"Vector MUST be sorted! O(log n) binary search.",hint:"auto lb = lower_bound(v.begin(), v.end(), 5); index = lb - v.begin();",approach:"lower_bound → first element ≥ val. upper_bound → first element > val. Both use binary search. Critical for DSA!"},
+{title:"Binary Search on Vector",difficulty:"Moderate",problem:"Given sorted vector {2, 5, 8, 12, 16, 23, 38}, check if 23 exists using <code>binary_search()</code>. Also check for 10.",inputEx:"(no input needed)",outputEx:"23 found: true\n10 found: false",constraints:"Use std::binary_search from <algorithm>; vector must be sorted",hint:"binary_search(v.begin(), v.end(), 23); returns true/false.",approach:"binary_search() returns bool (just tells if exists). Use lower_bound() if you need the position."},
+{title:"next_permutation",difficulty:"Moderate",problem:"Given vector {1, 2, 3}, generate and print all permutations using <code>next_permutation()</code>.",inputEx:"(no input needed)",outputEx:"1 2 3\n1 3 2\n2 1 3\n2 3 1\n3 1 2\n3 2 1",constraints:"Sort first, then loop with next_permutation",hint:"Sort the vector first. do { print(v); } while(next_permutation(v.begin(), v.end()));",approach:"next_permutation() rearranges to the next lexicographic permutation. Returns false when reached the last. Must start sorted!"},
+{title:"Frequency Count Using Vector (Counting Sort Style)",difficulty:"Moderate",problem:"Given vector {1, 3, 2, 3, 1, 4, 2, 1} with values 1-4, count frequency of each value using a frequency vector. Print results.",inputEx:"(no input needed)",outputEx:"1 appears 3 times\n2 appears 2 times\n3 appears 2 times\n4 appears 1 times",constraints:"Use vector<int> freq(maxVal+1, 0)",hint:"vector<int> freq(5, 0); for(int x : v) freq[x]++;",approach:"Create freq vector of size (maxVal+1) initialized to 0. Increment freq[x] for each element. O(n). This is the counting sort technique!"},
+{title:"Complete Mini-Project: Student Gradebook",difficulty:"Moderate",problem:"Build a gradebook using <code>vector&lt;pair&lt;string, vector&lt;int&gt;&gt;&gt;</code>. Each student has multiple marks. Support: (1) Add student with marks, (2) Print all students, (3) Find class average, (4) Find topper, (5) Sort by average marks.",inputEx:"Ravi: 85,90,78\nPriya: 92,88,95\nAmit: 70,65,80",outputEx:"Topper: Priya (avg: 91.67)\nClass avg: 82.56\nSorted: Priya, Ravi, Amit",constraints:"Combines vectors, pairs, sort, accumulate",hint:"Use vector<pair<string, vector<int>>> for students. Calculate averages using accumulate. Sort with custom comparator.",approach:"This combines vector + pair + accumulate + sort with lambda. Full synthesis of all vector operations."}
+];
+
+const MUST_DO = [
+"Q3 — Fixed Size with Default: vector<int>(n, 0) is THE most common initialization in DSA (DP tables, visited arrays)",
+"Q4 — push_back: The most used vector operation. Master it completely",
+"Q11 — Read Input into Vector: You'll do this in every single competitive programming problem",
+"Q17 — Modify In-place with &: Critical — without &, range-for creates copies and changes are lost!",
+"Q29 — Sort a Vector: sort() is used in 40%+ of DSA problems. Know ascending AND descending",
+"Q33 — Erase-Unique Idiom: v.erase(unique(...), v.end()) — classic pattern for removing duplicates",
+"Q36 — 2D Vector: Essential for matrices, grids, graphs (adjacency list), DP tables",
+"Q39 — Sort Vector of Pairs: Sorting by custom criteria is extremely common in interview problems",
+"Q47 — lower_bound/upper_bound: Binary search on sorted vectors — used in TONS of DSA problems",
+"Q50 — Frequency Count with Vector: The counting sort technique, foundational for many problems"
+];
+
+const MISTAKES = [
+"Using v[i] on an empty vector or out-of-bounds index — UNDEFINED BEHAVIOR with no error! Use at() for safety",
+"Forgetting & in range-for when modifying: for(auto x : v) x *= 2; DOES NOTHING — use for(auto& x : v)",
+"Comparing signed/unsigned: v.size() returns size_t (unsigned). for(int i=0; i<v.size(); ...) may warn",
+"Not sorting before using unique(), lower_bound(), upper_bound(), or binary_search() — results will be WRONG",
+"Erasing elements during forward iteration — shifts indices and skips elements. Use erase-remove idiom instead",
+"Confusing size() and capacity() — size is elements count, capacity is allocated memory slots",
+"Using reserve() and expecting elements to exist — reserve() allocates memory but size stays 0! Use resize() instead",
+"push_back inside a loop that reads v.size() — size changes each iteration! Cache the size first",
+"2D vector: vector<vector<int>> v(n) creates n EMPTY rows, not n×m matrix! Use vector<vector<int>>(n, vector<int>(m, 0))",
+"Returning a large vector by value from a function — looks expensive but C++ uses move semantics/RVO, so it's actually fine!"
+];
+
+const KEY_PATTERNS = [
+"<strong>push_back / pop_back:</strong> Append/remove from end in O(1). The most basic and most used operations",
+"<strong>Range-based for with &:</strong> for(auto& x : v) — the go-to iteration pattern for reading AND modifying",
+"<strong>Erase-Remove idiom:</strong> v.erase(remove(...), v.end()) — the standard way to remove elements by value",
+"<strong>Erase-Unique idiom:</strong> v.erase(unique(...), v.end()) — remove consecutive duplicates from sorted vector",
+"<strong>Two-pointer on vector:</strong> left=0, right=v.size()-1 — used in reverse, partition, sorted pair problems",
+"<strong>Sorting + Binary Search:</strong> sort() then lower_bound()/upper_bound() — O(n log n + log n) lookup pattern",
+"<strong>Frequency vector:</strong> vector<int> freq(maxVal+1, 0); freq[x]++ — counting sort / frequency counting",
+"<strong>2D vector as adjacency list:</strong> vector<vector<int>> adj(n) — THE standard graph representation",
+"<strong>Vector of pairs:</strong> vector<pair<int,int>> — store edges, intervals, coordinates, key-value data",
+"<strong>reserve() for optimization:</strong> Pre-allocate when you know the final size to avoid repeated reallocations"
+];
+</script>
+<script src="topic_template.js"></script>
+</body>
+</html>

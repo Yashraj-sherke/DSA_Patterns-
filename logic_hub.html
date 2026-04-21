@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="DSA Logic Building Hub — 400 beginner problems across 8 topics with hints, approaches, and progress tracking.">
-<title>🧠 Logic Building Hub — 560 Problems × 11 Topics</title>
+<title>🧠 Logic Building Hub — 660 Problems × 13 Topics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -73,12 +73,12 @@ h1{font-size:2.6rem;font-weight:900;background:linear-gradient(135deg,#f59e0b,#e
 </nav>
 <header>
  <h1>Logic Building Hub</h1>
- <p class="tagline">🎯 <strong>560 Problems</strong> across 11 topics — from beginner fundamentals to interview-level patterns.<br>Built for absolute beginners who want to master coding logic step by step.</p>
+ <p class="tagline">🎯 <strong>660 Problems</strong> across 13 topics — from beginner fundamentals to interview-level patterns.<br>Built for absolute beginners who want to master coding logic step by step.</p>
 </header>
 
 <div class="overall-stats">
- <div class="os-card"><div class="num">560</div><div class="lbl">Total Problems</div></div>
- <div class="os-card"><div class="num">11</div><div class="lbl">Topics</div></div>
+ <div class="os-card"><div class="num">660</div><div class="lbl">Total Problems</div></div>
+ <div class="os-card"><div class="num">13</div><div class="lbl">Topics</div></div>
  <div class="os-card"><div class="num" id="totalDone">0</div><div class="lbl">Completed</div></div>
  <div class="os-card"><div class="num" id="totalPct">0%</div><div class="lbl">Progress</div></div>
 </div>
@@ -172,10 +172,26 @@ h1{font-size:2.6rem;font-weight:900;background:linear-gradient(135deg,#f59e0b,#e
   <div class="progress-mini"><div class="fill" id="prog-hashmap"></div></div>
   <div class="completed-text" id="done-hashmap">0/50</div>
  </a>
+ <a href="topic_vector.html" class="topic-card" style="--accent:#6366f1">
+  <span class="topic-icon">📐</span>
+  <div class="topic-name">Vector (std::vector) (C++)</div>
+  <div class="topic-desc">Initialization, access, push/pop, insert, erase, sort, reverse, 2D vectors, pairs, binary search, STL algorithms.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Moderate</span><span class="tm" style="background:rgba(99,102,241,.15);color:#a5b4fc">🔥 C++ STL</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-vector"></div></div>
+  <div class="completed-text" id="done-vector">0/50</div>
+ </a>
+ <a href="topic_stl.html" class="topic-card" style="--accent:#f472b6">
+  <span class="topic-icon">🧰</span>
+  <div class="topic-name">STL Toolkit (C++)</div>
+  <div class="topic-desc">Stack, Queue, Deque, Set, Priority Queue, Pair — essential STL containers and algorithms for DSA interviews.</div>
+  <div class="topic-meta"><span class="tm"><strong>50</strong> Problems</span><span class="tm">Very Easy → Moderate</span><span class="tm" style="background:rgba(244,114,182,.15);color:#f9a8d4">🔥 C++ STL</span></div>
+  <div class="progress-mini"><div class="fill" id="prog-stl"></div></div>
+  <div class="completed-text" id="done-stl">0/50</div>
+ </a>
 </div>
 
 <div class="footer">
- 🧠 Logic Building Hub — 560 Problems for DSA Mastery &bull; Built with ❤️ for interview preparation
+ 🧠 Logic Building Hub — 660 Problems for DSA Mastery &bull; Built with ❤️ for interview preparation
 </div>
 </div>
 
@@ -191,10 +207,12 @@ const topics = [
  {key:'mixed', total:50},
  {key:'array_patterns', total:72},
  {key:'string_patterns', total:38},
- {key:'hashmap', total:50}
+ {key:'hashmap', total:50},
+ {key:'vector', total:50},
+ {key:'stl', total:50}
 ];
 let totalDone = 0;
-const grandTotal = 560;
+const grandTotal = 660;
 topics.forEach(({key:t, total:tot}) => {
  try {
   const d = JSON.parse(localStorage.getItem('logic50_' + t) || '{}');
